@@ -4,11 +4,14 @@ import react from '@vitejs/plugin-react'
 import tailwindcss from '@tailwindcss/vite'
 import { readFileSync } from 'node:fs'
 import { fileURLToPath } from 'node:url'
+import { assertNoDemoInBuild } from './scripts/build-guard'
 
 const pkg = JSON.parse(readFileSync(new URL('./package.json', import.meta.url), 'utf8')) as { version: string }
 
 // `vite build --mode e2e` swaps the data location for small test fixtures.
-export default defineConfig(({ mode }) => ({
+export default defineConfig(({ mode, command }) => {
+  assertNoDemoInBuild(command, mode, process.env)
+  return {
   plugins: [react(), tailwindcss()],
   define: { __APP_VERSION__: JSON.stringify(pkg.version) },
   resolve: {
@@ -21,4 +24,5 @@ export default defineConfig(({ mode }) => ({
   test: {
     include: ['tests/unit/**/*.test.{ts,tsx}'],
   },
-}))
+}
+})

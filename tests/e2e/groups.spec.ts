@@ -37,10 +37,11 @@ test('click expands and collapses; the chevron rotates', async ({ page }) => {
   await expect(group(page, 'house').getByRole('link')).toHaveCount(0)
 })
 
-test('keyboard: Tab to a group, Enter and Space toggle it, focus ring is visible', async ({ page }) => {
+test('keyboard: Tab reaches a group, Enter and Space toggle it, focus ring is visible', async ({ page }) => {
   await page.goto('/')
+  await toggle(page, 'provincial').focus()
   const b = toggle(page, 'house')
-  await b.focus()
+  for (let i = 0; i < 40 && !(await b.evaluate((e) => e === document.activeElement)); i++) await page.keyboard.press('Tab')
   await expect(b).toBeFocused()
   expect(await b.evaluate((el) => getComputedStyle(el).outlineStyle)).not.toBe('none')
   await page.keyboard.press('Enter')
@@ -49,6 +50,7 @@ test('keyboard: Tab to a group, Enter and Space toggle it, focus ring is visible
   await expect(b).toHaveAttribute('aria-expanded', 'false')
   const box = await b.boundingBox()
   expect(box!.height).toBeGreaterThanOrEqual(44)
+  await expect(page.locator(`#${await b.getAttribute('aria-controls')}`)).toHaveCount(1)
 })
 
 test('a municipality filter auto-expands its groups and counts follow the filter', async ({ page }) => {
@@ -90,7 +92,7 @@ test('level headers: h3 per level with description, total badge and neutral rows
   await expect(muni).toContainText(/Mayors, vice mayors and councilors of Bukidnon's \d+ cities and \d+ municipalities/)
   await expect(muni.getByTestId('level-total')).toContainText(/\d+ Officials?/)
   await expect(page.locator('[data-level="barangay"]')).toContainText(/Barangay captains across Bukidnon's \d+ barangays/)
-  // single-row levels carry their description on the row and a coloured left marker
+  // single-row levels carry their description on the row
   await expect(page.locator('[data-level="provincial"]')).toContainText('governor and vice governor')
   // group rows are neutral cards: no coloured left edge
   const edges = await page
@@ -143,16 +145,19 @@ test('active filter pills: appear, remove with ×, URL follows, clear all', asyn
   await expect(page.getByLabel('Search by name')).toHaveValue('')
 })
 
-test('non-default term, sort and checkboxes become pills; × hit area is at least 40px', async ({ page }) => {
+test('non-default term, sort and checkboxes become pills; × has a 44px hit area', async ({ page }) => {
   await page.goto('/?status=all&sort=netWorth&dir=desc&saln=1&pw=1')
   await expect(page.getByTestId('filter-pill')).toHaveText([
     'Term: All', 'Sort by: Net worth', 'Order: Descending', 'Include province-wide officials', 'Only officials with SALN data',
   ])
+  // 28px button plus its ::before extension must give a >= 44px square target
   const hit = await page.getByRole('button', { name: /Remove filter: Term/ }).evaluate((e) => {
-    const r = e.getBoundingClientRect(); const a = getComputedStyle(e, '::before')
-    return Math.min(r.width + 2 * -parseFloat(a.inset || a.top), r.height)
+    const r = e.getBoundingClientRect()
+    const a = getComputedStyle(e, '::before')
+    return { w: Math.max(r.width, parseFloat(a.width)), h: Math.max(r.height, parseFloat(a.height)) }
   })
-  expect(hit).toBeGreaterThanOrEqual(28)
+  expect(hit.w).toBeGreaterThanOrEqual(44)
+  expect(hit.h).toBeGreaterThanOrEqual(44)
   await page.getByRole('button', { name: 'Remove filter: Term: All' }).click()
   await expect(page).not.toHaveURL(/status=/)
 })
@@ -204,4 +209,11 @@ test('on desktop the filter card is not collapsible', async ({ page }) => {
   await page.goto('/')
   await expect(page.getByTestId('filters-toggle')).toBeHidden()
   await expect(page.getByLabel('Municipality', { exact: true })).toBeVisible()
+})
+
+test('heading structure: level headers are h3, per-municipality rows are not headings', async ({ page }) => {
+  await page.goto('/')
+  await expect(page.locator('[data-level="municipal"] h3')).toHaveCount(1)
+  await expect(page.locator('[data-level="municipal"] [data-testid="group"] h3')).toHaveCount(0)
+  await expect(page.locator('[data-level="provincial"] h3')).toHaveCount(1)
 })

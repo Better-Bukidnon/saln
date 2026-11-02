@@ -21,7 +21,7 @@ const MailIcon = () => (
 
 const heading = 'mb-5 text-[0.8125rem] font-semibold uppercase tracking-[0.5px] text-white/65'
 const link =
-  'inline-flex min-h-11 items-center rounded text-[0.8125rem] text-white/80 transition-colors hover:text-white hover:underline lg:min-h-0'
+  'inline-flex min-h-11 items-center rounded text-[0.8125rem] text-white/80 transition-colors hover:text-white hover:underline lg:min-h-6'
 const social =
   'inline-flex h-11 w-11 items-center justify-center rounded-[10px] bg-white/10 text-white/80 transition-all hover:-translate-y-0.5 hover:bg-primary-500 hover:text-white motion-reduce:hover:translate-y-0 lg:h-10 lg:w-10'
 const pill =

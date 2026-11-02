@@ -18,7 +18,8 @@ export interface GroupedOfficials {
   former: OfficialGroup[]
 }
 
-const HEADS = /^(vice[ -])?governor$/i
+// Governor and vice governor, also acting / OIC; anchored so "Governor's Secretary" does not match.
+const HEADS = /^(?:(?:acting|oic|officer[- ]in[- ]charge)\s+)?(?:vice[ -])?governor$/i
 
 function build(officials: Official[], geo: Geo): OfficialGroup[] {
   const fixed: Record<'provincial' | 'sp' | 'house', OfficialGroup> = {

@@ -124,6 +124,7 @@ function GroupSet({
               salnByPerson={data.salnByPerson}
               defaultOpen={autoOpen || (!former && g.kind === 'provincial')}
               description={single ? desc[level] : undefined}
+              asHeading={single}
             />
           )
           // Provincial heads, board, House: the level is a single row that carries its own description.

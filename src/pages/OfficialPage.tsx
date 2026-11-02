@@ -79,13 +79,13 @@ export default function OfficialPage() {
           </Badge>
         </div>
         <dl className="mt-4 grid grid-cols-2 gap-3 sm:max-w-md">
-          <div className="rounded-lg bg-primary-50 p-3 text-center" data-testid="stat-records">
-            <dd className="text-xl font-bold tabular-nums text-primary-900 sm:text-2xl">{saln?.length ?? 0}</dd>
-            <dt className="text-xs font-medium text-primary-800 sm:text-sm">{t('statRecords')}</dt>
+          <div className="flex flex-col rounded-lg bg-primary-50 p-3 text-center" data-testid="stat-records">
+            <dt className="order-2 text-xs font-medium text-primary-800 sm:text-sm">{t('statRecords')}</dt>
+            <dd className="order-1 text-xl font-bold tabular-nums text-primary-900 sm:text-2xl">{saln?.length ?? 0}</dd>
           </div>
-          <div className="rounded-lg bg-primary-50 p-3 text-center" data-testid="stat-latest">
-            <dd className="text-xl font-bold tabular-nums text-primary-900 sm:text-2xl">{latest ? latest.year : '\u2014'}</dd>
-            <dt className="text-xs font-medium text-primary-800 sm:text-sm">{t('statLatestYear')}</dt>
+          <div className="flex flex-col rounded-lg bg-primary-50 p-3 text-center" data-testid="stat-latest">
+            <dt className="order-2 text-xs font-medium text-primary-800 sm:text-sm">{t('statLatestYear')}</dt>
+            <dd className="order-1 text-xl font-bold tabular-nums text-primary-900 sm:text-2xl">{latest ? latest.year : '\u2014'}</dd>
           </div>
         </dl>
         <h3 className="mb-2 mt-5 text-base font-semibold text-gray-900">{t('termsHeading')}</h3>

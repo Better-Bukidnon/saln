@@ -31,6 +31,7 @@ export default function OfficialGroupSection({
   salnByPerson,
   defaultOpen,
   description,
+  asHeading = true,
 }: {
   group: OfficialGroup
   geo: Geo
@@ -38,12 +39,15 @@ export default function OfficialGroupSection({
   defaultOpen: boolean
   /** One-line level description, shown under the row title when this row is the whole level. */
   description?: string
+  /** Rows that are the whole level are an h3; per-municipality rows sit under a level h3 and are plain text. */
+  asHeading?: boolean
 }) {
   const t = useT()
   const [open, setOpen] = useState(defaultOpen)
   const panelId = useId()
   const descId = useId()
-  const lguName = group.code ? (nodeByCode(geo, group.code)?.name ?? '') : ''
+  // Unknown LGU (not in geo): fall back to its code, never an empty title.
+  const lguName = group.code ? (nodeByCode(geo, group.code)?.name ?? group.code) : t('unknownLgu')
   const title =
     group.kind === 'provincial'
       ? t('groupProvincial')
@@ -55,11 +59,12 @@ export default function OfficialGroupSection({
             ? lguName
             : t('groupBarangays', { lgu: lguName })
   const n = group.officials.length
+  const Wrap = asHeading ? 'h3' : 'div'
   return (
     <li data-testid="group" data-group={group.key}>
       <div className="rounded-xl border border-gray-200 bg-white shadow-sm">
         <div className={`bg-gray-50 ${open ? 'rounded-t-xl border-b border-gray-200' : 'rounded-xl'}`}>
-          <h3>
+          <Wrap>
             <button
               type="button"
               aria-expanded={open}
@@ -74,22 +79,24 @@ export default function OfficialGroupSection({
                 {n === 1 ? t('groupCount.one') : t('groupCount.other', { n })}
               </Badge>
             </button>
-          </h3>
+          </Wrap>
           {description && (
             <p id={descId} className="-mt-2 pb-3 pl-12 pr-4 text-sm text-gray-600 sm:pl-14 sm:pr-5">
               {description}
             </p>
           )}
         </div>
-        {open && (
-          <div id={panelId} className="p-3 sm:p-4">
+        {/* The panel element always exists so aria-controls is valid; its cards are mounted only while
+            open (942 cards would otherwise be in the DOM), so in-page find only sees open groups. */}
+        <div id={panelId} hidden={!open} className="p-3 sm:p-4">
+          {open && (
             <ul className="grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-6 lg:grid-cols-3">
               {group.officials.map((o) => (
                 <OfficialCard key={o.id} official={o} saln={salnByPerson.get(o.personId)} geo={geo} />
               ))}
             </ul>
-          </div>
-        )}
+          )}
+        </div>
       </div>
     </li>
   )

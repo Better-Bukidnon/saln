@@ -260,7 +260,7 @@ export default function FilterBar({
           <button
             type="button"
             onClick={() => onChange({ ...defaultFilters })}
-            className="inline-flex h-8 items-center rounded-full bg-accent-100 px-3 text-xs font-semibold text-accent-800 transition-colors hover:bg-accent-200"
+            className="inline-flex h-11 items-center rounded-full bg-accent-100 px-3 text-xs font-semibold text-accent-800 transition-colors hover:bg-accent-200 md:h-9"
           >
             {t('clearAll')}
           </button>

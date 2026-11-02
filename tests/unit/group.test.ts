@@ -88,4 +88,15 @@ describe('groupOfficials', () => {
     expect(r.current.map((g) => g.kind)).toEqual(['barangay'])
     expect(ids(r.current[0])).toEqual(['lost'])
   })
+  it('treats acting and OIC governors as provincial heads, but not other governor-related titles', () => {
+    const acting = off('ag', 'province', P, 'Acting Governor')
+    const oic = off('oic', 'province', P, 'OIC Vice Governor')
+    const actVg = off('avg', 'province', P, 'acting vice-governor')
+    const sec = off('sec', 'province', P, "Governor's Secretary")
+    const r = groupOfficials([acting, oic, actVg, sec], geo, today)
+    expect(r.current.map((g) => [g.key, g.officials.map((o) => o.id)])).toEqual([
+      ['provincial', ['ag', 'oic', 'avg']],
+      ['sp', ['sec']],
+    ])
+  })
 })

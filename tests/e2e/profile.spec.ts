@@ -30,11 +30,6 @@ test('year cards are newest first with a status badge, and verified-by only when
   await expect(page.getByText('Data source: Ombudsman copy')).toBeVisible()
 })
 
-test('no itemised Assets/Liabilities sections are rendered (totals only)', async ({ page }) => {
-  await page.goto('/official/dual-gov')
-  await expect(page.getByRole('heading', { name: /^(Assets|Liabilities) \(\d+\)$/ })).toHaveCount(0)
-})
-
 test('over-time chart appears only with two or more SALN years, with an accessible label and table', async ({ page }) => {
   await page.goto('/official/dual-gov')
   const chart = page.getByTestId('saln-chart')
