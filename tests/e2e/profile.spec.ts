@@ -71,3 +71,10 @@ test('about page has its sections and the submit link', async ({ page }) => {
   )
   await expect(page.getByText('Aggregator, not the original source; not an official government website.')).toBeVisible()
 })
+
+test('unsafe source scheme is not rendered as a link', async ({ page }) => {
+  await page.goto('/official/unsafe-person')
+  await expect(page.getByText('Source link unavailable')).toBeVisible()
+  await expect(page.getByRole('table').getByRole('link')).toHaveCount(0)
+  await expect(page.locator('a[href^="javascript:" i]')).toHaveCount(0)
+})

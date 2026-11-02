@@ -68,6 +68,7 @@ const strings = {
     under_review: 'Under review',
     flagged: 'Flagged for review',
   },
+  sourceUnavailable: 'Source link unavailable',
   verifiedBy: (by: string, on: string) => `Verified by ${by} on ${on}`,
   present: 'present',
   termRange: (start: string, end: string) => `${start} to ${end}`,

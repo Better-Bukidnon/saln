@@ -1,5 +1,6 @@
 import { formatPeso } from '../lib/money'
 import strings from '../lib/strings'
+import { safeHref } from '../lib/url'
 import type { SalnRecord } from '../lib/types'
 
 export default function SalnTable({ records }: { records: SalnRecord[] }) {
@@ -30,9 +31,13 @@ export default function SalnTable({ records }: { records: SalnRecord[] }) {
                 <strong>{formatPeso(r.netWorth)}</strong>
               </td>
               <td>
-                <a href={r.sourceUrl} target="_blank" rel="noopener noreferrer">
-                  {strings.sourceTypes[r.sourceType]}
-                </a>
+                {safeHref(r.sourceUrl) ? (
+                  <a href={r.sourceUrl} target="_blank" rel="noopener noreferrer">
+                    {strings.sourceTypes[r.sourceType]}
+                  </a>
+                ) : (
+                  <span>{strings.sourceUnavailable}</span>
+                )}
               </td>
               <td>
                 <span>{strings.salnStatuses[r.status]}</span>

@@ -2,6 +2,7 @@ import { existsSync, readdirSync, readFileSync } from 'node:fs'
 import { join, resolve } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { netWorthMatches } from '../src/lib/money'
+import { safeHref } from '../src/lib/url'
 import type { Geo, Official, SalnRecord } from '../src/lib/types'
 
 function readJsonDir<T>(dir: string): { file: string; value: T }[] {
@@ -58,6 +59,9 @@ export function validateData(dir: string, opts: { strictGeoCounts?: boolean } = 
       errors.push(`saln/${file}: orphan-personId: no official with personId ${r.personId}`)
     }
     if (!r.sourceUrl) errors.push(`saln/${file}: missing-sourceUrl: sourceUrl is required`)
+    else if (!safeHref(r.sourceUrl)) {
+      errors.push(`saln/${file}: bad-source-url: record ${r.id} sourceUrl must be an http(s) URL`)
+    }
     if (!r.status) errors.push(`saln/${file}: missing-status: status is required`)
     if (!netWorthMatches(r)) {
       errors.push(`saln/${file}: net-worth-mismatch: netWorth must equal totalAssets - totalLiabilities`)

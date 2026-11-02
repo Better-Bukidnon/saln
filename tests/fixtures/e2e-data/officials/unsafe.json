@@ -1,0 +1,12 @@
+{
+  "id": "unsafe-person",
+  "personId": "unsafe-person",
+  "name": "Unsafe Link Person",
+  "position": "Board Member",
+  "level": "province",
+  "geoCode": "1001300000",
+  "termStart": "2025-06-30",
+  "termEnd": "2028-06-30",
+  "rosterSource": "manual",
+  "rosterVerified": true
+}

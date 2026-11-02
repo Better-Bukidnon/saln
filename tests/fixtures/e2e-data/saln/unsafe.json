@@ -1,0 +1,12 @@
+{
+  "id": "unsafe-2024",
+  "personId": "unsafe-person",
+  "year": 2024,
+  "filingType": "annual",
+  "totalAssets": 100,
+  "totalLiabilities": 0,
+  "netWorth": 100,
+  "sourceType": "submitted",
+  "sourceUrl": "javascript:alert(1)",
+  "status": "submitted"
+}

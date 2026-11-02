@@ -1,0 +1,12 @@
+{
+  "id": "s1",
+  "personId": "p1",
+  "year": 2024,
+  "filingType": "annual",
+  "totalAssets": 16366487.45,
+  "totalLiabilities": 6507000,
+  "netWorth": 9859487.45,
+  "sourceType": "ombudsman",
+  "status": "submitted",
+  "sourceUrl": "javascript:alert(1)"
+}

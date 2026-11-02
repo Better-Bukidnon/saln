@@ -13,6 +13,10 @@ const cases: [string, string][] = [
   ['duplicate-saln', 'duplicate-saln'],
   ['term-reversed', 'term-order'],
   ['orphan-person', 'orphan-personId'],
+  ['bad-source-url-javascript', 'bad-source-url'],
+  ['bad-source-url-data', 'bad-source-url'],
+  ['bad-source-url-garbage', 'bad-source-url'],
+  ['bad-source-url-mixedcase', 'bad-source-url'],
 ]
 
 describe('validateData', () => {
