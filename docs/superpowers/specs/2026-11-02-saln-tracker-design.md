@@ -77,7 +77,7 @@ no signatures, no ID numbers.
 
 ## 5. Data sources, verified during design
 
-- **Geography:** PSA PSGC masterlist (Bukidnon 1013; 2 cities, 20 municipalities, 464
+- **Geography:** PSA PSGC masterlist (Bukidnon 1001300000 (region 10, province 013); 2 cities, 20 municipalities, 464
   barangays). Municipality boundaries from `bettergovph/officials-network-graph`
   (`public/data/geo/cities/bukidnon.json.gz`, PSGC 2023).
 - **Roster:** Dynasties API `https://officials.bettergov.ph/api/v1` (Open Halalan, derived

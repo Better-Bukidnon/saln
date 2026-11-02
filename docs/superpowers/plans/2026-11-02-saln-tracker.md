@@ -14,7 +14,7 @@
 
 - Project folder: `/Users/ict/Documents/Personal_Projects/kode-projects/saln-bukidnon` (own git repo). Main site repo is `.../betterbukidnon`.
 - No Firebase, no backend, no user uploads. Zero hosting cost.
-- Bukidnon PSGC province code `1013000000`; 2 cities, 20 municipalities, 464 barangays.
+- Bukidnon PSGC province code `1001300000`; 2 cities, 20 municipalities, 464 barangays.
 - Store declared totals only. No addresses, spouse/children details, signatures or ID numbers.
 - `netWorth` must equal `totalAssets - totalLiabilities` to the centavo (compare `Math.round(x*100)`). Net worth may be negative.
 - A SALN record needs `sourceUrl` and `status`; nothing is `verified` without `verifiedBy` and `verifiedAt`.
@@ -62,9 +62,9 @@ tests/unit/*.test.ts, tests/e2e/*.spec.ts, tests/fixtures/
 - Test: `tests/unit/config.test.ts`
 
 **Interfaces:**
-- Produces: `portalConfig` (default export of `portal.config.ts`) with `{ provinceName: 'Bukidnon'; provincePsgc: '1013000000'; disclaimer: string; ombudsmanRequestUrl: 'https://www.ombudsman.gov.ph/request-for-copy-of-salns/'; mainSiteUrl: 'https://betterbukidnon.org' }`. npm scripts: `dev`, `build`, `test` (vitest run), `lint`, `validate-data`, `e2e`.
+- Produces: `portalConfig` (default export of `portal.config.ts`) with `{ provinceName: 'Bukidnon'; provincePsgc: '1001300000'; disclaimer: string; ombudsmanRequestUrl: 'https://www.ombudsman.gov.ph/request-for-copy-of-salns/'; mainSiteUrl: 'https://betterbukidnon.org' }`. npm scripts: `dev`, `build`, `test` (vitest run), `lint`, `validate-data`, `e2e`.
 
-- [ ] **Step 1: Write the failing test** `config.test.ts`: `portalConfig.provincePsgc === '1013000000'`, `ombudsmanRequestUrl` equals the URL above, `disclaimer` contains "not an official government website".
+- [ ] **Step 1: Write the failing test** `config.test.ts`: `portalConfig.provincePsgc === '1001300000'`, `ombudsmanRequestUrl` equals the URL above, `disclaimer` contains "not an official government website".
 - [ ] **Step 2: Run** `npm test` (after `git init` and scaffolding with `npm create vite@latest . -- --template react-ts`, then adding vitest, react-router, eslint, playwright, tsx). Expected: FAIL, `portal.config.ts` missing.
 - [ ] **Step 3: Implement** `portal.config.ts`; wire `wrangler.jsonc` for static assets with SPA fallback (unknown paths → `index.html`), copying the shape of `Better-Bukidnon/budget`'s `wrangler.jsonc`; CI workflow runs `lint`, `test`, `validate-data`, `build`.
 - [ ] **Step 4: Run** `npm test && npm run build`. Expected: PASS, `dist/` produced.
@@ -104,7 +104,7 @@ tests/unit/*.test.ts, tests/e2e/*.spec.ts, tests/fixtures/
 
 **Interfaces:**
 - Consumes: `GeoNode` from Task 2.
-- Produces: `buildGeo(csvText: string): GeoNode[]`, keeping rows whose 10-digit code starts with `1013`, mapping the "Geographic Level" values `Prov`→province, `City`→city, `Mun`→municipality, `Bgy`→barangay, with `parent` set from the code hierarchy. CLI: `tsx scripts/build-geo.ts <psgc.csv>` writes `data/geo.json`. `geo.ts`: `type Geo = { nodes: GeoNode[] }`, `lgus(geo): GeoNode[]` (cities+municipalities, sorted by name), `barangaysOf(geo, lguCode: string): GeoNode[]`, `nodeByCode(geo, code: string): GeoNode | undefined`.
+- Produces: `buildGeo(csvText: string): GeoNode[]`, keeping rows whose 10-digit code starts with `10013`, mapping the "Geographic Level" values `Prov`→province, `City`→city, `Mun`→municipality, `Bgy`→barangay, with `parent` set from the code hierarchy. CLI: `tsx scripts/build-geo.ts <psgc.csv>` writes `data/geo.json`. `geo.ts`: `type Geo = { nodes: GeoNode[] }`, `lgus(geo): GeoNode[]` (cities+municipalities, sorted by name), `barangaysOf(geo, lguCode: string): GeoNode[]`, `nodeByCode(geo, code: string): GeoNode | undefined`.
 - The user must supply the PSA PSGC masterlist export as CSV (download from https://psa.gov.ph/classification/psgc/, save the sheet as CSV). Check the real column names against the file and adjust the parser, since the fixture only mimics them.
 
 - [ ] **Step 1: Write failing tests.** With the fixture (province row, 2 LGUs, 2 barangays each including a "Poblacion" in both): `buildGeo` returns 1 province, 2 LGUs, 4 barangays, each barangay's `parent` is its LGU; non-Bukidnon rows are dropped. `geo.test.ts`: `barangaysOf` returns only that LGU's barangays (the two "Poblacion" have different codes); `nodeByCode('bogus')` undefined.
