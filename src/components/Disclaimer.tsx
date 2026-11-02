@@ -1,9 +1,9 @@
 import { useT } from '../lib/i18n'
 
-export default function Disclaimer({ textClass = 'text-gray-700' }: { textClass?: string }) {
+export default function Disclaimer({ textClass = 'text-gray-700', size = 'text-sm' }: { textClass?: string; size?: string }) {
   const t = useT()
   return (
-    <p className={`text-sm ${textClass}`} role="note">
+    <p className={`${size} ${textClass}`} role="note">
       {t('disclaimer')}
     </p>
   )

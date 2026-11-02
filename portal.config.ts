@@ -15,6 +15,8 @@ const portalConfig = {
   betterGovSalnUrl: 'https://saln.bettergov.ph/',
   openHalalanUrl: 'https://robertrleung.github.io/OpenHalalan/',
   designCreditUrl: 'https://github.com/JHNLWHD/saln-tracker-ph',
+  openDataUrl: 'https://data.gov.ph',
+  foiUrl: 'https://www.foi.gov.ph/',
   ombudsmanUrl: 'https://www.ombudsman.gov.ph/',
 } as const
 

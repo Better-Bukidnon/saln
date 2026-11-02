@@ -314,3 +314,41 @@ test('the language menu opens, selects, closes on Escape and outside click, and 
   const overflow = await page.evaluate(() => document.documentElement.scrollWidth - window.innerWidth)
   expect(overflow).toBeLessThanOrEqual(0)
 })
+
+test('footer content is aligned with the page container at 1280', async ({ page }) => {
+  await page.setViewportSize({ width: 1280, height: 900 })
+  await page.goto('/')
+  const left = (sel: string) => page.locator(sel).first().evaluate((e) => e.getBoundingClientRect().left)
+  const brand = await left('[data-testid="footer-brand"]')
+  const pageLeft = await left('main > div')
+  expect(Math.abs(brand - pageLeft)).toBeLessThanOrEqual(1)
+  expect(brand).toBeGreaterThan(16)
+})
+
+test('footer columns follow 1.5fr 1fr 1fr 1fr and bottom bar is one row on desktop', async ({ page }) => {
+  await page.setViewportSize({ width: 1280, height: 900 })
+  await page.goto('/')
+  const w = await page.locator('footer [data-testid^="footer-"]:not([data-testid="footer-bottom"]):not([data-testid="footer-version"])').evaluateAll((els) => els.map((e) => e.getBoundingClientRect().width))
+  expect(w[0] / w[1]).toBeGreaterThan(1.3)
+  expect(w[0] / w[1]).toBeLessThan(1.7)
+  const bar = page.getByTestId('footer-bottom')
+  const ys = await bar.locator('> div > *, > span').evaluateAll((els) => els.map((e) => Math.round(e.getBoundingClientRect().top)))
+  expect(Math.max(...ys) - Math.min(...ys)).toBeLessThanOrEqual(2)
+  const version = page.getByTestId('footer-version')
+  await expect(version).toHaveText(/^Ver\. \d+\.\d+\.\d+/)
+  const vb = await version.boundingBox()
+  const bb = await bar.boundingBox()
+  expect(vb!.x + vb!.width).toBeGreaterThan(bb!.x + bb!.width - 4)
+  await expect(page.getByText('Aggregator, not the original source; not an official government website.')).toHaveCount(1)
+  await expect(page.getByTestId('footer-contribute')).toContainText('₱0')
+})
+
+test('footer partner logo is 54px tall and every footer text is AA on the dark background', async ({ page }) => {
+  await page.setViewportSize({ width: 1280, height: 900 })
+  await page.goto('/')
+  const h = await page.locator('footer img[src="/bettergov-footer.svg"]').evaluate((e) => e.getBoundingClientRect().height)
+  expect(Math.round(h)).toBe(54)
+  for (const sel of ['footer h2', '[data-testid="footer-bottom"] span', '[data-testid="footer-brand"] p']) {
+    expect(await contrastOf(page, sel, ['rgb(26, 26, 26)', 'rgb(17, 17, 17)']), sel).toBeGreaterThanOrEqual(4.5)
+  }
+})

@@ -116,3 +116,7 @@ The issue form is `.github/ISSUE_TEMPLATE/submit-saln.yml`. The GitHub label `sa
 - `public/logo.svg`, `public/logo-white.svg`, `public/favicon.svg`, `public/favicon.ico` and `public/bettergov-footer.svg` are copied unchanged from the BetterBukidnon site (`betterbukidnon/assets/images/logo/`: `better-bukidnon-logo.svg`, `better-bukidnon-logo-white.svg`, `favicon.svg`, `favicon.ico`, `bettergov-footer.svg`). That repository is dual-licensed MIT (code) and CC BY 4.0 (content, including images); the logo files carry their own notes inside (province outline from OpenStreetMap, ODbL 1.0; wordmark Inter Display, SIL OFL 1.1). `bettergov-footer.svg` is the BetterGov.ph partner mark that the main site displays in its footer; it stays the property of BetterGov.ph and is used here only to credit the partner.
 - Roster data derives from Open Halalan (Leung), CC0 1.0, via the BetterGov Dynasties API. The SALN Tracker PH project (MIT) is the design reference, and logos and the BetterGov mark are BetterBukidnon assets, as described above.
 - Layout and styling follow [SALN Tracker PH](https://github.com/JHNLWHD/saln-tracker-ph) (MIT) and the BetterBukidnon site's design tokens.
+
+## License
+
+The code is released under the MIT license (see `LICENSE`). Data comes from public sources named in "Data sources" and is always linked back to them; this repository does not claim a licence over those sources. The footer shows the app version from `package.json` ("Ver. x.y.z", injected at build time).

@@ -19,13 +19,14 @@ const MailIcon = () => (
   </svg>
 )
 
-const heading = 'mb-3 text-[0.8125rem] font-semibold uppercase tracking-wide text-white/75'
+const heading = 'mb-5 text-[0.8125rem] font-semibold uppercase tracking-[0.5px] text-white/65'
 const link =
-  'inline-flex min-h-11 items-center rounded text-sm text-white/85 transition-colors hover:text-white hover:underline lg:min-h-8'
+  'inline-flex min-h-11 items-center rounded text-[0.8125rem] text-white/80 transition-colors hover:text-white hover:underline lg:min-h-0'
 const social =
-  'inline-flex h-11 w-11 items-center justify-center rounded-full bg-white/10 text-white/90 transition-colors hover:bg-primary-500 hover:text-white'
+  'inline-flex h-11 w-11 items-center justify-center rounded-[10px] bg-white/10 text-white/80 transition-all hover:-translate-y-0.5 hover:bg-primary-500 hover:text-white motion-reduce:hover:translate-y-0 lg:h-10 lg:w-10'
 const pill =
-  'inline-flex min-h-11 items-center gap-2 rounded-full bg-white/10 px-4 text-sm text-white/90 transition-colors hover:bg-white/20 hover:text-white'
+  'inline-flex min-h-11 items-center gap-2 rounded-full bg-white/5 px-4 py-2 text-[0.8125rem] text-white/80 transition-colors hover:bg-white/10 hover:text-white'
+const credit = 'rounded font-medium text-white/85 underline underline-offset-2 hover:text-white'
 const ext = { target: '_blank', rel: 'noopener noreferrer' } as const
 
 export default function Footer() {
@@ -33,10 +34,10 @@ export default function Footer() {
   return (
     <footer className="mt-12 bg-linear-to-b from-ink to-ink-deep text-white sm:mt-16">
       <div className="container mx-auto px-3 sm:px-4 lg:px-8">
-        <div className="grid grid-cols-1 gap-8 border-b border-white/10 py-10 sm:grid-cols-2 sm:gap-10 lg:grid-cols-[1.5fr_1fr_1fr_1fr] lg:gap-12 lg:py-14">
-          <section className="sm:col-span-2 lg:col-span-1" data-testid="footer-brand">
+        <div className="grid grid-cols-1 gap-8 border-b border-white/10 pb-8 pt-10 text-center sm:grid-cols-2 sm:gap-10 sm:text-left lg:grid-cols-[1.5fr_1fr_1fr_1fr] lg:gap-12 lg:pb-10 lg:pt-[60px]">
+          <section className="flex flex-col items-center sm:col-span-2 sm:items-start lg:col-span-1 lg:max-w-xs" data-testid="footer-brand">
             <img src="/logo-white.svg" alt={t('logoAlt')} className="mb-4 h-14 w-auto" />
-            <p className="mb-6 max-w-xs text-sm leading-relaxed text-white/80">{t('footerTagline')}</p>
+            <p className="mb-6 max-w-sm text-sm leading-relaxed text-white/70">{t('footerTagline')}</p>
             <div className="flex gap-3">
               <a className={social} href={REPO_URL} {...ext} aria-label={t('footerGithubLabel')}>
                 <GithubIcon />
@@ -46,26 +47,29 @@ export default function Footer() {
               </a>
             </div>
           </section>
-          <section data-testid="footer-quick">
+          <section data-testid="footer-quick" className="flex flex-col items-center sm:items-start">
             <h2 className={heading}>{t('footerQuickLinks')}</h2>
             <ul>
               <li><Link className={link} to="/">{t('navHome')}</Link></li>
               <li><Link className={link} to="/about">{t('navAbout')}</Link></li>
-              <li><a className={link} href={portalConfig.mainSiteUrl} {...ext}>{t('footerMainSite')}</a></li>
               <li><a className={link} href={portalConfig.ombudsmanRequestUrl} {...ext}>{t('footerRequestSaln')}</a></li>
+              <li><a className={link} href={portalConfig.submitUrl} {...ext}>{t('footerSubmit')}</a></li>
+              <li><a className={link} href={portalConfig.mainSiteUrl} {...ext}>{t('footerMainSite')}</a></li>
             </ul>
           </section>
-          <section data-testid="footer-resources">
+          <section data-testid="footer-resources" className="flex flex-col items-center sm:items-start">
             <h2 className={heading}>{t('footerResources')}</h2>
             <ul>
               <li><a className={link} href={portalConfig.openHalalanUrl} {...ext}>{t('footerOpenHalalan')}</a></li>
               <li><a className={link} href={portalConfig.betterGovSalnUrl} {...ext}>{t('footerBetterGovSaln')}</a></li>
               <li><a className={link} href={portalConfig.designCreditUrl} {...ext}>{t('footerDesignLink')}</a></li>
               <li><a className={link} href={portalConfig.ombudsmanUrl} {...ext}>{t('footerOmbudsman')}</a></li>
+              <li><a className={link} href={portalConfig.openDataUrl} {...ext}>{t('footerOpenData')}</a></li>
+              <li><a className={link} href={portalConfig.foiUrl} {...ext}>{t('footerFoi')}</a></li>
             </ul>
           </section>
-          <section data-testid="footer-contribute" className="flex flex-col items-start gap-3">
-            <p className="inline-flex items-center gap-1.5 rounded-md bg-success/15 px-3 py-1.5 text-xs text-white/90">
+          <section data-testid="footer-contribute" className="flex flex-col items-center gap-3 sm:items-start">
+            <p className="inline-flex items-center gap-1.5 rounded-md bg-success/15 px-3 py-1.5 text-xs text-white/80">
               {t('footerCostPrefix')} <span className="font-bold text-success-light">{'₱'}0</span>
             </p>
             <a className={pill} href={VOLUNTEER_MAIL}>
@@ -76,27 +80,27 @@ export default function Footer() {
               <GithubIcon />
               {t('footerContribute')}
             </a>
-            <a href={portalConfig.betterGovUrl} {...ext} className="mt-1 inline-flex rounded opacity-90 transition-opacity hover:opacity-100">
-              <img src="/bettergov-footer.svg" alt={t('footerPartnerAlt')} className="h-16 w-auto" loading="lazy" />
+            <a href={portalConfig.betterGovUrl} {...ext} className="mt-1 inline-flex rounded opacity-60 transition-opacity hover:opacity-100 focus-visible:opacity-100">
+              <img src="/bettergov-footer.svg" alt={t('footerPartnerAlt')} width={120} height={28} className="block h-[54px] w-auto" loading="lazy" />
             </a>
           </section>
         </div>
-        <div className="space-y-3 py-6 text-[0.8125rem] text-white/75">
-          <div className="flex flex-wrap items-center gap-x-2 gap-y-1">
-            <span className="text-white/85">{t('footerCopyright', { year: new Date().getFullYear() })}</span>
-            <span aria-hidden="true">&middot;</span>
+        <div className="flex flex-col items-center gap-x-4 gap-y-2 py-6 text-center text-[0.8125rem] text-white/70 lg:flex-row lg:items-center lg:text-left" data-testid="footer-bottom">
+          <div className="flex flex-col items-center gap-x-3 gap-y-1 lg:flex-row lg:flex-wrap">
+            <span className="text-white/80">{t('footerCopyright', { year: new Date().getFullYear() })}</span>
             <span>{t('footerLicense')}</span>
+            <Disclaimer textClass="text-white/70" size="text-[0.8125rem]" />
           </div>
-          <Disclaimer textClass="text-white/80" />
-          <p>
-            {t('footerBuiltBy')}{' '}
-            <a className="rounded font-medium text-white underline underline-offset-2" href={portalConfig.mainSiteUrl} {...ext}>BetterBukidnon</a>
-            {' '}&middot;{' '}
-            <a className="rounded font-medium text-white underline underline-offset-2" href={portalConfig.betterGovUrl} {...ext}>BetterGov.ph</a>
-            {' '}&middot; {t('footerDesignBy')}{' '}
-            <a className="rounded font-medium text-white underline underline-offset-2" href={portalConfig.designCreditUrl} {...ext}>{t('footerDesignLink')}</a>
-          </p>
+          <span data-testid="footer-version" className="lg:ml-auto lg:whitespace-nowrap">{t('footerVersion', { v: __APP_VERSION__ })}</span>
         </div>
+        <p className="pb-6 text-center text-xs text-white/65 lg:text-left">
+          {t('footerBuiltBy')}{' '}
+          <a className={credit} href={portalConfig.mainSiteUrl} {...ext}>BetterBukidnon</a>
+          {' '}&middot;{' '}
+          <a className={credit} href={portalConfig.betterGovUrl} {...ext}>BetterGov.ph</a>
+          {' '}&middot; {t('footerDesignBy')}{' '}
+          <a className={credit} href={portalConfig.designCreditUrl} {...ext}>{t('footerDesignLink')}</a>
+        </p>
       </div>
     </footer>
   )
