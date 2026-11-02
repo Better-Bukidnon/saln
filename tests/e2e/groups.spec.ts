@@ -108,14 +108,29 @@ test('level headers: h3 per level with description, total badge and neutral rows
   for (let i = 1; i < levels.length; i++) expect(levels[i] - levels[i - 1]).toBeLessThanOrEqual(1)
 })
 
-test('group header band is gray, holds the description, and sits above a white content area', async ({ page }) => {
+test('group header band encloses title, count and description, and is one colour', async ({ page }) => {
   await page.goto('/')
-  const row = group(page, 'provincial')
-  const band = row.locator('> div > div').first()
-  expect(await band.evaluate((e) => getComputedStyle(e).backgroundColor)).toMatch(/oklch\(0\.985|rgb\(249, 250, 251\)/)
-  const desc = row.getByText('The governor and vice governor of Bukidnon')
-  const [bb, db] = [await band.boundingBox(), await desc.boundingBox()]
-  expect(db!.y + db!.height).toBeLessThanOrEqual(bb!.y + bb!.height + 0.5)
+  const band = group(page, 'provincial').getByTestId('group-header')
+  const desc = group(page, 'provincial').getByTestId('group-description')
+  const bg = (l: typeof band) => l.evaluate((e) => getComputedStyle(e).backgroundColor)
+  expect(await bg(band)).toMatch(/oklch\(0\.985|rgb\(249, 250, 251\)/)
+  expect(await bg(desc)).toBe('rgba(0, 0, 0, 0)') // transparent: it sits on the band's own gray
+  const [bb, db, tb] = [await band.boundingBox(), await desc.boundingBox(), await band.getByRole('button').boundingBox()]
+  expect(db!.y).toBeGreaterThanOrEqual(bb!.y)
+  expect(db!.y + db!.height).toBeLessThanOrEqual(bb!.y + bb!.height + 0.5) // the description box (with its bottom padding) ends inside the band
+  expect(db!.x + db!.width).toBeLessThanOrEqual(bb!.x + bb!.width)
+  // no divider line: the gray band alone separates it from the white content
+  expect(await band.evaluate((e) => getComputedStyle(e).borderBottomWidth)).toBe('0px')
+  // the clickable/hover/focus area is the whole band, not just the title row
+  expect(tb!.height).toBeLessThan(bb!.height)
+  await desc.hover({ position: { x: 200, y: 10 }, force: true }) // over the description line, not the title row
+  await page.waitForTimeout(300)
+  expect(await bg(band)).toMatch(/oklch\(0\.96|rgb\(243, 244, 246\)/)
+  // the focus ring is drawn on the band and sits inside the card (not clipped)
+  await band.getByRole('button').focus()
+  await page.keyboard.press('Shift+Tab')
+  await page.keyboard.press('Tab')
+  expect(await band.evaluate((e) => getComputedStyle(e).outlineStyle)).toBe('solid')
 })
 
 test('active filter pills: appear, remove with ×, URL follows, clear all', async ({ page }) => {

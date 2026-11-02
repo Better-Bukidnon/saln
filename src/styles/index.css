@@ -91,6 +91,11 @@
   outline-offset: 2px;
 }
 
+/* A stretched button inside a clipped band hands its ring to the band (which draws it inset), so it is not cut off. */
+.band-button:focus-visible {
+  outline: none;
+}
+
 /* On the dark footer the ring must be light to stay visible. Unlayered and more specific. */
 footer :focus-visible {
   outline-color: var(--color-white);
