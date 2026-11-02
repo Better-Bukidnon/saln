@@ -24,6 +24,8 @@ export interface Official {
   rosterSource: 'openhalalan' | 'comelec' | 'dilg' | 'community' | 'manual'
   rosterVerified: boolean
   party?: string
+  /** Set only on the opt-in demo official (src/demo); carries its own visible labels. */
+  sample?: { badge: string; notice: string }
 }
 
 export interface SalnRecord {

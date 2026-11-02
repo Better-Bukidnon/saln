@@ -5,6 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
+    "dev:demo": "vite --mode demo --port 5199 --strictPort",
     "build": "tsc --noEmit && vite build",
     "validate-data": "tsx scripts/validate-data.ts",
     "typecheck": "tsc --noEmit",

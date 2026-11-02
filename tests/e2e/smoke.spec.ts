@@ -1,7 +1,7 @@
 // Smoke test against the REAL data in data/ (production build, no fixture alias).
 // Run by the `smoke` Playwright project (see playwright.config.ts). Nothing here
 // asserts a record is `verified`; real records are unverified by default.
-import { readFileSync } from 'node:fs'
+import { readdirSync, readFileSync } from 'node:fs'
 import { expect, test } from '@playwright/test'
 import portalConfig from '../../portal.config'
 import { formatPeso } from '../../src/lib/money'
@@ -99,5 +99,25 @@ test('the disclaimer appears exactly once on the list, a profile and About', asy
   for (const path of ['/', `/official/${profile.id}`, '/about']) {
     await page.goto(path)
     await expect(page.getByText(portalConfig.disclaimer)).toHaveCount(1)
+  }
+})
+
+test('the production build contains no demo or sample data', async () => {
+  const dir = new URL('../../dist/', import.meta.url)
+  const files: string[] = []
+  const walk = (d: URL) => {
+    for (const e of readdirSync(d, { withFileTypes: true })) {
+      const u = new URL(e.name + (e.isDirectory() ? '/' : ''), d)
+      if (e.isDirectory()) walk(u)
+      else if (/\.(js|css|html|json|txt|svg)$/.test(e.name)) files.push(readFileSync(u, 'utf8'))
+    }
+  }
+  walk(dir)
+  expect(files.length).toBeGreaterThan(0)
+  for (const f of files) {
+    expect(f).not.toContain('SAMPLE DATA')
+    expect(f).not.toContain('Juan Dela Cruz')
+    expect(f).not.toContain('Demo Maintainer')
+    expect(f).not.toContain('example.com/sample-saln')
   }
 })

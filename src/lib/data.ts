@@ -11,6 +11,11 @@ const salnFiles = import.meta.glob<SalnRecord | SalnRecord[]>('@data/saln/*.json
   import: 'default',
 })
 
+// Opt-in preview data (npm run dev:demo). The flag is a build-time constant, so a normal build
+// drops this branch together with the eagerly imported demo module.
+const demo =
+  import.meta.env.VITE_DEMO_DATA === '1' ? await import('../demo/sample-official') : undefined
+
 const flat = <T>(files: Record<string, T | T[]>): T[] =>
   Object.keys(files)
     .sort()
@@ -24,8 +29,9 @@ export function latestSaln(records: SalnRecord[] | undefined): SalnRecord | unde
 export function loadAll(): { geo: Geo; officials: Official[]; salnByPerson: Map<string, SalnRecord[]> } {
   const geo = Object.values(geoFiles)[0] ?? { nodes: [] }
   const officials = flat(officialFiles)
+  if (demo) officials.push(demo.sampleOfficial)
   const salnByPerson = new Map<string, SalnRecord[]>()
-  for (const r of flat(salnFiles)) {
+  for (const r of [...flat(salnFiles), ...(demo ? demo.sampleSaln : [])]) {
     const list = salnByPerson.get(r.personId)
     if (list) list.push(r)
     else salnByPerson.set(r.personId, [r])

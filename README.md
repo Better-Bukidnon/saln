@@ -120,3 +120,7 @@ The issue form is `.github/ISSUE_TEMPLATE/submit-saln.yml`. The GitHub label `sa
 ## License
 
 The code is released under the MIT license (see `LICENSE`). Data comes from public sources named in "Data sources" and is always linked back to them; this repository does not claim a licence over those sources. The footer shows the app version from `package.json` ("Ver. x.y.z", injected at build time).
+
+## Preview with demo data
+
+`npm run dev:demo` starts the dev server on port 5199 with `VITE_DEMO_DATA=1` (from `.env.demo`). It adds ONE obviously fake official, "Juan Dela Cruz (SAMPLE)" (Mayor of Baungon), with three made-up SALN years, so you can see a profile with the year cards, the over-time chart and the verified styling. The file is `src/demo/sample-official.ts`. **All of it is fake**: the source URL is a non-resolving example.com address and the profile shows a "SAMPLE DATA" banner. It is never part of `data/`, `npm run validate-data` ignores it, and a normal `npm run build` contains none of it (the smoke test scans `dist/` for it).

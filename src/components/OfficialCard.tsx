@@ -72,7 +72,14 @@ export default function OfficialCard({
           )}
         </p>
         <div className="mt-auto flex items-center justify-between gap-2">
-          <span>{!official.rosterVerified && <UnverifiedBadge />}</span>
+          <span className="flex flex-wrap gap-1.5">
+            {!official.rosterVerified && <UnverifiedBadge />}
+            {official.sample && (
+              <Badge variant="accent" size="sm" data-testid="sample-badge">
+                {official.sample.badge}
+              </Badge>
+            )}
+          </span>
           <span aria-hidden="true" className="text-sm font-medium text-primary-600">
             {t('viewProfile')} &rarr;
           </span>

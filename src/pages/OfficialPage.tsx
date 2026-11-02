@@ -58,6 +58,14 @@ export default function OfficialPage() {
           {t('back')}
         </Link>
       </p>
+      {o.sample && (
+        <p
+          data-testid="sample-banner"
+          className="rounded-xl border-2 border-dashed border-accent-700 bg-accent-100 px-4 py-3 text-sm font-semibold text-accent-900 sm:text-base"
+        >
+          {o.sample.notice}
+        </p>
+      )}
       <Card className="motion-safe:animate-slide-up">
         <div className="flex flex-wrap items-start justify-between gap-3">
           <div className="min-w-0">
