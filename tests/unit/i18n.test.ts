@@ -98,11 +98,25 @@ describe('persistence', () => {
   })
 })
 
+describe('page titles and the not-found page', () => {
+  it.each(LANGS)('%s has title and not-found strings, titles end with the site name', (lang) => {
+    for (const k of ['title.about', 'title.official', 'title.notFound']) {
+      expect(strings[lang][k], `${lang}.${k}`).toMatch(/SALN Tracker - Bukidnon$/)
+    }
+    expect(strings[lang]['title.official']).toContain('{name}')
+    for (const k of ['notFoundPage.title', 'notFoundPage.body', 'notFoundPage.home']) expect(strings[lang][k]).toBeTruthy()
+  })
+  it.each(LANGS)('%s About says the API describes its data as CC0, not that it is CC0', (lang) => {
+    expect(strings[lang]['aboutSourcesList.2']).toMatch(/Dynasties API/)
+    expect(strings[lang]['aboutSourcesList.2']).toMatch(/CC0/)
+    expect(strings[lang]['aboutSourcesList.2']).not.toMatch(/\(CC0\)/)
+  })
+})
+
 describe('applyLang', () => {
   it.each(LANGS)('sets document.documentElement.lang to %s', (lang) => {
-    const doc = { documentElement: { lang: '' }, title: '' }
+    const doc = { documentElement: { lang: '' } }
     applyLang(lang, doc)
     expect(doc.documentElement.lang).toBe(lang)
-    expect(doc.title).toBe(strings[lang].docTitle)
   })
 })

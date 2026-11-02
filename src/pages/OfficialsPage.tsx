@@ -8,7 +8,7 @@ import { filterOfficials, parseFilters, serializeFilters, sortOfficials } from '
 import type { Filters } from '../lib/filter'
 import { groupOfficials } from '../lib/group'
 import type { OfficialGroup } from '../lib/group'
-import { useT } from '../lib/i18n'
+import { useDocTitle, useT } from '../lib/i18n'
 import portalConfig from '../../portal.config'
 import { Badge } from '../components/ui/Badge'
 import { Card } from '../components/ui/Card'
@@ -17,6 +17,7 @@ const data = loadAll()
 
 export default function OfficialsPage() {
   const t = useT()
+  useDocTitle('docTitle')
   const [params, setParams] = useSearchParams()
   const filters = useMemo(() => parseFilters(params, data.geo), [params])
   const shown = useMemo(

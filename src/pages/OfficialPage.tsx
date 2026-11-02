@@ -9,7 +9,7 @@ import { Card } from '../components/ui/Card'
 import { latestSaln, loadAll } from '../lib/data'
 import { chartSeries } from '../lib/saln-view'
 import { nodeByCode } from '../lib/geo'
-import { useT } from '../lib/i18n'
+import { useDocTitle, useT } from '../lib/i18n'
 import type { TFn } from '../lib/i18n'
 import type { Geo, Official } from '../lib/types'
 import portalConfig from '../../portal.config'
@@ -31,6 +31,7 @@ export default function OfficialPage() {
   const t = useT()
   const { id } = useParams()
   const o = data.officials.find((x) => x.id === id)
+  useDocTitle(o ? 'title.official' : 'title.notFound', { name: o?.name ?? '' })
   const backLink = 'inline-flex min-h-11 items-center rounded-lg type-button text-primary-600 hover:text-primary-800'
   if (!o) {
     return (

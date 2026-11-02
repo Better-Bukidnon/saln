@@ -9,6 +9,7 @@ import UnverifiedBadge from './UnverifiedBadge'
 import { Badge } from './ui/Badge'
 import type { BadgeVariant } from './ui/Badge'
 import { Card } from './ui/Card'
+import { STATUS_VARIANT } from './SalnCards'
 
 export const LEVEL_VARIANT: Record<Level, BadgeVariant> = {
   province: 'primary',
@@ -61,16 +62,21 @@ export default function OfficialCard({
             {t(`levels.${official.level}`)}
           </Badge>
         </div>
-        <p className="rounded-lg bg-primary-50 p-3 type-meta text-primary-800">
+        <div className="rounded-lg bg-primary-50 p-3 type-meta text-primary-800">
           {latest ? (
             <>
-              <span>{t('netWorthYear', { year: latest.year })}: </span>
-              <strong className="block type-figure text-primary-900">{formatPeso(latest.netWorth, true)}</strong>
+              <p>
+                <span>{t('netWorthYear', { year: latest.year })}: </span>
+                <strong className="block type-figure text-primary-900">{formatPeso(latest.netWorth, true)}</strong>
+              </p>
+              <Badge variant={STATUS_VARIANT[latest.status]} size="sm" className="mt-2" data-testid="card-status-badge">
+                {t(`salnStatuses.${latest.status}`)}
+              </Badge>
             </>
           ) : (
-            t('noSaln')
+            <p>{t('noSaln')}</p>
           )}
-        </p>
+        </div>
         <div className="mt-auto flex items-center justify-between gap-2">
           <span className="flex flex-wrap gap-1.5">
             {!official.rosterVerified && <UnverifiedBadge />}
