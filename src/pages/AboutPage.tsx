@@ -7,7 +7,7 @@ import portalConfig from '../../portal.config'
 function Section({ title, children }: { title: string; children: ReactNode }) {
   return (
     <Card>
-      <h3 className="mb-3 text-lg font-semibold tracking-tight text-gray-900">{title}</h3>
+      <h3 className="mb-3 text-xl font-bold tracking-tight text-gray-900 sm:text-2xl">{title}</h3>
       <div className="space-y-3 text-gray-800">{children}</div>
     </Card>
   )
@@ -18,7 +18,7 @@ export default function AboutPage() {
   return (
     <div className="mx-auto max-w-3xl space-y-4 sm:space-y-6">
       <Card className="border-2 border-primary-200 bg-primary-50 motion-safe:animate-fade-in">
-        <h2 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 sm:text-3xl">{t('aboutHeading')}</h2>
+        <h2 className="mb-2 text-2xl font-bold leading-tight tracking-tight text-gray-900 sm:text-3xl lg:text-4xl lg:leading-10">{t('aboutHeading')}</h2>
         <p className="text-gray-800">{t('aboutBody')}</p>
       </Card>
       <Section title={t('aboutSources')}>

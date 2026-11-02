@@ -53,8 +53,8 @@ export default function OfficialPage() {
         </Link>
       </p>
       <Card className="motion-safe:animate-slide-up">
-        <h2 className="text-2xl font-bold tracking-tight text-gray-900 sm:text-3xl">{o.name}</h2>
-        <p className="mt-1 text-gray-700">
+        <h2 className="text-xl font-bold leading-tight tracking-tight text-gray-900 sm:text-2xl sm:leading-8 lg:text-3xl lg:leading-9">{o.name}</h2>
+        <p className="mt-1 text-sm text-gray-700 sm:text-base">
           {current.position}, {location(data.geo, current, t)}
         </p>
         <h3 className="mb-2 mt-5 text-base font-semibold text-gray-900">{t('termsHeading')}</h3>
@@ -69,7 +69,7 @@ export default function OfficialPage() {
         </ul>
       </Card>
       <section>
-        <h3 className="mb-3 text-xl font-bold tracking-tight text-gray-900">{t('salnHeading')}</h3>
+        <h3 className="mb-3 text-xl font-bold tracking-tight text-gray-900 sm:text-2xl">{t('salnHeading')}</h3>
         {saln?.length ? (
           <>
             <SalnTable records={saln} />

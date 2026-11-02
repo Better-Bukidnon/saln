@@ -49,23 +49,23 @@ export default function OfficialCard({
       >
         <div className="flex items-start justify-between gap-3">
           <div className="min-w-0">
-            <h4 className="text-lg font-semibold leading-tight text-gray-900">
+            <h4 className="text-lg font-bold leading-tight tracking-tight text-gray-900 sm:leading-7">
               <Link to={`/official/${official.id}`} className="rounded after:absolute after:inset-0 after:content-['']">
                 {official.name}
               </Link>
             </h4>
-            <p className="mt-1 text-sm text-gray-700">{official.position}</p>
-            <p className="text-sm text-gray-600">{location(geo, official, t)}</p>
+            <p className="mt-1 text-xs text-gray-700 sm:text-sm">{official.position}</p>
+            <p className="text-xs text-gray-600 sm:text-sm">{location(geo, official, t)}</p>
           </div>
           <Badge variant={LEVEL_VARIANT[official.level]} size="sm" className="shrink-0" data-testid="level-badge">
             {t(`levels.${official.level}`)}
           </Badge>
         </div>
-        <p className="rounded-lg bg-primary-50 p-3 text-sm text-primary-800">
+        <p className="rounded-lg bg-primary-50 p-3 text-xs font-medium text-primary-800 sm:text-sm">
           {latest ? (
             <>
               <span>{t('netWorthYear', { year: latest.year })}: </span>
-              <strong className="block text-lg font-bold text-primary-900">{formatPeso(latest.netWorth, true)}</strong>
+              <strong className="block text-base font-bold leading-5 text-primary-900 sm:text-xl sm:leading-7">{formatPeso(latest.netWorth, true)}</strong>
             </>
           ) : (
             t('noSaln')

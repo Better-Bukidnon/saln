@@ -11,7 +11,7 @@ const STATUSES: Status[] = ['current', 'former', 'all']
 const SORTS: SortKey[] = ['name', 'netWorth', 'assets', 'liabilities']
 const DIRS: Dir[] = ['asc', 'desc']
 
-const labelCls = 'text-sm font-semibold text-gray-700'
+const labelCls = 'text-sm font-bold text-gray-700'
 const controlCls =
   'select-chevron block min-h-11 w-full max-w-full rounded-lg border border-gray-500 bg-white px-3 py-2 text-sm text-ink transition-colors hover:border-primary-500 disabled:cursor-not-allowed disabled:border-gray-300 disabled:bg-gray-100 disabled:text-gray-500 disabled:hover:border-gray-300'
 const groupCls = 'min-w-0 space-y-3 rounded-lg border border-gray-200 bg-gray-50 p-3 sm:p-4'

@@ -37,14 +37,14 @@ export default function OfficialsPage() {
     <div className="space-y-6 sm:space-y-8">
       <section className="overflow-hidden rounded-xl bg-linear-to-br from-primary-500 to-primary-700 text-white shadow-md motion-safe:animate-fade-in">
         <div className="px-4 py-8 text-center sm:px-6 sm:py-12">
-          <h2 data-testid="hero-title" className="mb-3 text-2xl font-bold leading-tight tracking-tight sm:mb-4 sm:text-4xl">
+          <h2 data-testid="hero-title" className="mb-3 text-2xl font-bold leading-tight tracking-tight sm:mb-4 sm:text-4xl sm:leading-10">
             {t('heroTitle')}
           </h2>
           <p className="mx-auto mb-2 max-w-2xl text-base text-white sm:text-xl">{t('heroPurpose')}</p>
           <p data-testid="hero-summary" className="mx-auto mb-5 max-w-2xl text-sm leading-relaxed text-white sm:text-base">
             {t('heroSummary')}
           </p>
-          <p data-testid="hero-hashtags" className="inline-block rounded-lg border border-white/30 bg-white/10 px-4 py-2 text-sm font-semibold text-accent-300">
+          <p data-testid="hero-hashtags" className="inline-block rounded-lg border border-white/30 bg-white/10 px-4 py-2 text-xs font-medium text-accent-300 sm:text-sm">
             {portalConfig.hashtags}
           </p>
         </div>
@@ -113,7 +113,7 @@ function GroupSet({
   }
   return (
     <section aria-labelledby={`${id}-heading`} data-testid={`${id}-officials`} className="space-y-4">
-      <h2 id={`${id}-heading`} className="text-2xl font-bold tracking-tight text-gray-900 sm:text-3xl">
+      <h2 id={`${id}-heading`} className="text-xl font-bold tracking-tight text-gray-900 sm:text-2xl">
         {title}
       </h2>
       <div className="space-y-6">
@@ -138,7 +138,7 @@ function GroupSet({
             <div key={level} data-level={level} className="space-y-3">
               <div className={`flex items-start justify-between gap-3 border-l-4 py-1 pl-4 ${LEVEL_ACCENT[level] ?? ''}`}>
                 <div className="min-w-0">
-                  <h3 id={hid} className="text-lg font-bold text-gray-900 sm:text-xl">
+                  <h3 id={hid} className="text-base font-bold text-gray-900 sm:text-lg">
                     {titles[level]}
                   </h3>
                   <p className="text-sm text-gray-700">{desc[level]}</p>
