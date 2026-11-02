@@ -31,11 +31,11 @@ export default function OfficialPage() {
   const t = useT()
   const { id } = useParams()
   const o = data.officials.find((x) => x.id === id)
-  const backLink = 'inline-flex min-h-11 items-center rounded-lg font-medium text-primary-600 hover:text-primary-800'
+  const backLink = 'inline-flex min-h-11 items-center rounded-lg type-button text-primary-600 hover:text-primary-800'
   if (!o) {
     return (
       <Card>
-        <h2 className="text-xl font-bold text-gray-900">{t('notFound')}</h2>
+        <h2 className="type-section-title text-gray-900">{t('notFound')}</h2>
         <p className="mt-2 text-gray-700">{t('notFoundBody')}</p>
         <Link to="/" className={`${backLink} mt-2 underline underline-offset-2`}>
           {t('back')}
@@ -61,7 +61,7 @@ export default function OfficialPage() {
       {o.sample && (
         <p
           data-testid="sample-banner"
-          className="rounded-xl border-2 border-dashed border-accent-700 bg-accent-100 px-4 py-3 text-sm font-semibold text-accent-900 sm:text-base"
+          className="rounded-xl border-2 border-dashed border-accent-700 bg-accent-100 px-4 py-3 type-body font-semibold text-accent-900"
         >
           {o.sample.notice}
         </p>
@@ -69,8 +69,8 @@ export default function OfficialPage() {
       <Card className="motion-safe:animate-slide-up">
         <div className="flex flex-wrap items-start justify-between gap-3">
           <div className="min-w-0">
-            <h2 className="text-xl font-bold leading-tight tracking-tight text-gray-900 sm:text-2xl sm:leading-8 lg:text-3xl lg:leading-9">{o.name}</h2>
-            <p className="mt-1 text-sm text-gray-700 sm:text-base">
+            <h2 className="type-entity-title text-gray-900">{o.name}</h2>
+            <p className="mt-1 type-body text-gray-700">
               {current.position}, {location(data.geo, current, t)}
             </p>
           </div>
@@ -80,18 +80,18 @@ export default function OfficialPage() {
         </div>
         <dl className="mt-4 grid grid-cols-2 gap-3 sm:max-w-md">
           <div className="flex flex-col rounded-lg bg-primary-50 p-3 text-center" data-testid="stat-records">
-            <dt className="order-2 text-xs font-medium text-primary-800 sm:text-sm">{t('statRecords')}</dt>
-            <dd className="order-1 text-xl font-bold tabular-nums text-primary-900 sm:text-2xl">{saln?.length ?? 0}</dd>
+            <dt className="order-2 type-meta text-primary-800">{t('statRecords')}</dt>
+            <dd className="order-1 type-stat text-primary-900">{saln?.length ?? 0}</dd>
           </div>
           <div className="flex flex-col rounded-lg bg-primary-50 p-3 text-center" data-testid="stat-latest">
-            <dt className="order-2 text-xs font-medium text-primary-800 sm:text-sm">{t('statLatestYear')}</dt>
-            <dd className="order-1 text-xl font-bold tabular-nums text-primary-900 sm:text-2xl">{latest ? latest.year : '\u2014'}</dd>
+            <dt className="order-2 type-meta text-primary-800">{t('statLatestYear')}</dt>
+            <dd className="order-1 type-stat text-primary-900">{latest ? latest.year : '\u2014'}</dd>
           </div>
         </dl>
-        <h3 className="mb-2 mt-5 text-base font-semibold text-gray-900">{t('termsHeading')}</h3>
+        <h3 className="mb-2 mt-5 type-group-title text-gray-900">{t('termsHeading')}</h3>
         <ul aria-label={t('termsHeading')} className="space-y-2">
           {terms.map((term) => (
-            <li key={term.id} className="rounded-lg bg-gray-50 px-3 py-2 text-sm text-gray-800">
+            <li key={term.id} className="rounded-lg bg-gray-50 px-3 py-2 type-body-sm text-gray-800">
               <strong>{term.position}</strong>, {location(data.geo, term, t)}.{' '}
               {t('termRange', { start: term.termStart, end: term.termEnd ?? t('present') })}{' '}
               {!term.rosterVerified && <UnverifiedBadge />}
@@ -101,9 +101,9 @@ export default function OfficialPage() {
       </Card>
       <section aria-labelledby="saln-records-heading" className="space-y-4 sm:space-y-6">
         <div>
-          <h3 id="saln-records-heading" className="text-xl font-bold tracking-tight text-gray-900 sm:text-2xl">{t('salnHeading')}</h3>
+          <h3 id="saln-records-heading" className="type-section-title text-gray-900">{t('salnHeading')}</h3>
           {saln?.length ? (
-            <p className="text-xs text-gray-700 sm:text-sm">
+            <p className="type-body-sm text-gray-700">
               {saln.length === 1 ? t('recordsCount.one') : t('recordsCount.other', { n: saln.length })}
             </p>
           ) : null}
@@ -112,14 +112,14 @@ export default function OfficialPage() {
           <>
             {series && <SalnChart data={series} headingId="saln-chart-heading" />}
             <SalnCards records={saln} />
-            <p className="text-sm text-gray-700">{t('salnNote')}</p>
+            <p className="type-body-sm text-gray-700">{t('salnNote')}</p>
           </>
         ) : (
           <Card
             data-testid="empty-state"
             className="border-2 border-primary-200 bg-primary-50"
           >
-            <p className="text-lg text-gray-900">
+            <p className="type-lead text-gray-900">
               <strong>{t('noSaln')}</strong>
             </p>
             <p className="mt-2 text-gray-800">{t('requestExplain')}</p>

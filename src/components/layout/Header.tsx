@@ -3,7 +3,7 @@ import { useT } from '../../lib/i18n'
 import LanguageSwitcher from '../LanguageSwitcher'
 
 const navLink =
-  'inline-flex min-h-11 items-center rounded-lg px-2 text-xs font-medium text-ink sm:text-sm transition-colors hover:text-primary-500 aria-[current=page]:font-semibold aria-[current=page]:text-primary-500 sm:px-3'
+  'inline-flex min-h-11 items-center rounded-lg px-2 type-nav text-ink transition-colors hover:text-primary-500 aria-[current=page]:font-semibold aria-[current=page]:text-primary-500 sm:px-3'
 
 export default function Header() {
   const t = useT()
@@ -14,8 +14,8 @@ export default function Header() {
           <Link to="/" className="flex min-w-0 items-center gap-2 rounded-lg transition-opacity hover:opacity-80 sm:gap-4">
             <img src="/logo.svg" alt={t('logoAlt')} className="h-9 w-auto shrink-0 sm:h-12" />
             <div className="min-w-0">
-              <h1 className="truncate text-base font-bold leading-6 tracking-tight text-gray-900 sm:text-xl sm:leading-7">{t('siteTitle')}</h1>
-              <p className="truncate text-xs font-medium text-gray-600 sm:text-sm">{t('headerSubtitle')}</p>
+              <h1 className="truncate type-header-title text-gray-900">{t('siteTitle')}</h1>
+              <p className="truncate type-nav text-gray-600">{t('headerSubtitle')}</p>
             </div>
           </Link>
           <div className="ml-auto flex items-center gap-x-2 sm:gap-x-4">

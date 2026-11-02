@@ -37,14 +37,14 @@ export default function OfficialsPage() {
     <div className="space-y-6 sm:space-y-8">
       <section className="overflow-hidden rounded-xl bg-linear-to-br from-primary-500 to-primary-700 text-white shadow-md motion-safe:animate-fade-in">
         <div className="px-4 py-8 text-center sm:px-6 sm:py-12">
-          <h2 data-testid="hero-title" className="mb-3 text-2xl font-bold leading-tight tracking-tight sm:mb-4 sm:text-4xl sm:leading-10">
+          <h2 data-testid="hero-title" className="mb-3 type-page-title sm:mb-4">
             {t('heroTitle')}
           </h2>
-          <p className="mx-auto mb-2 max-w-2xl text-base text-white sm:text-xl">{t('heroPurpose')}</p>
-          <p data-testid="hero-summary" className="mx-auto mb-5 max-w-2xl text-sm leading-relaxed text-white sm:text-base">
+          <p className="mx-auto mb-2 max-w-2xl type-lead text-white">{t('heroPurpose')}</p>
+          <p data-testid="hero-summary" className="mx-auto mb-5 max-w-2xl type-body text-white">
             {t('heroSummary')}
           </p>
-          <p data-testid="hero-hashtags" className="inline-block rounded-lg border border-white/30 bg-white/10 px-4 py-2 text-xs font-medium text-accent-300 sm:text-sm">
+          <p data-testid="hero-hashtags" className="inline-block rounded-lg border border-white/30 bg-white/10 px-4 py-2 type-meta text-accent-300">
             {portalConfig.hashtags}
           </p>
         </div>
@@ -53,7 +53,7 @@ export default function OfficialsPage() {
       <Card padding="sm" className="sm:p-6">
         <FilterBar geo={data.geo} filters={filters} onChange={onChange} />
       </Card>
-      <p className="text-sm font-semibold text-gray-700" role="status">
+      <p className="type-meta font-semibold text-gray-700" role="status">
         {shown.length === 1 ? t('resultCount.one') : t('resultCount.other', { n: shown.length })}
       </p>
       {shown.length === 0 ? (
@@ -109,7 +109,7 @@ function GroupSet({
   }
   return (
     <section aria-labelledby={`${id}-heading`} data-testid={`${id}-officials`} className="space-y-4">
-      <h2 id={`${id}-heading`} className="text-xl font-bold tracking-tight text-gray-900 sm:text-2xl">
+      <h2 id={`${id}-heading`} className="type-section-title text-gray-900">
         {title}
       </h2>
       <div className="space-y-6">
@@ -135,10 +135,10 @@ function GroupSet({
             <div key={level} data-level={level} className="space-y-3">
               <div className="flex items-start justify-between gap-3 py-1">
                 <div className="min-w-0">
-                  <h3 id={hid} className="text-base font-bold text-gray-900 sm:text-lg">
+                  <h3 id={hid} className="type-group-title text-gray-900">
                     {titles[level]}
                   </h3>
-                  <p className="text-sm text-gray-700">{desc[level]}</p>
+                  <p className="type-body-sm text-gray-700">{desc[level]}</p>
                 </div>
                 <Badge variant="gray" size="md" className="shrink-0" data-testid="level-total">
                   {total === 1 ? t('groupCount.one') : t('groupCount.other', { n: total })}

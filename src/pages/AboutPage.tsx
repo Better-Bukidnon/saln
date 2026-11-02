@@ -5,9 +5,9 @@ import { Card } from '../components/ui/Card'
 import { useT } from '../lib/i18n'
 import portalConfig from '../../portal.config'
 
-const h3 = 'mb-3 text-xl font-bold tracking-tight text-gray-900 sm:text-2xl'
-const h4 = 'mb-1 text-sm font-semibold text-gray-900 sm:text-base'
-const body = 'text-sm leading-relaxed text-gray-800 sm:text-base'
+const h3 = 'mb-3 type-section-title text-gray-900'
+const h4 = 'mb-1 type-group-title text-gray-900'
+const body = 'type-body text-gray-800'
 
 function Section({ id, title, children }: { id: string; title: string; children: ReactNode }) {
   return (
@@ -28,11 +28,11 @@ export default function AboutPage() {
     <div className="mx-auto max-w-4xl space-y-6 sm:space-y-8">
       <section className="overflow-hidden rounded-xl bg-linear-to-br from-primary-500 to-primary-700 text-white shadow-md motion-safe:animate-fade-in">
         <div className="px-4 py-8 text-center sm:px-6 sm:py-12">
-          <h2 data-testid="about-hero-title" className="mb-3 text-2xl font-bold leading-tight tracking-tight sm:mb-4 sm:text-3xl lg:text-4xl lg:leading-10">
+          <h2 data-testid="about-hero-title" className="mb-3 type-page-title sm:mb-4">
             {t('aboutHeading')}
           </h2>
-          <p className="mx-auto mb-5 max-w-2xl text-base text-white sm:text-xl">{t('aboutBody')}</p>
-          <p className="inline-block rounded-lg border border-white/30 bg-white/10 px-4 py-2 text-xs font-medium text-accent-300 sm:text-sm">
+          <p className="mx-auto mb-5 max-w-2xl type-lead text-white">{t('aboutBody')}</p>
+          <p className="inline-block rounded-lg border border-white/30 bg-white/10 px-4 py-2 type-meta text-accent-300">
             {portalConfig.hashtags}
           </p>
         </div>
@@ -59,10 +59,10 @@ export default function AboutPage() {
 
       <Section id="about-data" title={t('aboutDataTitle')}>
         <div data-testid="about-important" className="rounded-lg border-2 border-accent-700 bg-accent-50 p-4">
-          <p className="mb-1 inline-block rounded-full bg-accent-700 px-2.5 py-0.5 text-xs font-bold uppercase tracking-wide text-white">
+          <p className="mb-1 inline-block rounded-full bg-accent-700 px-2.5 py-0.5 type-badge uppercase tracking-wide text-white">
             {t('aboutImportant')}
           </p>
-          <p className="text-sm leading-relaxed text-gray-900 sm:text-base">{t('aboutDataBody')}</p>
+          <p className="type-body text-gray-900">{t('aboutDataBody')}</p>
         </div>
         <h4 className={h4}>{t('aboutSources')}</h4>
         <ul className={`list-disc space-y-2 pl-5 ${body}`}>
@@ -99,7 +99,7 @@ export default function AboutPage() {
           {LEGAL.map((k) => (
             <div key={k} className="rounded-lg bg-gray-50 p-4">
               <h4 className={h4}>{t(`aboutLegal.${k}.title`)}</h4>
-              <p className="text-xs leading-relaxed text-gray-800 sm:text-sm">{t(`aboutLegal.${k}.body`)}</p>
+              <p className="type-body-sm text-gray-800">{t(`aboutLegal.${k}.body`)}</p>
             </div>
           ))}
         </div>

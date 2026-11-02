@@ -13,15 +13,15 @@ const STATUSES: Status[] = ['current', 'former', 'all']
 const SORTS: SortKey[] = ['name', 'netWorth', 'assets', 'liabilities']
 const DIRS: Dir[] = ['asc', 'desc']
 
-const labelCls = 'text-sm font-medium leading-none text-gray-900'
+const labelCls = 'type-label text-gray-900'
 const controlCls =
-  'select-chevron block h-11 w-full max-w-full rounded-md border border-gray-500 bg-white px-3 text-base md:h-10 md:text-sm text-ink shadow-xs transition-colors hover:border-gray-700 disabled:cursor-not-allowed disabled:border-gray-300 disabled:bg-gray-100 disabled:text-gray-500 disabled:shadow-none disabled:hover:border-gray-300'
+  'select-chevron block h-11 w-full max-w-full rounded-md border border-gray-500 bg-white px-3 type-control text-ink shadow-xs transition-colors hover:border-gray-700 disabled:cursor-not-allowed disabled:border-gray-300 disabled:bg-gray-100 disabled:text-gray-500 disabled:shadow-none disabled:hover:border-gray-300'
 const groupCls = 'min-w-0 space-y-3 rounded-md border border-gray-200 bg-white p-3 sm:p-4'
-const legendCls = 'px-1 text-xs font-medium uppercase tracking-wide text-gray-700'
+const legendCls = 'px-1 type-badge uppercase tracking-wide text-gray-700'
 const chipCls =
-  'flex min-h-11 w-full cursor-pointer items-center gap-3 rounded-md sm:inline-flex sm:w-auto md:min-h-10 border border-gray-500 bg-white px-3 py-2 text-sm font-medium text-ink shadow-xs transition-colors hover:bg-gray-50 has-[:checked]:border-primary-500 has-[:checked]:bg-primary-50 has-[:checked]:text-primary-800'
+  'flex min-h-11 w-full cursor-pointer items-center gap-3 rounded-md sm:inline-flex sm:w-auto md:min-h-10 border border-gray-500 bg-white px-3 py-2 type-label text-ink shadow-xs transition-colors hover:bg-gray-50 has-[:checked]:border-primary-500 has-[:checked]:bg-primary-50 has-[:checked]:text-primary-800'
 const pillCls =
-  'inline-flex items-center gap-1 rounded-full border border-gray-300 bg-white py-1 pl-3 pr-1 text-xs font-medium text-gray-800 shadow-xs'
+  'inline-flex items-center gap-1 rounded-full border border-gray-300 bg-white py-1 pl-3 pr-1 type-badge text-gray-800 shadow-xs'
 
 const icon = { width: 18, height: 18, viewBox: '0 0 24 24', fill: 'none', stroke: 'currentColor', strokeWidth: 2, strokeLinecap: 'round', strokeLinejoin: 'round', 'aria-hidden': true } as const
 
@@ -61,9 +61,9 @@ export default function FilterBar({
               <path d="M3 5h18l-7 8v6l-4 2v-8z" />
             </svg>
           </span>
-          <h3 className="text-base font-semibold text-ink">{t('filtersHeading')}</h3>
+          <h3 className="type-group-title text-ink">{t('filtersHeading')}</h3>
           {active > 0 && (
-            <span data-testid="filters-active" className="rounded-full bg-primary-100 px-2.5 py-0.5 text-xs font-semibold text-primary-800">
+            <span data-testid="filters-active" className="rounded-full bg-primary-100 px-2.5 py-0.5 type-badge text-primary-800">
               {t('filtersActive', { n: active })}
             </span>
           )}
@@ -84,7 +84,7 @@ export default function FilterBar({
           <input
             id="f-q"
             type="search"
-            className="block h-11 w-full rounded-md border border-gray-500 bg-white pl-10 pr-3 text-base md:h-10 md:text-sm text-ink shadow-xs transition-colors hover:border-gray-700"
+            className="block h-11 w-full rounded-md border border-gray-500 bg-white pl-10 pr-3 type-control text-ink shadow-xs transition-colors hover:border-gray-700"
             value={filters.q}
             onChange={(e) => onChange({ ...filters, q: e.target.value }, true)}
           />
@@ -97,7 +97,7 @@ export default function FilterBar({
         aria-controls={bodyId}
         onClick={() => setOpen((v) => !v)}
         data-testid="filters-toggle"
-        className="flex h-11 w-full items-center gap-2 rounded-md border border-gray-500 bg-white px-3 text-base font-medium text-ink shadow-xs md:hidden"
+        className="flex h-11 w-full items-center gap-2 rounded-md border border-gray-500 bg-white px-3 type-control font-medium text-ink shadow-xs md:hidden"
       >
         <span className="text-primary-500">
           <svg {...icon}>
@@ -106,7 +106,7 @@ export default function FilterBar({
         </span>
         <span className="flex-1 text-left">{t('filtersHeading')}</span>
         {active > 0 && (
-          <span className="rounded-full bg-primary-100 px-2.5 py-0.5 text-xs font-semibold text-primary-800">{t('filtersActive', { n: active })}</span>
+          <span className="rounded-full bg-primary-100 px-2.5 py-0.5 type-badge text-primary-800">{t('filtersActive', { n: active })}</span>
         )}
         <svg {...icon} className={`transition-transform motion-reduce:transition-none ${open ? 'rotate-180' : ''}`}>
           <path d="m6 9 6 6 6-6" />
@@ -260,7 +260,7 @@ export default function FilterBar({
           <button
             type="button"
             onClick={() => onChange({ ...defaultFilters })}
-            className="inline-flex h-11 items-center rounded-full bg-accent-100 px-3 text-xs font-semibold text-accent-800 transition-colors hover:bg-accent-200 md:h-9"
+            className="inline-flex h-11 items-center rounded-full bg-accent-100 px-3 type-badge text-accent-800 transition-colors hover:bg-accent-200 md:h-9"
           >
             {t('clearAll')}
           </button>

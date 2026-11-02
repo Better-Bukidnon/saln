@@ -12,9 +12,9 @@ const variants: Record<BadgeVariant, string> = {
   unverified: 'border border-dashed border-amber-700 bg-amber-100 text-amber-900',
 }
 const sizes: Record<Size, string> = {
-  sm: 'px-2 py-0.5 text-xs',
-  md: 'px-2.5 py-1 text-sm',
-  lg: 'px-3 py-1.5 text-base',
+  sm: 'px-2 py-0.5 type-badge',
+  md: 'px-2.5 py-1 type-badge-lg',
+  lg: 'px-3 py-1.5 type-badge-lg',
 }
 
 export function Badge({
@@ -25,7 +25,7 @@ export function Badge({
 }: HTMLAttributes<HTMLSpanElement> & { variant?: BadgeVariant; size?: Size }) {
   return (
     <span
-      className={`inline-flex items-center rounded-full font-medium ${variants[variant]} ${sizes[size]} ${className}`}
+      className={`inline-flex items-center rounded-full ${variants[variant]} ${sizes[size]} ${className}`}
       {...props}
     />
   )

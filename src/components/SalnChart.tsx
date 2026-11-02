@@ -54,7 +54,7 @@ export default function SalnChart({ data, headingId }: { data: ChartData; headin
 
   return (
     <Card data-testid="saln-chart" aria-labelledby={headingId} role="region">
-      <h4 id={headingId} className="text-lg font-bold tracking-tight text-gray-900 sm:text-xl">
+      <h4 id={headingId} className="type-card-title text-gray-900">
         {t('chartHeading')}
       </h4>
       <div className="mt-3 overflow-x-auto rounded" role="region" tabIndex={0} aria-label={t('chartRegion')}>
@@ -69,7 +69,7 @@ export default function SalnChart({ data, headingId }: { data: ChartData; headin
           {sc.ticks.map((v) => (
             <g key={v}>
               {v !== 0 && <line x1={PAD.l} x2={W - PAD.r} y1={yy(v)} y2={yy(v)} className="stroke-gray-300" strokeDasharray="4 4" strokeWidth={1} />}
-              <text x={PAD.l - 8} y={yy(v)} textAnchor="end" dominantBaseline="middle" className="fill-gray-700 text-[11px]">
+              <text x={PAD.l - 8} y={yy(v)} textAnchor="end" dominantBaseline="middle" className="fill-gray-700 type-chart-label">
                 {compactPeso(v)}
               </text>
             </g>
@@ -80,7 +80,7 @@ export default function SalnChart({ data, headingId }: { data: ChartData; headin
           ))}
           <line x1={PAD.l} x2={W - PAD.r} y1={y0} y2={y0} className="stroke-gray-700" strokeWidth={1.5} />
           {bars.filter((b) => shown.has(b.id)).map((b) => (
-            <text key={b.id} x={b.x + BAR_W / 2} y={b.ly} textAnchor="middle" className="fill-ink stroke-white text-[11px] font-bold" strokeWidth={3} strokeLinejoin="round" style={{ paintOrder: 'stroke' }} data-testid="chart-value">
+            <text key={b.id} x={b.x + BAR_W / 2} y={b.ly} textAnchor="middle" className="fill-ink stroke-white type-chart-value" strokeWidth={3} strokeLinejoin="round" style={{ paintOrder: 'stroke' }} data-testid="chart-value">
               {b.text}
             </text>
           ))}
@@ -94,7 +94,7 @@ export default function SalnChart({ data, headingId }: { data: ChartData; headin
                 y={ty}
                 textAnchor={rotate ? 'end' : 'middle'}
                 transform={rotate ? `rotate(-45 ${cx} ${ty})` : undefined}
-                className="fill-gray-700 text-[12px]"
+                className="fill-gray-700 type-chart-label"
               >
                 {p.year}
               </text>
@@ -102,7 +102,7 @@ export default function SalnChart({ data, headingId }: { data: ChartData; headin
           })}
         </svg>
       </div>
-      <ul className="mt-3 flex flex-wrap justify-center gap-x-5 gap-y-1 text-xs text-gray-800 sm:text-sm" data-testid="chart-legend">
+      <ul className="mt-3 flex flex-wrap justify-center gap-x-5 gap-y-1 type-body-sm text-gray-800" data-testid="chart-legend">
         {SERIES.map((s) => (
           <li key={s.key} className="inline-flex items-center gap-2">
             <span aria-hidden="true" className={`h-3 w-3 rounded-sm ${s.bg}`} />
@@ -110,15 +110,15 @@ export default function SalnChart({ data, headingId }: { data: ChartData; headin
           </li>
         ))}
       </ul>
-      <p className="mt-2 text-center text-xs text-gray-700 sm:text-sm">{t('chartRange', { from: data.from, to: data.to })}</p>
-      <details className="mt-3 text-sm">
-        <summary className="inline-flex min-h-11 cursor-pointer items-center font-medium text-primary-600">{t('chartTable')}</summary>
+      <p className="mt-2 text-center type-body-sm text-gray-700">{t('chartRange', { from: data.from, to: data.to })}</p>
+      <details className="mt-3 type-body-sm">
+        <summary className="inline-flex min-h-11 cursor-pointer items-center type-meta text-primary-600">{t('chartTable')}</summary>
         <div className="overflow-x-auto rounded" role="region" tabIndex={0} aria-label={t('salnTableRegion')}>
-          <table className="mt-2 w-full min-w-[420px] border-collapse text-sm">
+          <table className="mt-2 w-full min-w-[420px] border-collapse type-body-sm">
             <thead>
               <tr>
                 {['cols.year', 'cols.assets', 'cols.liabilities', 'cols.netWorth'].map((k) => (
-                  <th key={k} scope="col" className="border border-gray-300 bg-gray-100 px-3 py-2 text-left font-semibold text-gray-900">
+                  <th key={k} scope="col" className="border border-gray-300 bg-gray-100 px-3 py-2 text-left type-meta text-gray-900">
                     {t(k)}
                   </th>
                 ))}
@@ -127,7 +127,7 @@ export default function SalnChart({ data, headingId }: { data: ChartData; headin
             <tbody>
               {data.points.map((p) => (
                 <tr key={p.year}>
-                  <th scope="row" className="border border-gray-300 px-3 py-2 text-left font-semibold tabular-nums">{p.year}</th>
+                  <th scope="row" className="border border-gray-300 px-3 py-2 text-left type-meta tabular-nums">{p.year}</th>
                   <td className="border border-gray-300 px-3 py-2 tabular-nums">{formatPeso(p.assets)}</td>
                   <td className="border border-gray-300 px-3 py-2 tabular-nums">{formatPeso(p.liabilities)}</td>
                   <td className="border border-gray-300 px-3 py-2 tabular-nums">{formatPeso(p.netWorth)}</td>

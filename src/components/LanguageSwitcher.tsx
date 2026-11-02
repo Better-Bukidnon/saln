@@ -72,7 +72,7 @@ export default function LanguageSwitcher() {
             setOpen(true)
           }
         }}
-        className="inline-flex min-h-11 items-center gap-1.5 rounded-full border border-primary-400 bg-primary-50 px-3.5 text-sm font-bold text-primary-500 transition-colors hover:bg-primary-100"
+        className="inline-flex min-h-11 items-center gap-1.5 rounded-full border border-primary-400 bg-primary-50 px-3.5 type-label font-bold text-primary-500 transition-colors hover:bg-primary-100"
       >
         <svg {...icon}>
           <circle cx="12" cy="12" r="10" />
@@ -104,7 +104,7 @@ export default function LanguageSwitcher() {
               setLang(l)
               close(true)
             }}
-            className={`flex min-h-12 w-full items-center gap-4 whitespace-nowrap rounded-lg px-4 text-left text-base hover:bg-primary-50 ${l === lang ? 'font-bold text-primary-500' : 'font-medium text-ink'}`}
+            className={`flex min-h-12 w-full items-center gap-4 whitespace-nowrap rounded-lg px-4 text-left type-control hover:bg-primary-50 ${l === lang ? 'font-bold text-primary-500' : 'font-medium text-ink'}`}
           >
             <svg {...icon} className={l === lang ? '' : 'invisible'}>
               <path d="m5 12 5 5 9-10" />
