@@ -1,1 +1,2925 @@
-{"nodes":[]}
+{
+  "nodes": [
+    {
+      "psgc": "1001300000",
+      "name": "Bukidnon",
+      "type": "province"
+    },
+    {
+      "psgc": "1001301000",
+      "name": "Baungon",
+      "type": "municipality",
+      "parent": "1001300000"
+    },
+    {
+      "psgc": "1001302000",
+      "name": "Damulog",
+      "type": "municipality",
+      "parent": "1001300000"
+    },
+    {
+      "psgc": "1001303000",
+      "name": "Dangcagan",
+      "type": "municipality",
+      "parent": "1001300000"
+    },
+    {
+      "psgc": "1001304000",
+      "name": "Don Carlos",
+      "type": "municipality",
+      "parent": "1001300000"
+    },
+    {
+      "psgc": "1001305000",
+      "name": "Impasug-Ong",
+      "type": "municipality",
+      "parent": "1001300000"
+    },
+    {
+      "psgc": "1001306000",
+      "name": "Kadingilan",
+      "type": "municipality",
+      "parent": "1001300000"
+    },
+    {
+      "psgc": "1001307000",
+      "name": "Kalilangan",
+      "type": "municipality",
+      "parent": "1001300000"
+    },
+    {
+      "psgc": "1001308000",
+      "name": "Kibawe",
+      "type": "municipality",
+      "parent": "1001300000"
+    },
+    {
+      "psgc": "1001309000",
+      "name": "Kitaotao",
+      "type": "municipality",
+      "parent": "1001300000"
+    },
+    {
+      "psgc": "1001310000",
+      "name": "Lantapan",
+      "type": "municipality",
+      "parent": "1001300000"
+    },
+    {
+      "psgc": "1001311000",
+      "name": "Libona",
+      "type": "municipality",
+      "parent": "1001300000"
+    },
+    {
+      "psgc": "1001312000",
+      "name": "City of Malaybalay",
+      "type": "city",
+      "parent": "1001300000"
+    },
+    {
+      "psgc": "1001313000",
+      "name": "Malitbog",
+      "type": "municipality",
+      "parent": "1001300000"
+    },
+    {
+      "psgc": "1001314000",
+      "name": "Manolo Fortich",
+      "type": "municipality",
+      "parent": "1001300000"
+    },
+    {
+      "psgc": "1001315000",
+      "name": "Maramag",
+      "type": "municipality",
+      "parent": "1001300000"
+    },
+    {
+      "psgc": "1001316000",
+      "name": "Pangantucan",
+      "type": "municipality",
+      "parent": "1001300000"
+    },
+    {
+      "psgc": "1001317000",
+      "name": "Quezon",
+      "type": "municipality",
+      "parent": "1001300000"
+    },
+    {
+      "psgc": "1001318000",
+      "name": "San Fernando",
+      "type": "municipality",
+      "parent": "1001300000"
+    },
+    {
+      "psgc": "1001319000",
+      "name": "Sumilao",
+      "type": "municipality",
+      "parent": "1001300000"
+    },
+    {
+      "psgc": "1001320000",
+      "name": "Talakag",
+      "type": "municipality",
+      "parent": "1001300000"
+    },
+    {
+      "psgc": "1001321000",
+      "name": "City of Valencia",
+      "type": "city",
+      "parent": "1001300000"
+    },
+    {
+      "psgc": "1001322000",
+      "name": "Cabanglasan",
+      "type": "municipality",
+      "parent": "1001300000"
+    },
+    {
+      "psgc": "1001301001",
+      "name": "Balintad",
+      "type": "barangay",
+      "parent": "1001301000"
+    },
+    {
+      "psgc": "1001301002",
+      "name": "Buenavista",
+      "type": "barangay",
+      "parent": "1001301000"
+    },
+    {
+      "psgc": "1001301003",
+      "name": "Danatag",
+      "type": "barangay",
+      "parent": "1001301000"
+    },
+    {
+      "psgc": "1001301004",
+      "name": "Kalilangan",
+      "type": "barangay",
+      "parent": "1001301000"
+    },
+    {
+      "psgc": "1001301005",
+      "name": "Lacolac",
+      "type": "barangay",
+      "parent": "1001301000"
+    },
+    {
+      "psgc": "1001301006",
+      "name": "Langaon",
+      "type": "barangay",
+      "parent": "1001301000"
+    },
+    {
+      "psgc": "1001301007",
+      "name": "Liboran",
+      "type": "barangay",
+      "parent": "1001301000"
+    },
+    {
+      "psgc": "1001301008",
+      "name": "Lingating",
+      "type": "barangay",
+      "parent": "1001301000"
+    },
+    {
+      "psgc": "1001301009",
+      "name": "Mabuhay",
+      "type": "barangay",
+      "parent": "1001301000"
+    },
+    {
+      "psgc": "1001301010",
+      "name": "Mabunga",
+      "type": "barangay",
+      "parent": "1001301000"
+    },
+    {
+      "psgc": "1001301011",
+      "name": "Nicdao",
+      "type": "barangay",
+      "parent": "1001301000"
+    },
+    {
+      "psgc": "1001301012",
+      "name": "Imbatug (Pob.)",
+      "type": "barangay",
+      "parent": "1001301000"
+    },
+    {
+      "psgc": "1001301013",
+      "name": "Pualas",
+      "type": "barangay",
+      "parent": "1001301000"
+    },
+    {
+      "psgc": "1001301014",
+      "name": "Salimbalan",
+      "type": "barangay",
+      "parent": "1001301000"
+    },
+    {
+      "psgc": "1001301015",
+      "name": "San Vicente",
+      "type": "barangay",
+      "parent": "1001301000"
+    },
+    {
+      "psgc": "1001301016",
+      "name": "San Miguel",
+      "type": "barangay",
+      "parent": "1001301000"
+    },
+    {
+      "psgc": "1001302001",
+      "name": "Aludas",
+      "type": "barangay",
+      "parent": "1001302000"
+    },
+    {
+      "psgc": "1001302002",
+      "name": "Angga-an",
+      "type": "barangay",
+      "parent": "1001302000"
+    },
+    {
+      "psgc": "1001302003",
+      "name": "Tangkulan",
+      "type": "barangay",
+      "parent": "1001302000"
+    },
+    {
+      "psgc": "1001302004",
+      "name": "Kinapat",
+      "type": "barangay",
+      "parent": "1001302000"
+    },
+    {
+      "psgc": "1001302005",
+      "name": "Kiraon",
+      "type": "barangay",
+      "parent": "1001302000"
+    },
+    {
+      "psgc": "1001302006",
+      "name": "Kitingting",
+      "type": "barangay",
+      "parent": "1001302000"
+    },
+    {
+      "psgc": "1001302007",
+      "name": "Lagandang",
+      "type": "barangay",
+      "parent": "1001302000"
+    },
+    {
+      "psgc": "1001302008",
+      "name": "Macapari",
+      "type": "barangay",
+      "parent": "1001302000"
+    },
+    {
+      "psgc": "1001302009",
+      "name": "Maican",
+      "type": "barangay",
+      "parent": "1001302000"
+    },
+    {
+      "psgc": "1001302010",
+      "name": "Migcawayan",
+      "type": "barangay",
+      "parent": "1001302000"
+    },
+    {
+      "psgc": "1001302011",
+      "name": "New Compostela",
+      "type": "barangay",
+      "parent": "1001302000"
+    },
+    {
+      "psgc": "1001302013",
+      "name": "Old Damulog",
+      "type": "barangay",
+      "parent": "1001302000"
+    },
+    {
+      "psgc": "1001302014",
+      "name": "Omonay",
+      "type": "barangay",
+      "parent": "1001302000"
+    },
+    {
+      "psgc": "1001302015",
+      "name": "Poblacion",
+      "type": "barangay",
+      "parent": "1001302000"
+    },
+    {
+      "psgc": "1001302016",
+      "name": "Pocopoco",
+      "type": "barangay",
+      "parent": "1001302000"
+    },
+    {
+      "psgc": "1001302017",
+      "name": "Sampagar",
+      "type": "barangay",
+      "parent": "1001302000"
+    },
+    {
+      "psgc": "1001302019",
+      "name": "San Isidro",
+      "type": "barangay",
+      "parent": "1001302000"
+    },
+    {
+      "psgc": "1001303001",
+      "name": "Barongcot",
+      "type": "barangay",
+      "parent": "1001303000"
+    },
+    {
+      "psgc": "1001303002",
+      "name": "Bugwak",
+      "type": "barangay",
+      "parent": "1001303000"
+    },
+    {
+      "psgc": "1001303003",
+      "name": "Dolorosa",
+      "type": "barangay",
+      "parent": "1001303000"
+    },
+    {
+      "psgc": "1001303004",
+      "name": "Kapalaran",
+      "type": "barangay",
+      "parent": "1001303000"
+    },
+    {
+      "psgc": "1001303005",
+      "name": "Kianggat",
+      "type": "barangay",
+      "parent": "1001303000"
+    },
+    {
+      "psgc": "1001303006",
+      "name": "Lourdes",
+      "type": "barangay",
+      "parent": "1001303000"
+    },
+    {
+      "psgc": "1001303007",
+      "name": "Macarthur",
+      "type": "barangay",
+      "parent": "1001303000"
+    },
+    {
+      "psgc": "1001303008",
+      "name": "Miaray",
+      "type": "barangay",
+      "parent": "1001303000"
+    },
+    {
+      "psgc": "1001303009",
+      "name": "Migcuya",
+      "type": "barangay",
+      "parent": "1001303000"
+    },
+    {
+      "psgc": "1001303010",
+      "name": "New Visayas",
+      "type": "barangay",
+      "parent": "1001303000"
+    },
+    {
+      "psgc": "1001303011",
+      "name": "Osmeña",
+      "type": "barangay",
+      "parent": "1001303000"
+    },
+    {
+      "psgc": "1001303012",
+      "name": "Poblacion",
+      "type": "barangay",
+      "parent": "1001303000"
+    },
+    {
+      "psgc": "1001303013",
+      "name": "Sagbayan",
+      "type": "barangay",
+      "parent": "1001303000"
+    },
+    {
+      "psgc": "1001303014",
+      "name": "San Vicente",
+      "type": "barangay",
+      "parent": "1001303000"
+    },
+    {
+      "psgc": "1001304001",
+      "name": "Cabadiangan",
+      "type": "barangay",
+      "parent": "1001304000"
+    },
+    {
+      "psgc": "1001304002",
+      "name": "Bocboc",
+      "type": "barangay",
+      "parent": "1001304000"
+    },
+    {
+      "psgc": "1001304003",
+      "name": "Buyot",
+      "type": "barangay",
+      "parent": "1001304000"
+    },
+    {
+      "psgc": "1001304004",
+      "name": "Calaocalao",
+      "type": "barangay",
+      "parent": "1001304000"
+    },
+    {
+      "psgc": "1001304005",
+      "name": "Don Carlos Norte",
+      "type": "barangay",
+      "parent": "1001304000"
+    },
+    {
+      "psgc": "1001304006",
+      "name": "Embayao",
+      "type": "barangay",
+      "parent": "1001304000"
+    },
+    {
+      "psgc": "1001304008",
+      "name": "Kalubihon",
+      "type": "barangay",
+      "parent": "1001304000"
+    },
+    {
+      "psgc": "1001304009",
+      "name": "Kasigkot",
+      "type": "barangay",
+      "parent": "1001304000"
+    },
+    {
+      "psgc": "1001304010",
+      "name": "Kawilihan",
+      "type": "barangay",
+      "parent": "1001304000"
+    },
+    {
+      "psgc": "1001304011",
+      "name": "Kiara",
+      "type": "barangay",
+      "parent": "1001304000"
+    },
+    {
+      "psgc": "1001304012",
+      "name": "Kibatang",
+      "type": "barangay",
+      "parent": "1001304000"
+    },
+    {
+      "psgc": "1001304013",
+      "name": "Mahayahay",
+      "type": "barangay",
+      "parent": "1001304000"
+    },
+    {
+      "psgc": "1001304014",
+      "name": "Manlamonay",
+      "type": "barangay",
+      "parent": "1001304000"
+    },
+    {
+      "psgc": "1001304015",
+      "name": "Maraymaray",
+      "type": "barangay",
+      "parent": "1001304000"
+    },
+    {
+      "psgc": "1001304016",
+      "name": "Mauswagon",
+      "type": "barangay",
+      "parent": "1001304000"
+    },
+    {
+      "psgc": "1001304017",
+      "name": "Minsalagan",
+      "type": "barangay",
+      "parent": "1001304000"
+    },
+    {
+      "psgc": "1001304018",
+      "name": "New Nongnongan",
+      "type": "barangay",
+      "parent": "1001304000"
+    },
+    {
+      "psgc": "1001304019",
+      "name": "New Visayas",
+      "type": "barangay",
+      "parent": "1001304000"
+    },
+    {
+      "psgc": "1001304020",
+      "name": "Old Nongnongan",
+      "type": "barangay",
+      "parent": "1001304000"
+    },
+    {
+      "psgc": "1001304021",
+      "name": "Pinamaloy",
+      "type": "barangay",
+      "parent": "1001304000"
+    },
+    {
+      "psgc": "1001304022",
+      "name": "Don Carlos Sur (Pob.)",
+      "type": "barangay",
+      "parent": "1001304000"
+    },
+    {
+      "psgc": "1001304023",
+      "name": "Pualas",
+      "type": "barangay",
+      "parent": "1001304000"
+    },
+    {
+      "psgc": "1001304024",
+      "name": "San Antonio East",
+      "type": "barangay",
+      "parent": "1001304000"
+    },
+    {
+      "psgc": "1001304025",
+      "name": "San Antonio West",
+      "type": "barangay",
+      "parent": "1001304000"
+    },
+    {
+      "psgc": "1001304026",
+      "name": "San Francisco",
+      "type": "barangay",
+      "parent": "1001304000"
+    },
+    {
+      "psgc": "1001304027",
+      "name": "San Nicolas",
+      "type": "barangay",
+      "parent": "1001304000"
+    },
+    {
+      "psgc": "1001304028",
+      "name": "San Roque",
+      "type": "barangay",
+      "parent": "1001304000"
+    },
+    {
+      "psgc": "1001304029",
+      "name": "Sinangguyan",
+      "type": "barangay",
+      "parent": "1001304000"
+    },
+    {
+      "psgc": "1001304030",
+      "name": "Bismartz",
+      "type": "barangay",
+      "parent": "1001304000"
+    },
+    {
+      "psgc": "1001305001",
+      "name": "Bontongon",
+      "type": "barangay",
+      "parent": "1001305000"
+    },
+    {
+      "psgc": "1001305002",
+      "name": "Bulonay",
+      "type": "barangay",
+      "parent": "1001305000"
+    },
+    {
+      "psgc": "1001305003",
+      "name": "Capitan Bayong",
+      "type": "barangay",
+      "parent": "1001305000"
+    },
+    {
+      "psgc": "1001305004",
+      "name": "Cawayan",
+      "type": "barangay",
+      "parent": "1001305000"
+    },
+    {
+      "psgc": "1001305005",
+      "name": "Dumalaguing",
+      "type": "barangay",
+      "parent": "1001305000"
+    },
+    {
+      "psgc": "1001305006",
+      "name": "Guihean",
+      "type": "barangay",
+      "parent": "1001305000"
+    },
+    {
+      "psgc": "1001305007",
+      "name": "Hagpa",
+      "type": "barangay",
+      "parent": "1001305000"
+    },
+    {
+      "psgc": "1001305008",
+      "name": "Impalutao",
+      "type": "barangay",
+      "parent": "1001305000"
+    },
+    {
+      "psgc": "1001305010",
+      "name": "Kalabugao",
+      "type": "barangay",
+      "parent": "1001305000"
+    },
+    {
+      "psgc": "1001305011",
+      "name": "Kibenton",
+      "type": "barangay",
+      "parent": "1001305000"
+    },
+    {
+      "psgc": "1001305012",
+      "name": "La Fortuna",
+      "type": "barangay",
+      "parent": "1001305000"
+    },
+    {
+      "psgc": "1001305013",
+      "name": "Poblacion",
+      "type": "barangay",
+      "parent": "1001305000"
+    },
+    {
+      "psgc": "1001305015",
+      "name": "Sayawan",
+      "type": "barangay",
+      "parent": "1001305000"
+    },
+    {
+      "psgc": "1001306001",
+      "name": "Bagongbayan",
+      "type": "barangay",
+      "parent": "1001306000"
+    },
+    {
+      "psgc": "1001306002",
+      "name": "Bagor",
+      "type": "barangay",
+      "parent": "1001306000"
+    },
+    {
+      "psgc": "1001306003",
+      "name": "Balaoro",
+      "type": "barangay",
+      "parent": "1001306000"
+    },
+    {
+      "psgc": "1001306004",
+      "name": "Baroy",
+      "type": "barangay",
+      "parent": "1001306000"
+    },
+    {
+      "psgc": "1001306005",
+      "name": "Cabadiangan",
+      "type": "barangay",
+      "parent": "1001306000"
+    },
+    {
+      "psgc": "1001306006",
+      "name": "Husayan",
+      "type": "barangay",
+      "parent": "1001306000"
+    },
+    {
+      "psgc": "1001306007",
+      "name": "Kibalagon",
+      "type": "barangay",
+      "parent": "1001306000"
+    },
+    {
+      "psgc": "1001306008",
+      "name": "Mabuhay",
+      "type": "barangay",
+      "parent": "1001306000"
+    },
+    {
+      "psgc": "1001306009",
+      "name": "Malinao",
+      "type": "barangay",
+      "parent": "1001306000"
+    },
+    {
+      "psgc": "1001306010",
+      "name": "Matampay",
+      "type": "barangay",
+      "parent": "1001306000"
+    },
+    {
+      "psgc": "1001306011",
+      "name": "Sibonga",
+      "type": "barangay",
+      "parent": "1001306000"
+    },
+    {
+      "psgc": "1001306012",
+      "name": "Pay-as",
+      "type": "barangay",
+      "parent": "1001306000"
+    },
+    {
+      "psgc": "1001306013",
+      "name": "Pinamanguhan",
+      "type": "barangay",
+      "parent": "1001306000"
+    },
+    {
+      "psgc": "1001306014",
+      "name": "Poblacion",
+      "type": "barangay",
+      "parent": "1001306000"
+    },
+    {
+      "psgc": "1001306015",
+      "name": "Salvacion",
+      "type": "barangay",
+      "parent": "1001306000"
+    },
+    {
+      "psgc": "1001306016",
+      "name": "San Andres",
+      "type": "barangay",
+      "parent": "1001306000"
+    },
+    {
+      "psgc": "1001306017",
+      "name": "Kibogtok",
+      "type": "barangay",
+      "parent": "1001306000"
+    },
+    {
+      "psgc": "1001307001",
+      "name": "Bangbang",
+      "type": "barangay",
+      "parent": "1001307000"
+    },
+    {
+      "psgc": "1001307002",
+      "name": "Baborawon",
+      "type": "barangay",
+      "parent": "1001307000"
+    },
+    {
+      "psgc": "1001307003",
+      "name": "Canituan",
+      "type": "barangay",
+      "parent": "1001307000"
+    },
+    {
+      "psgc": "1001307004",
+      "name": "Kibaning",
+      "type": "barangay",
+      "parent": "1001307000"
+    },
+    {
+      "psgc": "1001307005",
+      "name": "Kinura",
+      "type": "barangay",
+      "parent": "1001307000"
+    },
+    {
+      "psgc": "1001307006",
+      "name": "Lampanusan",
+      "type": "barangay",
+      "parent": "1001307000"
+    },
+    {
+      "psgc": "1001307007",
+      "name": "Maca-opao",
+      "type": "barangay",
+      "parent": "1001307000"
+    },
+    {
+      "psgc": "1001307008",
+      "name": "Malinao",
+      "type": "barangay",
+      "parent": "1001307000"
+    },
+    {
+      "psgc": "1001307009",
+      "name": "Pamotolon",
+      "type": "barangay",
+      "parent": "1001307000"
+    },
+    {
+      "psgc": "1001307010",
+      "name": "Poblacion",
+      "type": "barangay",
+      "parent": "1001307000"
+    },
+    {
+      "psgc": "1001307012",
+      "name": "Public",
+      "type": "barangay",
+      "parent": "1001307000"
+    },
+    {
+      "psgc": "1001307013",
+      "name": "Ninoy Aquino",
+      "type": "barangay",
+      "parent": "1001307000"
+    },
+    {
+      "psgc": "1001307014",
+      "name": "San Vicente Ferrer",
+      "type": "barangay",
+      "parent": "1001307000"
+    },
+    {
+      "psgc": "1001307015",
+      "name": "West Poblacion",
+      "type": "barangay",
+      "parent": "1001307000"
+    },
+    {
+      "psgc": "1001308003",
+      "name": "Balintawak",
+      "type": "barangay",
+      "parent": "1001308000"
+    },
+    {
+      "psgc": "1001308006",
+      "name": "Cagawasan",
+      "type": "barangay",
+      "parent": "1001308000"
+    },
+    {
+      "psgc": "1001308007",
+      "name": "East Kibawe (Pob.)",
+      "type": "barangay",
+      "parent": "1001308000"
+    },
+    {
+      "psgc": "1001308008",
+      "name": "Gutapol",
+      "type": "barangay",
+      "parent": "1001308000"
+    },
+    {
+      "psgc": "1001308011",
+      "name": "Pinamula",
+      "type": "barangay",
+      "parent": "1001308000"
+    },
+    {
+      "psgc": "1001308013",
+      "name": "Kiorao",
+      "type": "barangay",
+      "parent": "1001308000"
+    },
+    {
+      "psgc": "1001308014",
+      "name": "Kisawa",
+      "type": "barangay",
+      "parent": "1001308000"
+    },
+    {
+      "psgc": "1001308015",
+      "name": "Labuagon",
+      "type": "barangay",
+      "parent": "1001308000"
+    },
+    {
+      "psgc": "1001308016",
+      "name": "Magsaysay",
+      "type": "barangay",
+      "parent": "1001308000"
+    },
+    {
+      "psgc": "1001308018",
+      "name": "Marapangi",
+      "type": "barangay",
+      "parent": "1001308000"
+    },
+    {
+      "psgc": "1001308019",
+      "name": "Mascariñas",
+      "type": "barangay",
+      "parent": "1001308000"
+    },
+    {
+      "psgc": "1001308020",
+      "name": "Natulongan",
+      "type": "barangay",
+      "parent": "1001308000"
+    },
+    {
+      "psgc": "1001308021",
+      "name": "New Kidapawan",
+      "type": "barangay",
+      "parent": "1001308000"
+    },
+    {
+      "psgc": "1001308023",
+      "name": "Old Kibawe",
+      "type": "barangay",
+      "parent": "1001308000"
+    },
+    {
+      "psgc": "1001308028",
+      "name": "Romagooc",
+      "type": "barangay",
+      "parent": "1001308000"
+    },
+    {
+      "psgc": "1001308030",
+      "name": "Sampaguita",
+      "type": "barangay",
+      "parent": "1001308000"
+    },
+    {
+      "psgc": "1001308031",
+      "name": "Sanipon",
+      "type": "barangay",
+      "parent": "1001308000"
+    },
+    {
+      "psgc": "1001308032",
+      "name": "Spring",
+      "type": "barangay",
+      "parent": "1001308000"
+    },
+    {
+      "psgc": "1001308033",
+      "name": "Talahiron",
+      "type": "barangay",
+      "parent": "1001308000"
+    },
+    {
+      "psgc": "1001308034",
+      "name": "Tumaras",
+      "type": "barangay",
+      "parent": "1001308000"
+    },
+    {
+      "psgc": "1001308035",
+      "name": "West Kibawe (Pob.)",
+      "type": "barangay",
+      "parent": "1001308000"
+    },
+    {
+      "psgc": "1001308036",
+      "name": "Bukang Liwayway",
+      "type": "barangay",
+      "parent": "1001308000"
+    },
+    {
+      "psgc": "1001308037",
+      "name": "Palma",
+      "type": "barangay",
+      "parent": "1001308000"
+    },
+    {
+      "psgc": "1001309001",
+      "name": "Balangigay",
+      "type": "barangay",
+      "parent": "1001309000"
+    },
+    {
+      "psgc": "1001309002",
+      "name": "Balukbukan",
+      "type": "barangay",
+      "parent": "1001309000"
+    },
+    {
+      "psgc": "1001309003",
+      "name": "Bershiba",
+      "type": "barangay",
+      "parent": "1001309000"
+    },
+    {
+      "psgc": "1001309004",
+      "name": "Bobong",
+      "type": "barangay",
+      "parent": "1001309000"
+    },
+    {
+      "psgc": "1001309005",
+      "name": "Bolocaon",
+      "type": "barangay",
+      "parent": "1001309000"
+    },
+    {
+      "psgc": "1001309006",
+      "name": "Cabalantian",
+      "type": "barangay",
+      "parent": "1001309000"
+    },
+    {
+      "psgc": "1001309007",
+      "name": "Calapaton",
+      "type": "barangay",
+      "parent": "1001309000"
+    },
+    {
+      "psgc": "1001309009",
+      "name": "Sinaysayan",
+      "type": "barangay",
+      "parent": "1001309000"
+    },
+    {
+      "psgc": "1001309010",
+      "name": "Kahusayan",
+      "type": "barangay",
+      "parent": "1001309000"
+    },
+    {
+      "psgc": "1001309011",
+      "name": "Kalumihan",
+      "type": "barangay",
+      "parent": "1001309000"
+    },
+    {
+      "psgc": "1001309012",
+      "name": "Kauyonan",
+      "type": "barangay",
+      "parent": "1001309000"
+    },
+    {
+      "psgc": "1001309013",
+      "name": "Kimolong",
+      "type": "barangay",
+      "parent": "1001309000"
+    },
+    {
+      "psgc": "1001309014",
+      "name": "Kitaihon",
+      "type": "barangay",
+      "parent": "1001309000"
+    },
+    {
+      "psgc": "1001309015",
+      "name": "Kitobo",
+      "type": "barangay",
+      "parent": "1001309000"
+    },
+    {
+      "psgc": "1001309019",
+      "name": "Magsaysay",
+      "type": "barangay",
+      "parent": "1001309000"
+    },
+    {
+      "psgc": "1001309020",
+      "name": "Malobalo",
+      "type": "barangay",
+      "parent": "1001309000"
+    },
+    {
+      "psgc": "1001309021",
+      "name": "Metebagao",
+      "type": "barangay",
+      "parent": "1001309000"
+    },
+    {
+      "psgc": "1001309022",
+      "name": "Sagundanon",
+      "type": "barangay",
+      "parent": "1001309000"
+    },
+    {
+      "psgc": "1001309023",
+      "name": "Pagan",
+      "type": "barangay",
+      "parent": "1001309000"
+    },
+    {
+      "psgc": "1001309025",
+      "name": "Panganan",
+      "type": "barangay",
+      "parent": "1001309000"
+    },
+    {
+      "psgc": "1001309026",
+      "name": "Poblacion",
+      "type": "barangay",
+      "parent": "1001309000"
+    },
+    {
+      "psgc": "1001309028",
+      "name": "San Isidro",
+      "type": "barangay",
+      "parent": "1001309000"
+    },
+    {
+      "psgc": "1001309029",
+      "name": "San Lorenzo",
+      "type": "barangay",
+      "parent": "1001309000"
+    },
+    {
+      "psgc": "1001309030",
+      "name": "Santo Rosario",
+      "type": "barangay",
+      "parent": "1001309000"
+    },
+    {
+      "psgc": "1001309031",
+      "name": "Sinuda",
+      "type": "barangay",
+      "parent": "1001309000"
+    },
+    {
+      "psgc": "1001309032",
+      "name": "Tandong",
+      "type": "barangay",
+      "parent": "1001309000"
+    },
+    {
+      "psgc": "1001309033",
+      "name": "Tawas",
+      "type": "barangay",
+      "parent": "1001309000"
+    },
+    {
+      "psgc": "1001309034",
+      "name": "White Kulaman",
+      "type": "barangay",
+      "parent": "1001309000"
+    },
+    {
+      "psgc": "1001309035",
+      "name": "Napalico",
+      "type": "barangay",
+      "parent": "1001309000"
+    },
+    {
+      "psgc": "1001309037",
+      "name": "Digongan",
+      "type": "barangay",
+      "parent": "1001309000"
+    },
+    {
+      "psgc": "1001309038",
+      "name": "Kiulom",
+      "type": "barangay",
+      "parent": "1001309000"
+    },
+    {
+      "psgc": "1001309039",
+      "name": "Binoongan",
+      "type": "barangay",
+      "parent": "1001309000"
+    },
+    {
+      "psgc": "1001309040",
+      "name": "Kipilas",
+      "type": "barangay",
+      "parent": "1001309000"
+    },
+    {
+      "psgc": "1001309041",
+      "name": "East Dalurong",
+      "type": "barangay",
+      "parent": "1001309000"
+    },
+    {
+      "psgc": "1001309042",
+      "name": "West Dalurong",
+      "type": "barangay",
+      "parent": "1001309000"
+    },
+    {
+      "psgc": "1001310001",
+      "name": "Alanib",
+      "type": "barangay",
+      "parent": "1001310000"
+    },
+    {
+      "psgc": "1001310002",
+      "name": "Baclayon",
+      "type": "barangay",
+      "parent": "1001310000"
+    },
+    {
+      "psgc": "1001310003",
+      "name": "Balila",
+      "type": "barangay",
+      "parent": "1001310000"
+    },
+    {
+      "psgc": "1001310004",
+      "name": "Bantuanon",
+      "type": "barangay",
+      "parent": "1001310000"
+    },
+    {
+      "psgc": "1001310005",
+      "name": "Basak",
+      "type": "barangay",
+      "parent": "1001310000"
+    },
+    {
+      "psgc": "1001310006",
+      "name": "Bugcaon",
+      "type": "barangay",
+      "parent": "1001310000"
+    },
+    {
+      "psgc": "1001310007",
+      "name": "Ka-atoan",
+      "type": "barangay",
+      "parent": "1001310000"
+    },
+    {
+      "psgc": "1001310008",
+      "name": "Capitan Juan",
+      "type": "barangay",
+      "parent": "1001310000"
+    },
+    {
+      "psgc": "1001310009",
+      "name": "Cawayan",
+      "type": "barangay",
+      "parent": "1001310000"
+    },
+    {
+      "psgc": "1001310010",
+      "name": "Kulasihan",
+      "type": "barangay",
+      "parent": "1001310000"
+    },
+    {
+      "psgc": "1001310011",
+      "name": "Kibangay",
+      "type": "barangay",
+      "parent": "1001310000"
+    },
+    {
+      "psgc": "1001310012",
+      "name": "Poblacion",
+      "type": "barangay",
+      "parent": "1001310000"
+    },
+    {
+      "psgc": "1001310013",
+      "name": "Songco",
+      "type": "barangay",
+      "parent": "1001310000"
+    },
+    {
+      "psgc": "1001310014",
+      "name": "Victory",
+      "type": "barangay",
+      "parent": "1001310000"
+    },
+    {
+      "psgc": "1001311001",
+      "name": "Capihan",
+      "type": "barangay",
+      "parent": "1001311000"
+    },
+    {
+      "psgc": "1001311002",
+      "name": "Crossing",
+      "type": "barangay",
+      "parent": "1001311000"
+    },
+    {
+      "psgc": "1001311003",
+      "name": "Gango",
+      "type": "barangay",
+      "parent": "1001311000"
+    },
+    {
+      "psgc": "1001311004",
+      "name": "Kiliog",
+      "type": "barangay",
+      "parent": "1001311000"
+    },
+    {
+      "psgc": "1001311005",
+      "name": "Kinawe",
+      "type": "barangay",
+      "parent": "1001311000"
+    },
+    {
+      "psgc": "1001311006",
+      "name": "Laturan",
+      "type": "barangay",
+      "parent": "1001311000"
+    },
+    {
+      "psgc": "1001311007",
+      "name": "Maambong",
+      "type": "barangay",
+      "parent": "1001311000"
+    },
+    {
+      "psgc": "1001311008",
+      "name": "Nangka",
+      "type": "barangay",
+      "parent": "1001311000"
+    },
+    {
+      "psgc": "1001311009",
+      "name": "Palabucan",
+      "type": "barangay",
+      "parent": "1001311000"
+    },
+    {
+      "psgc": "1001311010",
+      "name": "Poblacion",
+      "type": "barangay",
+      "parent": "1001311000"
+    },
+    {
+      "psgc": "1001311011",
+      "name": "Pongol",
+      "type": "barangay",
+      "parent": "1001311000"
+    },
+    {
+      "psgc": "1001311012",
+      "name": "San Jose",
+      "type": "barangay",
+      "parent": "1001311000"
+    },
+    {
+      "psgc": "1001311013",
+      "name": "Santa Fe",
+      "type": "barangay",
+      "parent": "1001311000"
+    },
+    {
+      "psgc": "1001311014",
+      "name": "Sil-ipon",
+      "type": "barangay",
+      "parent": "1001311000"
+    },
+    {
+      "psgc": "1001312001",
+      "name": "Aglayan",
+      "type": "barangay",
+      "parent": "1001312000"
+    },
+    {
+      "psgc": "1001312002",
+      "name": "Bangcud",
+      "type": "barangay",
+      "parent": "1001312000"
+    },
+    {
+      "psgc": "1001312003",
+      "name": "Busdi",
+      "type": "barangay",
+      "parent": "1001312000"
+    },
+    {
+      "psgc": "1001312004",
+      "name": "Cabangahan",
+      "type": "barangay",
+      "parent": "1001312000"
+    },
+    {
+      "psgc": "1001312007",
+      "name": "Caburacanan",
+      "type": "barangay",
+      "parent": "1001312000"
+    },
+    {
+      "psgc": "1001312009",
+      "name": "Canayan",
+      "type": "barangay",
+      "parent": "1001312000"
+    },
+    {
+      "psgc": "1001312010",
+      "name": "Capitan Angel",
+      "type": "barangay",
+      "parent": "1001312000"
+    },
+    {
+      "psgc": "1001312012",
+      "name": "Casisang",
+      "type": "barangay",
+      "parent": "1001312000"
+    },
+    {
+      "psgc": "1001312014",
+      "name": "Dalwangan",
+      "type": "barangay",
+      "parent": "1001312000"
+    },
+    {
+      "psgc": "1001312017",
+      "name": "Imbayao",
+      "type": "barangay",
+      "parent": "1001312000"
+    },
+    {
+      "psgc": "1001312018",
+      "name": "Indalaza",
+      "type": "barangay",
+      "parent": "1001312000"
+    },
+    {
+      "psgc": "1001312019",
+      "name": "Kalasungay",
+      "type": "barangay",
+      "parent": "1001312000"
+    },
+    {
+      "psgc": "1001312021",
+      "name": "Kabalabag",
+      "type": "barangay",
+      "parent": "1001312000"
+    },
+    {
+      "psgc": "1001312022",
+      "name": "Kulaman",
+      "type": "barangay",
+      "parent": "1001312000"
+    },
+    {
+      "psgc": "1001312023",
+      "name": "Laguitas",
+      "type": "barangay",
+      "parent": "1001312000"
+    },
+    {
+      "psgc": "1001312025",
+      "name": "Patpat",
+      "type": "barangay",
+      "parent": "1001312000"
+    },
+    {
+      "psgc": "1001312026",
+      "name": "Linabo",
+      "type": "barangay",
+      "parent": "1001312000"
+    },
+    {
+      "psgc": "1001312027",
+      "name": "Apo Macote",
+      "type": "barangay",
+      "parent": "1001312000"
+    },
+    {
+      "psgc": "1001312028",
+      "name": "Miglamin",
+      "type": "barangay",
+      "parent": "1001312000"
+    },
+    {
+      "psgc": "1001312029",
+      "name": "Magsaysay",
+      "type": "barangay",
+      "parent": "1001312000"
+    },
+    {
+      "psgc": "1001312030",
+      "name": "Maligaya",
+      "type": "barangay",
+      "parent": "1001312000"
+    },
+    {
+      "psgc": "1001312031",
+      "name": "Managok",
+      "type": "barangay",
+      "parent": "1001312000"
+    },
+    {
+      "psgc": "1001312032",
+      "name": "Manalog",
+      "type": "barangay",
+      "parent": "1001312000"
+    },
+    {
+      "psgc": "1001312034",
+      "name": "Mapayag",
+      "type": "barangay",
+      "parent": "1001312000"
+    },
+    {
+      "psgc": "1001312035",
+      "name": "Mapulo",
+      "type": "barangay",
+      "parent": "1001312000"
+    },
+    {
+      "psgc": "1001312038",
+      "name": "Barangay 1 (Pob.)",
+      "type": "barangay",
+      "parent": "1001312000"
+    },
+    {
+      "psgc": "1001312045",
+      "name": "Barangay 2 (Pob.)",
+      "type": "barangay",
+      "parent": "1001312000"
+    },
+    {
+      "psgc": "1001312046",
+      "name": "Barangay 3 (Pob.)",
+      "type": "barangay",
+      "parent": "1001312000"
+    },
+    {
+      "psgc": "1001312047",
+      "name": "Barangay 4 (Pob.)",
+      "type": "barangay",
+      "parent": "1001312000"
+    },
+    {
+      "psgc": "1001312048",
+      "name": "Barangay 5 (Pob.)",
+      "type": "barangay",
+      "parent": "1001312000"
+    },
+    {
+      "psgc": "1001312049",
+      "name": "Barangay 6 (Pob.)",
+      "type": "barangay",
+      "parent": "1001312000"
+    },
+    {
+      "psgc": "1001312050",
+      "name": "Barangay 7 (Pob.)",
+      "type": "barangay",
+      "parent": "1001312000"
+    },
+    {
+      "psgc": "1001312051",
+      "name": "Barangay 8 (Pob.)",
+      "type": "barangay",
+      "parent": "1001312000"
+    },
+    {
+      "psgc": "1001312052",
+      "name": "Barangay 9 (Pob.)",
+      "type": "barangay",
+      "parent": "1001312000"
+    },
+    {
+      "psgc": "1001312053",
+      "name": "Barangay 10 (Pob.)",
+      "type": "barangay",
+      "parent": "1001312000"
+    },
+    {
+      "psgc": "1001312054",
+      "name": "Barangay 11 (Pob.)",
+      "type": "barangay",
+      "parent": "1001312000"
+    },
+    {
+      "psgc": "1001312058",
+      "name": "Saint Peter",
+      "type": "barangay",
+      "parent": "1001312000"
+    },
+    {
+      "psgc": "1001312059",
+      "name": "San Jose",
+      "type": "barangay",
+      "parent": "1001312000"
+    },
+    {
+      "psgc": "1001312060",
+      "name": "San Martin",
+      "type": "barangay",
+      "parent": "1001312000"
+    },
+    {
+      "psgc": "1001312061",
+      "name": "Santo Niño",
+      "type": "barangay",
+      "parent": "1001312000"
+    },
+    {
+      "psgc": "1001312062",
+      "name": "Silae",
+      "type": "barangay",
+      "parent": "1001312000"
+    },
+    {
+      "psgc": "1001312063",
+      "name": "Simaya",
+      "type": "barangay",
+      "parent": "1001312000"
+    },
+    {
+      "psgc": "1001312064",
+      "name": "Sinanglanan",
+      "type": "barangay",
+      "parent": "1001312000"
+    },
+    {
+      "psgc": "1001312065",
+      "name": "Sumpong",
+      "type": "barangay",
+      "parent": "1001312000"
+    },
+    {
+      "psgc": "1001312066",
+      "name": "Violeta",
+      "type": "barangay",
+      "parent": "1001312000"
+    },
+    {
+      "psgc": "1001312067",
+      "name": "Zamboanguita",
+      "type": "barangay",
+      "parent": "1001312000"
+    },
+    {
+      "psgc": "1001313001",
+      "name": "Kalingking",
+      "type": "barangay",
+      "parent": "1001313000"
+    },
+    {
+      "psgc": "1001313002",
+      "name": "Kiabo",
+      "type": "barangay",
+      "parent": "1001313000"
+    },
+    {
+      "psgc": "1001313003",
+      "name": "Mindagat",
+      "type": "barangay",
+      "parent": "1001313000"
+    },
+    {
+      "psgc": "1001313004",
+      "name": "Omagling",
+      "type": "barangay",
+      "parent": "1001313000"
+    },
+    {
+      "psgc": "1001313005",
+      "name": "Patpat",
+      "type": "barangay",
+      "parent": "1001313000"
+    },
+    {
+      "psgc": "1001313006",
+      "name": "Poblacion",
+      "type": "barangay",
+      "parent": "1001313000"
+    },
+    {
+      "psgc": "1001313007",
+      "name": "Sampiano",
+      "type": "barangay",
+      "parent": "1001313000"
+    },
+    {
+      "psgc": "1001313008",
+      "name": "San Luis",
+      "type": "barangay",
+      "parent": "1001313000"
+    },
+    {
+      "psgc": "1001313009",
+      "name": "Santa Ines",
+      "type": "barangay",
+      "parent": "1001313000"
+    },
+    {
+      "psgc": "1001313010",
+      "name": "Silo-o",
+      "type": "barangay",
+      "parent": "1001313000"
+    },
+    {
+      "psgc": "1001313011",
+      "name": "Sumalsag",
+      "type": "barangay",
+      "parent": "1001313000"
+    },
+    {
+      "psgc": "1001314001",
+      "name": "Agusan Canyon",
+      "type": "barangay",
+      "parent": "1001314000"
+    },
+    {
+      "psgc": "1001314002",
+      "name": "Alae",
+      "type": "barangay",
+      "parent": "1001314000"
+    },
+    {
+      "psgc": "1001314003",
+      "name": "Dahilayan",
+      "type": "barangay",
+      "parent": "1001314000"
+    },
+    {
+      "psgc": "1001314004",
+      "name": "Dalirig",
+      "type": "barangay",
+      "parent": "1001314000"
+    },
+    {
+      "psgc": "1001314005",
+      "name": "Damilag",
+      "type": "barangay",
+      "parent": "1001314000"
+    },
+    {
+      "psgc": "1001314006",
+      "name": "Diclum",
+      "type": "barangay",
+      "parent": "1001314000"
+    },
+    {
+      "psgc": "1001314007",
+      "name": "Guilang-guilang",
+      "type": "barangay",
+      "parent": "1001314000"
+    },
+    {
+      "psgc": "1001314008",
+      "name": "Kalugmanan",
+      "type": "barangay",
+      "parent": "1001314000"
+    },
+    {
+      "psgc": "1001314009",
+      "name": "Lindaban",
+      "type": "barangay",
+      "parent": "1001314000"
+    },
+    {
+      "psgc": "1001314010",
+      "name": "Lingion",
+      "type": "barangay",
+      "parent": "1001314000"
+    },
+    {
+      "psgc": "1001314011",
+      "name": "Lunocan",
+      "type": "barangay",
+      "parent": "1001314000"
+    },
+    {
+      "psgc": "1001314012",
+      "name": "Maluko",
+      "type": "barangay",
+      "parent": "1001314000"
+    },
+    {
+      "psgc": "1001314013",
+      "name": "Mambatangan",
+      "type": "barangay",
+      "parent": "1001314000"
+    },
+    {
+      "psgc": "1001314014",
+      "name": "Mampayag",
+      "type": "barangay",
+      "parent": "1001314000"
+    },
+    {
+      "psgc": "1001314015",
+      "name": "Minsuro",
+      "type": "barangay",
+      "parent": "1001314000"
+    },
+    {
+      "psgc": "1001314016",
+      "name": "Mantibugao",
+      "type": "barangay",
+      "parent": "1001314000"
+    },
+    {
+      "psgc": "1001314017",
+      "name": "Tankulan (Pob.)",
+      "type": "barangay",
+      "parent": "1001314000"
+    },
+    {
+      "psgc": "1001314018",
+      "name": "San Miguel",
+      "type": "barangay",
+      "parent": "1001314000"
+    },
+    {
+      "psgc": "1001314019",
+      "name": "Sankanan",
+      "type": "barangay",
+      "parent": "1001314000"
+    },
+    {
+      "psgc": "1001314020",
+      "name": "Santiago",
+      "type": "barangay",
+      "parent": "1001314000"
+    },
+    {
+      "psgc": "1001314021",
+      "name": "Santo Niño",
+      "type": "barangay",
+      "parent": "1001314000"
+    },
+    {
+      "psgc": "1001314023",
+      "name": "Ticala",
+      "type": "barangay",
+      "parent": "1001314000"
+    },
+    {
+      "psgc": "1001315001",
+      "name": "Anahawon",
+      "type": "barangay",
+      "parent": "1001315000"
+    },
+    {
+      "psgc": "1001315002",
+      "name": "Base Camp",
+      "type": "barangay",
+      "parent": "1001315000"
+    },
+    {
+      "psgc": "1001315003",
+      "name": "Bayabason",
+      "type": "barangay",
+      "parent": "1001315000"
+    },
+    {
+      "psgc": "1001315004",
+      "name": "Camp I",
+      "type": "barangay",
+      "parent": "1001315000"
+    },
+    {
+      "psgc": "1001315005",
+      "name": "Colambugan",
+      "type": "barangay",
+      "parent": "1001315000"
+    },
+    {
+      "psgc": "1001315006",
+      "name": "Dagumba-an",
+      "type": "barangay",
+      "parent": "1001315000"
+    },
+    {
+      "psgc": "1001315007",
+      "name": "Danggawan",
+      "type": "barangay",
+      "parent": "1001315000"
+    },
+    {
+      "psgc": "1001315008",
+      "name": "Dologon",
+      "type": "barangay",
+      "parent": "1001315000"
+    },
+    {
+      "psgc": "1001315009",
+      "name": "Kisanday",
+      "type": "barangay",
+      "parent": "1001315000"
+    },
+    {
+      "psgc": "1001315010",
+      "name": "Kuya",
+      "type": "barangay",
+      "parent": "1001315000"
+    },
+    {
+      "psgc": "1001315011",
+      "name": "La Roxas",
+      "type": "barangay",
+      "parent": "1001315000"
+    },
+    {
+      "psgc": "1001315012",
+      "name": "Panadtalan",
+      "type": "barangay",
+      "parent": "1001315000"
+    },
+    {
+      "psgc": "1001315013",
+      "name": "Panalsalan",
+      "type": "barangay",
+      "parent": "1001315000"
+    },
+    {
+      "psgc": "1001315014",
+      "name": "North Poblacion",
+      "type": "barangay",
+      "parent": "1001315000"
+    },
+    {
+      "psgc": "1001315015",
+      "name": "South Poblacion",
+      "type": "barangay",
+      "parent": "1001315000"
+    },
+    {
+      "psgc": "1001315016",
+      "name": "San Miguel",
+      "type": "barangay",
+      "parent": "1001315000"
+    },
+    {
+      "psgc": "1001315017",
+      "name": "San Roque",
+      "type": "barangay",
+      "parent": "1001315000"
+    },
+    {
+      "psgc": "1001315018",
+      "name": "Tubigon",
+      "type": "barangay",
+      "parent": "1001315000"
+    },
+    {
+      "psgc": "1001315019",
+      "name": "Bagongsilang",
+      "type": "barangay",
+      "parent": "1001315000"
+    },
+    {
+      "psgc": "1001315020",
+      "name": "Kiharong",
+      "type": "barangay",
+      "parent": "1001315000"
+    },
+    {
+      "psgc": "1001316001",
+      "name": "Adtuyon",
+      "type": "barangay",
+      "parent": "1001316000"
+    },
+    {
+      "psgc": "1001316002",
+      "name": "Bacusanon",
+      "type": "barangay",
+      "parent": "1001316000"
+    },
+    {
+      "psgc": "1001316003",
+      "name": "Bangahan",
+      "type": "barangay",
+      "parent": "1001316000"
+    },
+    {
+      "psgc": "1001316004",
+      "name": "Barandias",
+      "type": "barangay",
+      "parent": "1001316000"
+    },
+    {
+      "psgc": "1001316005",
+      "name": "Concepcion",
+      "type": "barangay",
+      "parent": "1001316000"
+    },
+    {
+      "psgc": "1001316006",
+      "name": "Gandingan",
+      "type": "barangay",
+      "parent": "1001316000"
+    },
+    {
+      "psgc": "1001316007",
+      "name": "Kimanait",
+      "type": "barangay",
+      "parent": "1001316000"
+    },
+    {
+      "psgc": "1001316008",
+      "name": "Kipadukan",
+      "type": "barangay",
+      "parent": "1001316000"
+    },
+    {
+      "psgc": "1001316009",
+      "name": "Langcataon",
+      "type": "barangay",
+      "parent": "1001316000"
+    },
+    {
+      "psgc": "1001316010",
+      "name": "Lantay",
+      "type": "barangay",
+      "parent": "1001316000"
+    },
+    {
+      "psgc": "1001316011",
+      "name": "Madaya",
+      "type": "barangay",
+      "parent": "1001316000"
+    },
+    {
+      "psgc": "1001316012",
+      "name": "Malipayon",
+      "type": "barangay",
+      "parent": "1001316000"
+    },
+    {
+      "psgc": "1001316013",
+      "name": "Mendis",
+      "type": "barangay",
+      "parent": "1001316000"
+    },
+    {
+      "psgc": "1001316014",
+      "name": "Nabaliwa",
+      "type": "barangay",
+      "parent": "1001316000"
+    },
+    {
+      "psgc": "1001316015",
+      "name": "New Eden",
+      "type": "barangay",
+      "parent": "1001316000"
+    },
+    {
+      "psgc": "1001316016",
+      "name": "Payad",
+      "type": "barangay",
+      "parent": "1001316000"
+    },
+    {
+      "psgc": "1001316017",
+      "name": "Pigtauranan",
+      "type": "barangay",
+      "parent": "1001316000"
+    },
+    {
+      "psgc": "1001316018",
+      "name": "Poblacion",
+      "type": "barangay",
+      "parent": "1001316000"
+    },
+    {
+      "psgc": "1001316019",
+      "name": "Portulin",
+      "type": "barangay",
+      "parent": "1001316000"
+    },
+    {
+      "psgc": "1001317001",
+      "name": "Butong",
+      "type": "barangay",
+      "parent": "1001317000"
+    },
+    {
+      "psgc": "1001317002",
+      "name": "Cebole",
+      "type": "barangay",
+      "parent": "1001317000"
+    },
+    {
+      "psgc": "1001317003",
+      "name": "Delapa",
+      "type": "barangay",
+      "parent": "1001317000"
+    },
+    {
+      "psgc": "1001317004",
+      "name": "Dumalama",
+      "type": "barangay",
+      "parent": "1001317000"
+    },
+    {
+      "psgc": "1001317006",
+      "name": "C-Handumanan",
+      "type": "barangay",
+      "parent": "1001317000"
+    },
+    {
+      "psgc": "1001317007",
+      "name": "Cawayan",
+      "type": "barangay",
+      "parent": "1001317000"
+    },
+    {
+      "psgc": "1001317008",
+      "name": "Kiburiao",
+      "type": "barangay",
+      "parent": "1001317000"
+    },
+    {
+      "psgc": "1001317009",
+      "name": "Kipaypayon",
+      "type": "barangay",
+      "parent": "1001317000"
+    },
+    {
+      "psgc": "1001317010",
+      "name": "Libertad",
+      "type": "barangay",
+      "parent": "1001317000"
+    },
+    {
+      "psgc": "1001317012",
+      "name": "Linabo",
+      "type": "barangay",
+      "parent": "1001317000"
+    },
+    {
+      "psgc": "1001317013",
+      "name": "Lipa",
+      "type": "barangay",
+      "parent": "1001317000"
+    },
+    {
+      "psgc": "1001317014",
+      "name": "Lumintao",
+      "type": "barangay",
+      "parent": "1001317000"
+    },
+    {
+      "psgc": "1001317016",
+      "name": "Magsaysay",
+      "type": "barangay",
+      "parent": "1001317000"
+    },
+    {
+      "psgc": "1001317017",
+      "name": "Mahayag",
+      "type": "barangay",
+      "parent": "1001317000"
+    },
+    {
+      "psgc": "1001317018",
+      "name": "Manuto",
+      "type": "barangay",
+      "parent": "1001317000"
+    },
+    {
+      "psgc": "1001317019",
+      "name": "Merangerang",
+      "type": "barangay",
+      "parent": "1001317000"
+    },
+    {
+      "psgc": "1001317020",
+      "name": "Mibantang",
+      "type": "barangay",
+      "parent": "1001317000"
+    },
+    {
+      "psgc": "1001317021",
+      "name": "Minongan",
+      "type": "barangay",
+      "parent": "1001317000"
+    },
+    {
+      "psgc": "1001317022",
+      "name": "Minsamongan",
+      "type": "barangay",
+      "parent": "1001317000"
+    },
+    {
+      "psgc": "1001317025",
+      "name": "Paitan",
+      "type": "barangay",
+      "parent": "1001317000"
+    },
+    {
+      "psgc": "1001317026",
+      "name": "Palacapao",
+      "type": "barangay",
+      "parent": "1001317000"
+    },
+    {
+      "psgc": "1001317027",
+      "name": "Pinilayan",
+      "type": "barangay",
+      "parent": "1001317000"
+    },
+    {
+      "psgc": "1001317028",
+      "name": "Poblacion",
+      "type": "barangay",
+      "parent": "1001317000"
+    },
+    {
+      "psgc": "1001317029",
+      "name": "Puntian",
+      "type": "barangay",
+      "parent": "1001317000"
+    },
+    {
+      "psgc": "1001317030",
+      "name": "Salawagan",
+      "type": "barangay",
+      "parent": "1001317000"
+    },
+    {
+      "psgc": "1001317031",
+      "name": "San Isidro",
+      "type": "barangay",
+      "parent": "1001317000"
+    },
+    {
+      "psgc": "1001317032",
+      "name": "San Jose",
+      "type": "barangay",
+      "parent": "1001317000"
+    },
+    {
+      "psgc": "1001317033",
+      "name": "San Roque",
+      "type": "barangay",
+      "parent": "1001317000"
+    },
+    {
+      "psgc": "1001317034",
+      "name": "Santa Cruz",
+      "type": "barangay",
+      "parent": "1001317000"
+    },
+    {
+      "psgc": "1001317035",
+      "name": "Santa Filomena",
+      "type": "barangay",
+      "parent": "1001317000"
+    },
+    {
+      "psgc": "1001317036",
+      "name": "Minsalirak",
+      "type": "barangay",
+      "parent": "1001317000"
+    },
+    {
+      "psgc": "1001318001",
+      "name": "Bonacao",
+      "type": "barangay",
+      "parent": "1001318000"
+    },
+    {
+      "psgc": "1001318002",
+      "name": "Cabuling",
+      "type": "barangay",
+      "parent": "1001318000"
+    },
+    {
+      "psgc": "1001318003",
+      "name": "Kawayan",
+      "type": "barangay",
+      "parent": "1001318000"
+    },
+    {
+      "psgc": "1001318004",
+      "name": "Cayaga",
+      "type": "barangay",
+      "parent": "1001318000"
+    },
+    {
+      "psgc": "1001318005",
+      "name": "Dao",
+      "type": "barangay",
+      "parent": "1001318000"
+    },
+    {
+      "psgc": "1001318007",
+      "name": "Durian",
+      "type": "barangay",
+      "parent": "1001318000"
+    },
+    {
+      "psgc": "1001318009",
+      "name": "Iglugsad",
+      "type": "barangay",
+      "parent": "1001318000"
+    },
+    {
+      "psgc": "1001318010",
+      "name": "Kalagangan",
+      "type": "barangay",
+      "parent": "1001318000"
+    },
+    {
+      "psgc": "1001318014",
+      "name": "Kibongcog",
+      "type": "barangay",
+      "parent": "1001318000"
+    },
+    {
+      "psgc": "1001318016",
+      "name": "Little Baguio",
+      "type": "barangay",
+      "parent": "1001318000"
+    },
+    {
+      "psgc": "1001318019",
+      "name": "Nacabuklad",
+      "type": "barangay",
+      "parent": "1001318000"
+    },
+    {
+      "psgc": "1001318020",
+      "name": "Namnam",
+      "type": "barangay",
+      "parent": "1001318000"
+    },
+    {
+      "psgc": "1001318021",
+      "name": "Palacpacan",
+      "type": "barangay",
+      "parent": "1001318000"
+    },
+    {
+      "psgc": "1001318022",
+      "name": "Halapitan (Pob.)",
+      "type": "barangay",
+      "parent": "1001318000"
+    },
+    {
+      "psgc": "1001318023",
+      "name": "San Jose",
+      "type": "barangay",
+      "parent": "1001318000"
+    },
+    {
+      "psgc": "1001318024",
+      "name": "Santo Domingo",
+      "type": "barangay",
+      "parent": "1001318000"
+    },
+    {
+      "psgc": "1001318025",
+      "name": "Tugop",
+      "type": "barangay",
+      "parent": "1001318000"
+    },
+    {
+      "psgc": "1001318026",
+      "name": "Matupe",
+      "type": "barangay",
+      "parent": "1001318000"
+    },
+    {
+      "psgc": "1001318027",
+      "name": "Bulalang",
+      "type": "barangay",
+      "parent": "1001318000"
+    },
+    {
+      "psgc": "1001318028",
+      "name": "Candelaria",
+      "type": "barangay",
+      "parent": "1001318000"
+    },
+    {
+      "psgc": "1001318029",
+      "name": "Mabuhay",
+      "type": "barangay",
+      "parent": "1001318000"
+    },
+    {
+      "psgc": "1001318030",
+      "name": "Magkalungay",
+      "type": "barangay",
+      "parent": "1001318000"
+    },
+    {
+      "psgc": "1001318031",
+      "name": "Malayanan",
+      "type": "barangay",
+      "parent": "1001318000"
+    },
+    {
+      "psgc": "1001318032",
+      "name": "Sacramento Valley",
+      "type": "barangay",
+      "parent": "1001318000"
+    },
+    {
+      "psgc": "1001319001",
+      "name": "Kisolon",
+      "type": "barangay",
+      "parent": "1001319000"
+    },
+    {
+      "psgc": "1001319002",
+      "name": "Culasi",
+      "type": "barangay",
+      "parent": "1001319000"
+    },
+    {
+      "psgc": "1001319003",
+      "name": "Licoan",
+      "type": "barangay",
+      "parent": "1001319000"
+    },
+    {
+      "psgc": "1001319004",
+      "name": "Lupiagan",
+      "type": "barangay",
+      "parent": "1001319000"
+    },
+    {
+      "psgc": "1001319005",
+      "name": "Ocasion",
+      "type": "barangay",
+      "parent": "1001319000"
+    },
+    {
+      "psgc": "1001319006",
+      "name": "Puntian",
+      "type": "barangay",
+      "parent": "1001319000"
+    },
+    {
+      "psgc": "1001319007",
+      "name": "San Roque",
+      "type": "barangay",
+      "parent": "1001319000"
+    },
+    {
+      "psgc": "1001319008",
+      "name": "San Vicente",
+      "type": "barangay",
+      "parent": "1001319000"
+    },
+    {
+      "psgc": "1001319009",
+      "name": "Poblacion",
+      "type": "barangay",
+      "parent": "1001319000"
+    },
+    {
+      "psgc": "1001319010",
+      "name": "Vista Villa",
+      "type": "barangay",
+      "parent": "1001319000"
+    },
+    {
+      "psgc": "1001320001",
+      "name": "Basak",
+      "type": "barangay",
+      "parent": "1001320000"
+    },
+    {
+      "psgc": "1001320002",
+      "name": "Baylanan",
+      "type": "barangay",
+      "parent": "1001320000"
+    },
+    {
+      "psgc": "1001320003",
+      "name": "Cacaon",
+      "type": "barangay",
+      "parent": "1001320000"
+    },
+    {
+      "psgc": "1001320004",
+      "name": "Colawingon",
+      "type": "barangay",
+      "parent": "1001320000"
+    },
+    {
+      "psgc": "1001320005",
+      "name": "Cosina",
+      "type": "barangay",
+      "parent": "1001320000"
+    },
+    {
+      "psgc": "1001320006",
+      "name": "Dagumbaan",
+      "type": "barangay",
+      "parent": "1001320000"
+    },
+    {
+      "psgc": "1001320007",
+      "name": "Dagundalahon",
+      "type": "barangay",
+      "parent": "1001320000"
+    },
+    {
+      "psgc": "1001320008",
+      "name": "Dominorog",
+      "type": "barangay",
+      "parent": "1001320000"
+    },
+    {
+      "psgc": "1001320009",
+      "name": "Lapok",
+      "type": "barangay",
+      "parent": "1001320000"
+    },
+    {
+      "psgc": "1001320010",
+      "name": "Indulang",
+      "type": "barangay",
+      "parent": "1001320000"
+    },
+    {
+      "psgc": "1001320011",
+      "name": "Lantud",
+      "type": "barangay",
+      "parent": "1001320000"
+    },
+    {
+      "psgc": "1001320013",
+      "name": "Liguron",
+      "type": "barangay",
+      "parent": "1001320000"
+    },
+    {
+      "psgc": "1001320014",
+      "name": "Lingi-on",
+      "type": "barangay",
+      "parent": "1001320000"
+    },
+    {
+      "psgc": "1001320015",
+      "name": "Lirongan",
+      "type": "barangay",
+      "parent": "1001320000"
+    },
+    {
+      "psgc": "1001320016",
+      "name": "Santo Niño",
+      "type": "barangay",
+      "parent": "1001320000"
+    },
+    {
+      "psgc": "1001320018",
+      "name": "Miarayon",
+      "type": "barangay",
+      "parent": "1001320000"
+    },
+    {
+      "psgc": "1001320019",
+      "name": "Barangay 1 (Pob.)",
+      "type": "barangay",
+      "parent": "1001320000"
+    },
+    {
+      "psgc": "1001320020",
+      "name": "Barangay 2 (Pob.)",
+      "type": "barangay",
+      "parent": "1001320000"
+    },
+    {
+      "psgc": "1001320021",
+      "name": "Barangay 3 (Pob.)",
+      "type": "barangay",
+      "parent": "1001320000"
+    },
+    {
+      "psgc": "1001320022",
+      "name": "Barangay 4 (Pob.)",
+      "type": "barangay",
+      "parent": "1001320000"
+    },
+    {
+      "psgc": "1001320023",
+      "name": "Barangay 5 (Pob.)",
+      "type": "barangay",
+      "parent": "1001320000"
+    },
+    {
+      "psgc": "1001320024",
+      "name": "Sagaran",
+      "type": "barangay",
+      "parent": "1001320000"
+    },
+    {
+      "psgc": "1001320025",
+      "name": "Salucot",
+      "type": "barangay",
+      "parent": "1001320000"
+    },
+    {
+      "psgc": "1001320026",
+      "name": "San Antonio",
+      "type": "barangay",
+      "parent": "1001320000"
+    },
+    {
+      "psgc": "1001320027",
+      "name": "San Isidro",
+      "type": "barangay",
+      "parent": "1001320000"
+    },
+    {
+      "psgc": "1001320028",
+      "name": "San Miguel",
+      "type": "barangay",
+      "parent": "1001320000"
+    },
+    {
+      "psgc": "1001320029",
+      "name": "San Rafael",
+      "type": "barangay",
+      "parent": "1001320000"
+    },
+    {
+      "psgc": "1001320030",
+      "name": "Tagbak",
+      "type": "barangay",
+      "parent": "1001320000"
+    },
+    {
+      "psgc": "1001320031",
+      "name": "Tikalaan",
+      "type": "barangay",
+      "parent": "1001320000"
+    },
+    {
+      "psgc": "1001321001",
+      "name": "Bagontaas",
+      "type": "barangay",
+      "parent": "1001321000"
+    },
+    {
+      "psgc": "1001321002",
+      "name": "Banlag",
+      "type": "barangay",
+      "parent": "1001321000"
+    },
+    {
+      "psgc": "1001321003",
+      "name": "Barobo",
+      "type": "barangay",
+      "parent": "1001321000"
+    },
+    {
+      "psgc": "1001321004",
+      "name": "Batangan",
+      "type": "barangay",
+      "parent": "1001321000"
+    },
+    {
+      "psgc": "1001321005",
+      "name": "Catumbalon",
+      "type": "barangay",
+      "parent": "1001321000"
+    },
+    {
+      "psgc": "1001321006",
+      "name": "Colonia",
+      "type": "barangay",
+      "parent": "1001321000"
+    },
+    {
+      "psgc": "1001321007",
+      "name": "Concepcion",
+      "type": "barangay",
+      "parent": "1001321000"
+    },
+    {
+      "psgc": "1001321008",
+      "name": "Dagat-Kidavao",
+      "type": "barangay",
+      "parent": "1001321000"
+    },
+    {
+      "psgc": "1001321010",
+      "name": "Guinoyuran",
+      "type": "barangay",
+      "parent": "1001321000"
+    },
+    {
+      "psgc": "1001321011",
+      "name": "Kahapunan",
+      "type": "barangay",
+      "parent": "1001321000"
+    },
+    {
+      "psgc": "1001321012",
+      "name": "Laligan",
+      "type": "barangay",
+      "parent": "1001321000"
+    },
+    {
+      "psgc": "1001321013",
+      "name": "Lilingayon",
+      "type": "barangay",
+      "parent": "1001321000"
+    },
+    {
+      "psgc": "1001321014",
+      "name": "Lourdes",
+      "type": "barangay",
+      "parent": "1001321000"
+    },
+    {
+      "psgc": "1001321015",
+      "name": "Lumbayao",
+      "type": "barangay",
+      "parent": "1001321000"
+    },
+    {
+      "psgc": "1001321016",
+      "name": "Lumbo",
+      "type": "barangay",
+      "parent": "1001321000"
+    },
+    {
+      "psgc": "1001321017",
+      "name": "Lurogan",
+      "type": "barangay",
+      "parent": "1001321000"
+    },
+    {
+      "psgc": "1001321018",
+      "name": "Maapag",
+      "type": "barangay",
+      "parent": "1001321000"
+    },
+    {
+      "psgc": "1001321019",
+      "name": "Mabuhay",
+      "type": "barangay",
+      "parent": "1001321000"
+    },
+    {
+      "psgc": "1001321020",
+      "name": "Mailag",
+      "type": "barangay",
+      "parent": "1001321000"
+    },
+    {
+      "psgc": "1001321021",
+      "name": "Mt. Nebo",
+      "type": "barangay",
+      "parent": "1001321000"
+    },
+    {
+      "psgc": "1001321022",
+      "name": "Nabago",
+      "type": "barangay",
+      "parent": "1001321000"
+    },
+    {
+      "psgc": "1001321023",
+      "name": "Pinatilan",
+      "type": "barangay",
+      "parent": "1001321000"
+    },
+    {
+      "psgc": "1001321024",
+      "name": "Poblacion",
+      "type": "barangay",
+      "parent": "1001321000"
+    },
+    {
+      "psgc": "1001321025",
+      "name": "San Carlos",
+      "type": "barangay",
+      "parent": "1001321000"
+    },
+    {
+      "psgc": "1001321026",
+      "name": "San Isidro",
+      "type": "barangay",
+      "parent": "1001321000"
+    },
+    {
+      "psgc": "1001321028",
+      "name": "Sinabuagan",
+      "type": "barangay",
+      "parent": "1001321000"
+    },
+    {
+      "psgc": "1001321029",
+      "name": "Sinayawan",
+      "type": "barangay",
+      "parent": "1001321000"
+    },
+    {
+      "psgc": "1001321030",
+      "name": "Sugod",
+      "type": "barangay",
+      "parent": "1001321000"
+    },
+    {
+      "psgc": "1001321033",
+      "name": "Tongantongan",
+      "type": "barangay",
+      "parent": "1001321000"
+    },
+    {
+      "psgc": "1001321034",
+      "name": "Tugaya",
+      "type": "barangay",
+      "parent": "1001321000"
+    },
+    {
+      "psgc": "1001321035",
+      "name": "Vintar",
+      "type": "barangay",
+      "parent": "1001321000"
+    },
+    {
+      "psgc": "1001322001",
+      "name": "Cabulohan",
+      "type": "barangay",
+      "parent": "1001322000"
+    },
+    {
+      "psgc": "1001322002",
+      "name": "Canangaan",
+      "type": "barangay",
+      "parent": "1001322000"
+    },
+    {
+      "psgc": "1001322003",
+      "name": "Iba",
+      "type": "barangay",
+      "parent": "1001322000"
+    },
+    {
+      "psgc": "1001322004",
+      "name": "Imbatug",
+      "type": "barangay",
+      "parent": "1001322000"
+    },
+    {
+      "psgc": "1001322005",
+      "name": "Lambangan",
+      "type": "barangay",
+      "parent": "1001322000"
+    },
+    {
+      "psgc": "1001322006",
+      "name": "Mandaing",
+      "type": "barangay",
+      "parent": "1001322000"
+    },
+    {
+      "psgc": "1001322007",
+      "name": "Paradise",
+      "type": "barangay",
+      "parent": "1001322000"
+    },
+    {
+      "psgc": "1001322008",
+      "name": "Poblacion",
+      "type": "barangay",
+      "parent": "1001322000"
+    },
+    {
+      "psgc": "1001322009",
+      "name": "Anlogan",
+      "type": "barangay",
+      "parent": "1001322000"
+    },
+    {
+      "psgc": "1001322010",
+      "name": "Capinonan",
+      "type": "barangay",
+      "parent": "1001322000"
+    },
+    {
+      "psgc": "1001322011",
+      "name": "Dalacutan",
+      "type": "barangay",
+      "parent": "1001322000"
+    },
+    {
+      "psgc": "1001322012",
+      "name": "Freedom",
+      "type": "barangay",
+      "parent": "1001322000"
+    },
+    {
+      "psgc": "1001322013",
+      "name": "Mandahikan",
+      "type": "barangay",
+      "parent": "1001322000"
+    },
+    {
+      "psgc": "1001322014",
+      "name": "Mauswagon",
+      "type": "barangay",
+      "parent": "1001322000"
+    },
+    {
+      "psgc": "1001322015",
+      "name": "Jasaan",
+      "type": "barangay",
+      "parent": "1001322000"
+    }
+  ]
+}

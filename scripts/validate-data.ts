@@ -12,13 +12,29 @@ function readJsonDir<T>(dir: string): { file: string; value: T }[] {
     .map((f) => ({ file: f, value: JSON.parse(readFileSync(join(dir, f), 'utf8')) as T }))
 }
 
-export function validateData(dir: string): string[] {
+export function validateData(dir: string, opts: { strictGeoCounts?: boolean } = {}): string[] {
   const errors: string[] = []
   const geoPath = join(dir, 'geo.json')
   const geo: Geo = existsSync(geoPath)
     ? (JSON.parse(readFileSync(geoPath, 'utf8')) as Geo)
     : { nodes: [] }
   const geoCodes = new Set(geo.nodes.map((n) => n.psgc))
+  if (opts.strictGeoCounts && geo.nodes.length > 0) {
+    const count = (types: string[]) => geo.nodes.filter((n) => types.includes(n.type)).length
+    const want: [string, number, number][] = [
+      ['province', count(['province']), 1],
+      ['LGU (city+municipality)', count(['city', 'municipality']), 22],
+      ['barangay', count(['barangay']), 464],
+    ]
+    for (const [label, got, exp] of want) {
+      if (got !== exp) errors.push(`geo.json: geo-counts: expected ${exp} ${label} nodes, found ${got}`)
+    }
+    for (const n of geo.nodes) {
+      if (n.type !== 'province' && (!n.parent || !geoCodes.has(n.parent))) {
+        errors.push(`geo.json: geo-orphan-parent: ${n.psgc} (${n.name}) has missing parent ${n.parent}`)
+      }
+    }
+  }
   const officials = readJsonDir<Official>(join(dir, 'officials'))
   const salns = readJsonDir<SalnRecord>(join(dir, 'saln'))
   const personIds = new Set(officials.map((o) => o.value.personId))
@@ -56,7 +72,7 @@ export function validateData(dir: string): string[] {
 }
 
 if (process.argv[1] && resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
-  const errors = validateData(resolve(process.argv[2] ?? 'data'))
+  const errors = validateData(resolve(process.argv[2] ?? 'data'), { strictGeoCounts: true })
   if (errors.length) {
     for (const e of errors) console.error(e)
     process.exit(1)

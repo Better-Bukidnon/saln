@@ -1,0 +1,11 @@
+10-digit PSGC,Name,Correspondence Code,Geographic Level,Old names,City Class,Income Classification,Urban / Rural,2020 Population,Status
+1001300000,Bukidnon,101300000,Prov,,,1st,,1541308,
+1001301000,Baungon,101301000,Mun,,,1st,,40000,
+1001301001,Balintad,101301001,Bgy,,,,R,3000,
+1001301002,Poblacion,101301002,Bgy,"Pob., Old",,,U,4000,
+1001302000,Malaybalay City,101302000,City,,CC,1st,,190000,
+1001302001,Aglayan,101302001,Bgy,,,,U,6000,
+1001302002,Poblacion,101302002,Bgy,,,,U,5000,
+1000100000,Other Province,100100000,Prov,,,,,1,
+1000101000,Other Town,100101000,Mun,,,,,1,
+1000101001,Other Barangay,100101001,Bgy,,,,,1,

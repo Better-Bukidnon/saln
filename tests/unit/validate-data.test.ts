@@ -1,4 +1,5 @@
-import { readdirSync } from 'node:fs'
+import { mkdtempSync, readdirSync, writeFileSync } from 'node:fs'
+import { tmpdir } from 'node:os'
 import { join } from 'node:path'
 import { describe, expect, it } from 'vitest'
 import { validateData } from '../../scripts/validate-data'
@@ -23,5 +24,30 @@ describe('validateData', () => {
     const errs = validateData(join(fx, 'invalid', dir))
     expect(errs).toHaveLength(1)
     expect(errs[0]).toContain(rule)
+  })
+})
+
+describe('validateData strictGeoCounts', () => {
+  const mk = (nodes: unknown[]) => {
+    const d = mkdtempSync(join(tmpdir(), 'geo-'))
+    writeFileSync(join(d, 'geo.json'), JSON.stringify({ nodes }))
+    return d
+  }
+  it('fixture geo passes without the option', () => {
+    expect(validateData(join(fx, 'valid'))).toEqual([])
+  })
+  it('flags wrong counts', () => {
+    const errs = validateData(mk([{ psgc: '1001300000', name: 'B', type: 'province' }]), { strictGeoCounts: true })
+    expect(errs.join('\n')).toContain('geo-counts')
+  })
+  it('flags a barangay whose parent is missing', () => {
+    const errs = validateData(
+      mk([{ psgc: '1001301001', name: 'X', type: 'barangay', parent: '1001301000' }]),
+      { strictGeoCounts: true },
+    )
+    expect(errs.join('\n')).toContain('geo-orphan-parent')
+  })
+  it('passes the real data/ dir', () => {
+    expect(validateData(join(__dirname, '..', '..', 'data'), { strictGeoCounts: true })).toEqual([])
   })
 })
