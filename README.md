@@ -28,3 +28,14 @@ Deploys as static assets via Cloudflare Workers (`wrangler.jsonc`, worker name `
 - Regenerate: `npx tsx scripts/import-roster.ts [--years 2016,2019,2022,2025] [--from-fixture <file>]`. Output is sorted and deterministic, so reruns diff cleanly. Towns that cannot be matched to a PSGC LGU are printed as `UNMAPPED` and never dropped silently.
 - For the 2025 term the governor, vice governor, board member and representative seats are not imported; the curated `data/officials/seed.json` covers them. Every imported row is `rosterVerified: false`.
 
+
+### Barangay captains
+
+No captain data ships with the repo. The importer turns a CSV you supply (a COMELEC/DILG export, or a manual capture) into `data/officials/barangay-captains.json`. The tool never scrapes a website and never invents names.
+
+- CSV columns, header row required: `municipality,barangay,name,source`. Quoted fields (names with commas) are allowed; UTF-8 with or without BOM; CRLF or LF.
+- `source` must be `comelec`, `dilg` or `community` (case-insensitive). Anything else is an invalid row. Community-sourced rows are not official.
+- Matching: the municipality is matched first (case, accent, space and hyphen insensitive; "City of"/"Municipality of"/trailing "City" ignored), then the barangay only among that municipality's own barangays, so a "Poblacion" row always lands on its own town's Poblacion. A leading "Barangay "/"Brgy. " is ignored and a "(Pob.)" suffix is optional; numbers are kept ("Barangay 2" and "Barangay 3" stay distinct). Row numbers in reports count the header as row 1.
+- Every row imports as `rosterVerified: false` (shown with the unverified badge), `position: 'Punong Barangay'`, term 2023-11-30 to 2026-11-30. Ids are `2023-<barangayCode>-punong-barangay`; `personId` is `cap-<barangayCode>-2023` because identity across terms is unknown.
+- Run: `npx tsx scripts/import-barangays.ts captains.csv [--out data/officials/barangay-captains.json] [--allow-partial] [--force]`. It prints counts, unmatched/duplicate/invalid rows and the barangays that still have no captain (count plus first 20 when more than 20). It exits non-zero and writes nothing if any row is unmatched or invalid, unless `--allow-partial`. Two rows for one barangay: the first wins and the rest are listed as duplicates. An existing output file is not overwritten without `--force`.
+- Workflow: obtain the CSV, run the importer, fix reported rows in the CSV and rerun, then `npm run validate-data`. After the next barangay election, only the CSV and the term dates in the script change.
