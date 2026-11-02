@@ -26,3 +26,12 @@ input[type="checkbox"] { width: 20px; height: 20px; }
   .filters { grid-template-columns: repeat(2, 1fr); }
   .cards { grid-template-columns: repeat(2, 1fr); }
 }
+.table-wrap { overflow-x: auto; }
+table.saln { border-collapse: collapse; width: 100%; min-width: 640px; }
+table.saln caption { text-align: left; color: var(--muted); padding-bottom: 6px; }
+table.saln th, table.saln td { border: 1px solid var(--line); padding: 6px 8px; text-align: left; vertical-align: top; }
+table.saln td.num { text-align: right; white-space: nowrap; }
+.verified { color: var(--muted); font-size: .9rem; }
+.note { color: var(--muted); }
+.terms { padding-left: 20px; }
+.empty { border: 1px solid var(--line); border-radius: 8px; padding: 4px 16px; }

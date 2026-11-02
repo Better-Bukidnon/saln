@@ -1,0 +1,27 @@
+[
+  {
+    "id": "dual-rep",
+    "personId": "dual-person",
+    "name": "Dual Term Person",
+    "position": "Representative, 2nd District",
+    "level": "district",
+    "geoCode": "1001300000",
+    "district": 2,
+    "termStart": "2016-06-30",
+    "termEnd": "2022-06-30",
+    "rosterSource": "manual",
+    "rosterVerified": true
+  },
+  {
+    "id": "dual-gov",
+    "personId": "dual-person",
+    "name": "Dual Term Person",
+    "position": "Governor",
+    "level": "province",
+    "geoCode": "1001300000",
+    "termStart": "2022-06-30",
+    "termEnd": "2028-06-30",
+    "rosterSource": "manual",
+    "rosterVerified": false
+  }
+]

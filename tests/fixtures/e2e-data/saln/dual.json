@@ -1,0 +1,28 @@
+[
+  {
+    "id": "dual-2022",
+    "personId": "dual-person",
+    "year": 2022,
+    "filingType": "entering",
+    "totalAssets": 20000000,
+    "totalLiabilities": 1000000,
+    "netWorth": 19000000,
+    "sourceType": "house-summary",
+    "sourceUrl": "https://example.org/house-summary-2022",
+    "status": "verified",
+    "verifiedBy": "Test Maintainer",
+    "verifiedAt": "2026-10-01"
+  },
+  {
+    "id": "dual-2024",
+    "personId": "dual-person",
+    "year": 2024,
+    "filingType": "annual",
+    "totalAssets": 30000000,
+    "totalLiabilities": 5042811.02,
+    "netWorth": 24957188.98,
+    "sourceType": "ombudsman",
+    "sourceUrl": "https://example.org/ombudsman-2024",
+    "status": "submitted"
+  }
+]

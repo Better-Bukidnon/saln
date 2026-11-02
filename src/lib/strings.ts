@@ -41,9 +41,60 @@ const strings = {
   aboutHeading: 'About this portal',
   aboutBody:
     'This portal collects publicly available Statements of Assets, Liabilities and Net Worth (SALN) of Bukidnon officials and links to the original sources.',
-  officialPlaceholder: 'Official details are coming soon.',
   notFound: 'Official not found.',
   back: 'Back to officials',
+  termsHeading: 'Terms',
+  salnHeading: 'SALN records',
+  salnCaption: 'Declared totals by year, newest first',
+  salnNote: 'Totals only, as declared. Source documents are linked.',
+  cols: {
+    year: 'Year',
+    filingType: 'Filing type',
+    assets: 'Total assets',
+    liabilities: 'Total liabilities',
+    netWorth: 'Net worth',
+    source: 'Source',
+    status: 'Status',
+  },
+  sourceTypes: {
+    'house-summary': 'House of Representatives summary',
+    ombudsman: 'Ombudsman copy',
+    lgu: 'Local government unit copy',
+    submitted: 'Community-submitted copy',
+  },
+  salnStatuses: {
+    submitted: 'Submitted, not yet verified',
+    verified: 'Verified',
+    under_review: 'Under review',
+    flagged: 'Flagged for review',
+  },
+  verifiedBy: (by: string, on: string) => `Verified by ${by} on ${on}`,
+  present: 'present',
+  termRange: (start: string, end: string) => `${start} to ${end}`,
+  requestOmbudsman: 'Request this SALN from the Ombudsman',
+  requestExplain:
+    'A copy can be requested from the Office of the Ombudsman using its sworn request form, together with two valid IDs.',
+  notFoundBody: 'No official matches this link.',
+  aboutSources: 'Sources',
+  aboutSourcesList: [
+    'Roster of officials: Open Halalan election data, served through the BetterGov Dynasties API.',
+    'Geography: Philippine Standard Geographic Code (PSGC) from the Philippine Statistics Authority.',
+    'SALN totals: summaries published by the House of Representatives.',
+    'SALN copies: the Office of the Ombudsman.',
+  ],
+  aboutVerification: 'Verification',
+  aboutVerificationBody: [
+    'Unverified means the entry has been collected from the source above but nobody has checked it against the original document yet.',
+    'Only a named maintainer can mark a record as verified, and the page then shows who verified it and when.',
+  ],
+  aboutRequest: 'How to request a SALN',
+  aboutRequestBody:
+    'Copies of SALNs are released by the Office of the Ombudsman on a sworn request form with two valid IDs. Instructions and the form are on the Ombudsman page.',
+  aboutRequestLink: 'Ombudsman: request for copy of SALNs',
+  aboutSubmit: 'How to submit a SALN copy',
+  aboutSubmitBody:
+    'If you have obtained a copy through lawful means, open the submission form and link to it. We store declared totals only and always keep the source link.',
+  aboutSubmitLink: 'Open the SALN submission form',
 }
 
 export default strings
