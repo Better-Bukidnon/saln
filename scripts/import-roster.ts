@@ -152,22 +152,34 @@ export function contestsToOfficials(
   return { officials, unmapped: [...unmapped].sort() }
 }
 
-async function getJson(url: string): Promise<unknown> {
+export interface HttpOpts {
+  fetchFn?: typeof fetch
+  timeoutMs?: number
+  sleep?: (ms: number) => Promise<void>
+}
+
+export async function getJson(url: string, opts: HttpOpts = {}): Promise<unknown> {
+  const fetchFn = opts.fetchFn ?? fetch
+  const sleep = opts.sleep ?? ((ms: number) => new Promise<void>((r) => setTimeout(r, ms)))
   let lastErr: unknown
   for (let attempt = 0; attempt < 3; attempt++) {
     try {
-      const res = await fetch(url, { signal: AbortSignal.timeout(30_000) })
+      const res = await fetchFn(url, { signal: AbortSignal.timeout(opts.timeoutMs ?? 30_000) })
       if (res.status !== 200) throw new Error(`HTTP ${res.status} for ${url}`)
       return await res.json()
     } catch (e) {
       lastErr = e
-      if (attempt < 2) await new Promise((r) => setTimeout(r, 1000 * 2 ** attempt))
+      if (attempt < 2) await sleep(1000 * 2 ** attempt)
     }
   }
-  throw new Error(`failed after 3 attempts: ${(lastErr as Error).message}`)
+  throw new Error(`failed after 3 attempts for ${url}: ${(lastErr as Error).message}`)
 }
 
-export async function fetchContests(year: number, position: string): Promise<DynastiesContest[]> {
+export async function fetchContests(
+  year: number,
+  position: string,
+  opts: HttpOpts = {},
+): Promise<DynastiesContest[]> {
   const limit = 50
   const all: DynastiesContest[] = []
   for (let page = 1; ; page++) {
@@ -179,7 +191,9 @@ export async function fetchContests(year: number, position: string): Promise<Dyn
       page: String(page),
       limit: String(limit),
     })
-    const body = (await getJson(`${API_BASE}/contests?${q}`)) as { data: { contests: DynastiesContest[] } }
+    const body = (await getJson(`${API_BASE}/contests?${q}`, opts)) as {
+      data: { contests: DynastiesContest[] }
+    }
     all.push(...body.data.contests)
     if (body.data.contests.length < limit) break
   }
