@@ -54,7 +54,7 @@ export default function OfficialsPage() {
       <Card padding="sm" className="sm:p-6">
         <FilterBar geo={data.geo} filters={filters} onChange={onChange} />
       </Card>
-      <p className="type-meta font-semibold text-gray-700" role="status">
+      <p id="results-status" tabIndex={-1} className="type-meta font-semibold text-gray-700" role="status">
         {shown.length === 1 ? t('resultCount.one') : t('resultCount.other', { n: shown.length })}
       </p>
       {shown.length === 0 ? (

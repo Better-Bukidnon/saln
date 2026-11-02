@@ -117,7 +117,9 @@ test('keyboard focus shows the 2px primary outline on every interactive element'
     await page.keyboard.press('Tab')
     await page.waitForTimeout(250) // let `transition-all` finish so the outline is at its final width
     const info = await page.evaluate(() => {
-      const e = document.activeElement as HTMLElement
+      const focused = document.activeElement as HTMLElement
+      // a pill select is an invisible overlay; its visible face (the wrapper) carries the focus ring
+      const e = focused.closest<HTMLElement>('[data-testid="filter-pill-select"]') ?? focused
       const s = getComputedStyle(e)
       const outline =
         s.outlineStyle !== 'none' &&
@@ -125,10 +127,10 @@ test('keyboard focus shows the 2px primary outline on every interactive element'
         // light ring on the dark footer and the blue banner, primary blue elsewhere
         s.outlineColor === (e.closest('footer, .on-dark') ? 'rgb(255, 255, 255)' : 'rgb(0, 50, 160)')
       return {
-        tag: e.tagName.toLowerCase(),
-        type: (e as HTMLInputElement).type ?? '',
+        tag: focused.tagName.toLowerCase(),
+        type: (focused as HTMLInputElement).type ?? '',
         outline,
-        id: e.id,
+        id: focused.id,
         inFooter: !!e.closest('footer'),
         inOnDark: !!e.closest('.on-dark'),
       }
@@ -144,7 +146,7 @@ test('keyboard focus shows the 2px primary outline on every interactive element'
   // the white-ring branch must really have been exercised on the dark surfaces
   expect(rings.footer, 'footer elements reached').toBeGreaterThanOrEqual(8)
   expect(rings.onDark, 'blue banner elements reached').toBeGreaterThanOrEqual(3)
-  for (const k of ['a', 'button', 'select', 'input:search', 'input:checkbox']) expect(seen.has(k), k).toBe(true)
+  for (const k of ['a', 'button', 'select', 'input:search', 'input:checkbox', 'input:radio']) expect(seen.has(k), k).toBe(true)
 })
 
 test('the scrollable chart-data table region shows a focus outline that is not clipped', async ({ page }) => {
@@ -231,18 +233,19 @@ test('footer links are at least 44px tall on mobile', async ({ page }) => {
   expect(Math.min(...heights)).toBeGreaterThanOrEqual(44)
 })
 
-test('filter card groups exist and the checkboxes are real, labelled inputs', async ({ page }) => {
+test('filter card: dropdown pills, a term radio group and labelled checkboxes', async ({ page }) => {
   await page.goto('/')
-  await expect(page.getByTestId('filter-groups').locator('fieldset')).toHaveCount(3)
+  await expect(page.getByTestId('filter-pill-select')).toHaveCount(5)
+  await expect(page.getByRole('radio')).toHaveCount(3)
   for (const label of ['Include province-wide officials', 'Only officials with SALN data']) {
     await expect(page.getByRole('checkbox', { name: label })).toBeVisible()
   }
   await expect(page.getByLabel('Barangay', { exact: true })).toBeDisabled()
-  await expect(page.getByTestId('filters-active')).toHaveCount(0)
+  await expect(page.getByTestId('filters-active')).toHaveText('0')
   await page.getByLabel('Level').selectOption('province')
-  await expect(page.getByTestId('filters-active')).toHaveText('1 active')
-  await page.getByRole('button', { name: 'Reset filters' }).click()
-  await expect(page.getByTestId('filters-active')).toHaveCount(0)
+  await expect(page.getByTestId('filters-active')).toHaveText('1')
+  await page.getByTestId('clear-filters').click()
+  await expect(page.getByTestId('filters-active')).toHaveText('0')
 })
 
 test('the help banner is on the list and About pages (not profiles), with its three actions', async ({ page }) => {
