@@ -2,12 +2,15 @@ import { useMemo } from 'react'
 import { useSearchParams } from 'react-router'
 import HelpBanner from '../components/HelpBanner'
 import FilterBar from '../components/FilterBar'
-import OfficialCard from '../components/OfficialCard'
+import OfficialGroupSection from '../components/OfficialGroupSection'
 import { loadAll } from '../lib/data'
 import { filterOfficials, parseFilters, serializeFilters, sortOfficials } from '../lib/filter'
 import type { Filters } from '../lib/filter'
+import { groupOfficials } from '../lib/group'
+import type { OfficialGroup } from '../lib/group'
 import { useT } from '../lib/i18n'
 import portalConfig from '../../portal.config'
+import { Badge } from '../components/ui/Badge'
 import { Card } from '../components/ui/Card'
 
 const data = loadAll()
@@ -25,6 +28,9 @@ export default function OfficialsPage() {
       ),
     [filters],
   )
+  const grouped = useMemo(() => groupOfficials(shown, data.geo, new Date()), [shown])
+  // A location, level or name filter narrows the list enough to open every group.
+  const autoOpen = Boolean(filters.lgu || filters.barangay || filters.q.trim() || filters.level)
   const onChange = (next: Filters, replace = false) => setParams(serializeFilters(next), { replace })
 
   return (
@@ -55,12 +61,97 @@ export default function OfficialsPage() {
           <p className="text-gray-700">{t('noResults')}</p>
         </Card>
       ) : (
-        <ul className="grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-6 lg:grid-cols-3">
-          {shown.map((o) => (
-            <OfficialCard key={o.id} official={o} saln={data.salnByPerson.get(o.personId)} geo={data.geo} />
-          ))}
-        </ul>
+        <>
+          <GroupSet title={t('currentHeading')} id="current" groups={grouped.current} former={false} autoOpen={autoOpen} />
+          <GroupSet title={t('formerHeading')} id="former" groups={grouped.former} former autoOpen={autoOpen} />
+        </>
       )}
     </div>
+  )
+}
+
+type Level = 'provincial' | 'sp' | 'house' | 'municipal' | 'barangay'
+const LEVEL_ACCENT: Partial<Record<Level, string>> = {
+  municipal: 'border-l-danger-500',
+  barangay: 'border-l-gray-500',
+}
+const LEVEL_ORDER: Level[] = ['provincial', 'sp', 'house', 'municipal', 'barangay']
+const levelOf = (g: OfficialGroup): Level =>
+  g.kind === 'lgu' ? 'municipal' : g.kind
+
+function GroupSet({
+  title,
+  id,
+  groups,
+  former,
+  autoOpen,
+}: {
+  title: string
+  id: string
+  groups: OfficialGroup[]
+  former: boolean
+  autoOpen: boolean
+}) {
+  const t = useT()
+  if (groups.length === 0) return null
+  const cities = data.geo.nodes.filter((n) => n.type === 'city').length
+  const municipalities = data.geo.nodes.filter((n) => n.type === 'municipality').length
+  const barangays = data.geo.nodes.filter((n) => n.type === 'barangay').length
+  const desc: Record<Level, string> = {
+    provincial: t('levelDesc.provincial'),
+    sp: t('levelDesc.sp'),
+    house: t('levelDesc.house'),
+    municipal: t('levelDesc.municipal', { cities, municipalities }),
+    barangay: t('levelDesc.barangay', { n: barangays }),
+  }
+  const titles: Record<Level, string> = {
+    provincial: t('groupProvincial'),
+    sp: t('groupSp'),
+    house: t('groupHouse'),
+    municipal: t('levelMunicipal'),
+    barangay: t('levelBarangay'),
+  }
+  return (
+    <section aria-labelledby={`${id}-heading`} data-testid={`${id}-officials`} className="space-y-4">
+      <h2 id={`${id}-heading`} className="text-2xl font-bold tracking-tight text-gray-900 sm:text-3xl">
+        {title}
+      </h2>
+      <div className="space-y-6">
+        {LEVEL_ORDER.map((level) => {
+          const rows = groups.filter((g) => levelOf(g) === level)
+          if (rows.length === 0) return null
+          const row = (g: OfficialGroup, single: boolean) => (
+            <OfficialGroupSection
+              key={`${g.key}:${autoOpen}`}
+              group={g}
+              geo={data.geo}
+              salnByPerson={data.salnByPerson}
+              defaultOpen={autoOpen || (!former && g.kind === 'provincial')}
+              description={single ? desc[level] : undefined}
+            />
+          )
+          // Provincial heads, board, House: the level is a single row that carries its own description.
+          if (level !== 'municipal' && level !== 'barangay') return <ul key={level} data-level={level}>{row(rows[0], true)}</ul>
+          const total = rows.reduce((s, g) => s + g.officials.length, 0)
+          const hid = `${id}-${level}-heading`
+          return (
+            <div key={level} data-level={level} className="space-y-3">
+              <div className={`flex items-start justify-between gap-3 border-l-4 py-1 pl-4 ${LEVEL_ACCENT[level] ?? ''}`}>
+                <div className="min-w-0">
+                  <h3 id={hid} className="text-lg font-bold text-gray-900 sm:text-xl">
+                    {titles[level]}
+                  </h3>
+                  <p className="text-sm text-gray-700">{desc[level]}</p>
+                </div>
+                <Badge variant="gray" size="md" className="shrink-0" data-testid="level-total">
+                  {total === 1 ? t('groupCount.one') : t('groupCount.other', { n: total })}
+                </Badge>
+              </div>
+              <ul className="space-y-3 sm:space-y-4">{rows.map((g) => row(g, false))}</ul>
+            </div>
+          )
+        })}
+      </div>
+    </section>
   )
 }

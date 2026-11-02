@@ -49,11 +49,11 @@ export default function OfficialCard({
       >
         <div className="flex items-start justify-between gap-3">
           <div className="min-w-0">
-            <h3 className="text-lg font-semibold leading-tight text-gray-900">
+            <h4 className="text-lg font-semibold leading-tight text-gray-900">
               <Link to={`/official/${official.id}`} className="rounded after:absolute after:inset-0 after:content-['']">
                 {official.name}
               </Link>
-            </h3>
+            </h4>
             <p className="mt-1 text-sm text-gray-700">{official.position}</p>
             <p className="text-sm text-gray-600">{location(geo, official, t)}</p>
           </div>

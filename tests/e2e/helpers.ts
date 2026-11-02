@@ -13,3 +13,10 @@ export async function chooseLang(page: Page, name: string) {
   await openLangMenu(page)
   await page.getByRole('button', { name }).click()
 }
+
+/** Expand every collapsed officials group so all cards are in the DOM. */
+export async function openAllGroups(page: Page) {
+  const closed = page.locator('[data-testid="group"] button[aria-expanded="false"]')
+  // Re-query each time: expanding re-renders nothing above, but the count shrinks.
+  while ((await closed.count()) > 0) await closed.first().click()
+}

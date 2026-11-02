@@ -47,7 +47,7 @@ export function isCurrent(o: Official, today: Date): boolean {
   return o.termStart <= t && (o.termEnd === null || t <= o.termEnd)
 }
 
-function isFormer(o: Official, today: Date): boolean {
+export function isFormer(o: Official, today: Date): boolean {
   const t = day(today)
   return t !== null && o.termEnd !== null && o.termEnd < t
 }

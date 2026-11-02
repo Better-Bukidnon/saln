@@ -1,5 +1,5 @@
 import { expect, test } from '@playwright/test'
-import { chooseLang, openLangMenu } from './helpers'
+import { chooseLang, openAllGroups, openLangMenu } from './helpers'
 
 const DISCLAIMER = 'Aggregator, not the original source; not an official government website.'
 const BAUNGON = '1001301000'
@@ -45,6 +45,7 @@ test('reload restores the selection from the URL', async ({ page }) => {
 
 test('unknown lgu renders the unfiltered list', async ({ page }) => {
   await page.goto('/?lgu=zzz')
+  await openAllGroups(page)
   await expect(page.getByLabel('Municipality')).toHaveValue('')
   await expect(page.getByText('Test Governor')).toBeVisible()
   await expect(page.getByText('Captain Lacolac')).toBeVisible()
@@ -52,6 +53,7 @@ test('unknown lgu renders the unfiltered list', async ({ page }) => {
 
 test('cards show net worth, no-SALN text and unverified badge', async ({ page }) => {
   await page.goto('/')
+  await openAllGroups(page)
   await expect(page.getByText('No SALN data yet').first()).toBeVisible()
   await expect(page.getByText('₱10.50M')).toBeVisible()
   await expect(page.getByText('-₱300.00K')).toBeVisible()
