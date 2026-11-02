@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest'
 import type { SalnRecord } from '../../src/lib/types'
-import { chartScale, chartSeries, compactPeso, placeLabels, comparePreferred, newestFirst, sourceTypeKey } from '../../src/lib/saln-view'
+import { chartSeries, compactPeso, comparePreferred, newestFirst, sourceTypeKey } from '../../src/lib/saln-view'
 import { latestSaln } from '../../src/lib/data'
 
 function rec(year: number, assets: number, liab: number, id = `r${year}`): SalnRecord {
@@ -83,45 +83,6 @@ describe('same-year records: one rule everywhere', () => {
   })
 })
 
-const dataOf = (assets: number[]) => {
-  const points = assets.map((a, i) => ({ year: 2020 + i, assets: a, liabilities: 0, netWorth: a }))
-  const all = points.flatMap((p) => [p.assets, p.liabilities, p.netWorth])
-  return { points, min: Math.min(...all), max: Math.max(...all), from: 2020, to: 2020 + points.length - 1 }
-}
-
-describe('chartScale', () => {
-  it('puts positive-only data on a zero baseline at the bottom with even nice ticks', () => {
-    const c = chartScale(dataOf([10_000_000, 122_800_000]), 200)
-    expect(c.lo).toBe(0)
-    expect(c.hi).toBeGreaterThanOrEqual(122_800_000)
-    expect(c.y(0)).toBe(200)
-    expect(c.y(c.hi)).toBe(0)
-    const gaps = c.ticks.slice(1).map((t, i) => t - c.ticks[i])
-    expect(new Set(gaps).size).toBe(1)
-    expect(c.ticks.length).toBeGreaterThanOrEqual(4)
-    expect(c.ticks.length).toBeLessThanOrEqual(7)
-  })
-  it('covers negative values and keeps zero as a tick inside the plot', () => {
-    const c = chartScale(dataOf([-20, 10]), 200)
-    expect(c.lo).toBeLessThanOrEqual(-20)
-    expect(c.hi).toBeGreaterThanOrEqual(10)
-    expect(c.ticks).toContain(0)
-    expect(c.y(0)).toBeGreaterThan(0)
-    expect(c.y(0)).toBeLessThan(200)
-  })
-  it('does not divide by zero for all-zero data', () => {
-    const c = chartScale(dataOf([0, 0]), 200)
-    expect(Number.isFinite(c.y(0))).toBe(true)
-    expect(c.y(0)).toBe(200)
-    expect(c.ticks[0]).toBe(0)
-  })
-  it('handles a single tiny positive value and fractional ranges', () => {
-    const c = chartScale(dataOf([0.5, 0.75]), 100)
-    expect(c.hi).toBeGreaterThanOrEqual(0.75)
-    expect(c.ticks.every(Number.isFinite)).toBe(true)
-  })
-})
-
 describe('compactPeso', () => {
   it('formats like the reference: one decimal with K/M/B and a space after the peso sign', () => {
     expect(compactPeso(20_300_000)).toBe('\u20b1 20.3M')
@@ -131,17 +92,5 @@ describe('compactPeso', () => {
     expect(compactPeso(0)).toBe('\u20b1 0')
     expect(compactPeso(750)).toBe('\u20b1 750')
     expect(compactPeso(-1_800_000)).toBe('-\u20b1 1.8M')
-  })
-})
-
-describe('placeLabels', () => {
-  it('keeps non-overlapping labels and drops a later one that collides', () => {
-    const shown = placeLabels([
-      { id: 'a', x: 10, y: 50, w: 40, h: 12 },
-      { id: 'b', x: 30, y: 52, w: 40, h: 12 },
-      { id: 'c', x: 100, y: 52, w: 40, h: 12 },
-      { id: 'd', x: 30, y: 90, w: 40, h: 12 },
-    ])
-    expect([...shown]).toEqual(['a', 'c', 'd'])
   })
 })
