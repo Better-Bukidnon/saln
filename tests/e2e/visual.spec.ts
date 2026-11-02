@@ -105,40 +105,58 @@ test('every level badge colour meets AA', async ({ page }) => {
   }
 })
 
-test('keyboard focus shows a visible indicator on every interactive element', async ({ page }) => {
+test('keyboard focus shows the 2px primary outline on every interactive element', async ({ page }) => {
   await page.goto('/')
   const seen = new Set<string>()
   const bad: string[] = []
-  for (let i = 0; i < 40; i++) {
+  for (let i = 0; i < 60; i++) {
     await page.keyboard.press('Tab')
+    await page.waitForTimeout(250) // let `transition-all` finish so the outline is at its final width
     const info = await page.evaluate(() => {
       const e = document.activeElement as HTMLElement
       const s = getComputedStyle(e)
-      const ctx = document.createElement('canvas').getContext('2d', { willReadFrequently: true })!
-      const alpha = (css: string) => {
-        ctx.clearRect(0, 0, 1, 1)
-        ctx.fillStyle = css
-        ctx.fillRect(0, 0, 1, 1)
-        return ctx.getImageData(0, 0, 1, 1).data[3]
-      }
-      // Outline counts only with a real style, a width and a near-opaque colour.
-      const outline = s.outlineStyle !== 'none' && parseFloat(s.outlineWidth) > 0 && alpha(s.outlineColor) >= 200
-      // Box-shadow counts only if some layer paints: near-opaque colour (so a faint decorative shadow-sm does not count) and non-zero extent.
-      const layers = s.boxShadow === 'none' ? [] : s.boxShadow.split(/,(?![^(]*\))/)
-      const shadow = layers.some((l) => {
-        const color = l.match(/(rgba?|oklch|oklab|color|hsla?)\([^)]*\)|#[0-9a-f]{3,8}/i)?.[0] ?? ''
-        const nums = l.replace(color, '').match(/-?[\d.]+px/g) ?? []
-        return color !== '' && alpha(color) >= 200 && nums.some((n) => parseFloat(n) !== 0)
-      })
-      const pressed = e.getAttribute('aria-pressed') === 'true'
-      return { tag: e.tagName.toLowerCase(), type: (e as HTMLInputElement).type ?? '', visible: outline || shadow, id: e.id, pressed }
+      const outline =
+        s.outlineStyle !== 'none' && parseFloat(s.outlineWidth) >= 2 && s.outlineColor === 'rgb(0, 56, 168)'
+      // A primary Button paints the Philippine blue background.
+      const primary = e.tagName === 'BUTTON' && s.backgroundColor === 'rgb(0, 56, 168)'
+      return { tag: e.tagName.toLowerCase(), type: (e as HTMLInputElement).type ?? '', outline, primary, id: e.id }
     })
     if (info.tag === 'body') continue // focus wrapped around past the last control
     const kind = info.tag === 'input' ? `input:${info.type}` : info.tag
     seen.add(kind)
-    if (info.pressed) seen.add('primary-button') // the active language button is a primary Button
-    if (!info.visible) bad.push(`${kind}#${info.id}`)
+    if (info.primary) seen.add('primary-button')
+    if (!info.outline) bad.push(`${kind}#${info.id}`)
   }
   expect(bad).toEqual([])
   for (const k of ['a', 'button', 'primary-button', 'select', 'input:search', 'input:checkbox']) expect(seen.has(k), k).toBe(true)
+})
+
+test('the scrollable SALN table region shows a focus outline that is not clipped', async ({ page }) => {
+  await page.goto('/official/dual-gov')
+  const region = page.locator('[role="region"]')
+  for (let i = 0; i < 30; i++) {
+    await page.keyboard.press('Tab')
+    if (await region.evaluate((e) => e === document.activeElement)) break
+  }
+  await expect(region).toBeFocused()
+  const r = await region.evaluate((e) => {
+    const s = getComputedStyle(e)
+    const w = parseFloat(s.outlineWidth)
+    const off = parseFloat(s.outlineOffset)
+    const box = e.getBoundingClientRect()
+    const reach = w + off
+    const out = { l: box.left - reach, t: box.top - reach, r: box.right + reach, b: box.bottom + reach }
+    const clippedBy: string[] = []
+    for (let n = e.parentElement; n && n !== document.documentElement; n = n.parentElement) {
+      const o = getComputedStyle(n)
+      if ([o.overflowX, o.overflowY].every((v) => v === 'visible')) continue
+      const b = n.getBoundingClientRect()
+      if (out.l < b.left || out.t < b.top || out.r > b.right || out.b > b.bottom) clippedBy.push(n.tagName + '.' + n.className)
+    }
+    return { style: s.outlineStyle, w, color: s.outlineColor, clippedBy }
+  })
+  expect(r.style).not.toBe('none')
+  expect(r.w).toBeGreaterThanOrEqual(2)
+  expect(r.color).toBe('rgb(0, 56, 168)')
+  expect(r.clippedBy).toEqual([])
 })

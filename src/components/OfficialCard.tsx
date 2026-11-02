@@ -45,7 +45,7 @@ export default function OfficialCard({
       <Card
         hoverable
         padding="sm"
-        className="relative flex h-full flex-col gap-3 has-[a:focus-visible]:ring-2 has-[a:focus-visible]:ring-primary-500 has-[a:focus-visible]:ring-offset-2 sm:p-5"
+        className="relative flex h-full flex-col gap-3 sm:p-5"
       >
         <div className="flex items-start justify-between gap-3">
           <div className="min-w-0">
