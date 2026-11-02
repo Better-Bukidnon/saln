@@ -7,9 +7,9 @@ const DAMULOG = '1001302000'
 
 test('barangay select is disabled until a municipality is chosen, then lists only its barangays', async ({ page }) => {
   await page.goto('/')
-  const barangay = page.getByLabel('Barangay')
+  const barangay = page.getByLabel('Barangay', { exact: true })
   await expect(barangay).toBeDisabled()
-  await page.getByLabel('Municipality').selectOption(BAUNGON)
+  await page.getByLabel('Municipality', { exact: true }).selectOption(BAUNGON)
   await expect(page).toHaveURL(new RegExp(`lgu=${BAUNGON}`))
   await expect(barangay).toBeEnabled()
   const names = await barangay.locator('option:not([value=""])').allTextContents()
@@ -18,27 +18,27 @@ test('barangay select is disabled until a municipality is chosen, then lists onl
 
 test('changing the municipality resets the barangay', async ({ page }) => {
   await page.goto('/')
-  await page.getByLabel('Municipality').selectOption(BAUNGON)
-  await page.getByLabel('Barangay').selectOption({ label: 'Poblacion' })
+  await page.getByLabel('Municipality', { exact: true }).selectOption(BAUNGON)
+  await page.getByLabel('Barangay', { exact: true }).selectOption({ label: 'Poblacion' })
   await expect(page).toHaveURL(/barangay=/)
-  await page.getByLabel('Municipality').selectOption(DAMULOG)
-  await expect(page.getByLabel('Barangay')).toHaveValue('')
+  await page.getByLabel('Municipality', { exact: true }).selectOption(DAMULOG)
+  await expect(page.getByLabel('Barangay', { exact: true })).toHaveValue('')
   await expect(page).not.toHaveURL(/barangay=/)
 })
 
 test('same-named barangays are told apart by code', async ({ page }) => {
   await page.goto('/')
-  await page.getByLabel('Municipality').selectOption(DAMULOG)
-  await page.getByLabel('Barangay').selectOption({ label: 'Poblacion' })
+  await page.getByLabel('Municipality', { exact: true }).selectOption(DAMULOG)
+  await page.getByLabel('Barangay', { exact: true }).selectOption({ label: 'Poblacion' })
   await expect(page.getByText('Captain Poblacion Damulog')).toBeVisible()
   await expect(page.getByText('Captain Poblacion Baungon')).toHaveCount(0)
 })
 
 test('reload restores the selection from the URL', async ({ page }) => {
   await page.goto(`/?lgu=${BAUNGON}`)
-  await expect(page.getByLabel('Municipality')).toHaveValue(BAUNGON)
+  await expect(page.getByLabel('Municipality', { exact: true })).toHaveValue(BAUNGON)
   await page.reload()
-  await expect(page.getByLabel('Municipality')).toHaveValue(BAUNGON)
+  await expect(page.getByLabel('Municipality', { exact: true })).toHaveValue(BAUNGON)
   await expect(page.getByText('Captain Lacolac')).toBeVisible()
   await expect(page.getByText('Captain Poblacion Damulog')).toHaveCount(0)
 })
@@ -46,7 +46,7 @@ test('reload restores the selection from the URL', async ({ page }) => {
 test('unknown lgu renders the unfiltered list', async ({ page }) => {
   await page.goto('/?lgu=zzz')
   await openAllGroups(page)
-  await expect(page.getByLabel('Municipality')).toHaveValue('')
+  await expect(page.getByLabel('Municipality', { exact: true })).toHaveValue('')
   await expect(page.getByText('Test Governor')).toBeVisible()
   await expect(page.getByText('Captain Lacolac')).toBeVisible()
 })

@@ -54,9 +54,9 @@ test('municipality then barangay filter works on real data', async ({ page }) =>
   expect(muni, 'some municipality has officials').toBeTruthy()
 
   await page.goto('/')
-  const barangaySelect = page.getByLabel('Barangay')
+  const barangaySelect = page.getByLabel('Barangay', { exact: true })
   await expect(barangaySelect).toBeDisabled()
-  await page.getByLabel('Municipality').selectOption(muni!.psgc)
+  await page.getByLabel('Municipality', { exact: true }).selectOption(muni!.psgc)
   await expect(page).toHaveURL(new RegExp(`lgu=${muni!.psgc}`))
   await expect(barangaySelect).toBeEnabled()
 

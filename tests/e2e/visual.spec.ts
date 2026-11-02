@@ -237,7 +237,7 @@ test('filter card groups exist and the checkboxes are real, labelled inputs', as
   for (const label of ['Include province-wide officials', 'Only officials with SALN data']) {
     await expect(page.getByRole('checkbox', { name: label })).toBeVisible()
   }
-  await expect(page.getByLabel('Barangay')).toBeDisabled()
+  await expect(page.getByLabel('Barangay', { exact: true })).toBeDisabled()
   await expect(page.getByTestId('filters-active')).toHaveCount(0)
   await page.getByLabel('Level').selectOption('province')
   await expect(page.getByTestId('filters-active')).toHaveText('1 active')
