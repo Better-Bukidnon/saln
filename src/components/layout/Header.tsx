@@ -1,5 +1,4 @@
 import { Link, NavLink } from 'react-router'
-import portalConfig from '../../../portal.config'
 import { useT } from '../../lib/i18n'
 import LanguageSwitcher from '../LanguageSwitcher'
 
@@ -15,8 +14,8 @@ export default function Header() {
           <Link to="/" className="flex min-w-0 items-center gap-2 rounded-lg transition-opacity hover:opacity-80 sm:gap-4">
             <img src="/logo.svg" alt={t('logoAlt')} className="h-9 w-auto shrink-0 sm:h-12" />
             <div className="min-w-0">
-              <h1 className="truncate text-base font-bold leading-tight text-primary-500 sm:text-2xl">{t('siteTitle')}</h1>
-              <p className="hidden text-sm text-gray-600 sm:block">{portalConfig.provinceName}</p>
+              <h1 className="truncate text-base font-bold leading-tight tracking-tight text-gray-900 sm:text-xl">{t('siteTitle')}</h1>
+              <p className="truncate text-xs font-medium text-gray-600 sm:text-sm">{t('headerSubtitle')}</p>
             </div>
           </Link>
           <div className="ml-auto flex items-center gap-x-2 sm:gap-x-4">
