@@ -1,0 +1,12 @@
+{
+  "id": "s3",
+  "personId": "p1",
+  "year": 2024,
+  "filingType": "annual",
+  "totalAssets": 16366487.45,
+  "totalLiabilities": 6507000,
+  "netWorth": 9859487.45,
+  "sourceType": "ombudsman",
+  "sourceUrl": "https://example.org/p1-2024",
+  "status": "submitted"
+}

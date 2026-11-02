@@ -1,0 +1,12 @@
+{
+  "id": "o1",
+  "personId": "p1",
+  "name": "Test Governor",
+  "position": "Governor",
+  "level": "province",
+  "geoCode": "1013000000",
+  "termStart": "2025-06-30",
+  "termEnd": "2028-06-30",
+  "rosterSource": "manual",
+  "rosterVerified": false
+}

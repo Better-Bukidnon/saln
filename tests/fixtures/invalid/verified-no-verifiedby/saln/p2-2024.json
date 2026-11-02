@@ -1,0 +1,13 @@
+{
+  "id": "s2",
+  "personId": "p2",
+  "year": 2024,
+  "filingType": "annual",
+  "totalAssets": 1000,
+  "totalLiabilities": 2500.5,
+  "netWorth": -1500.5,
+  "sourceType": "lgu",
+  "sourceUrl": "https://example.org/p2-2024",
+  "status": "verified",
+  "verifiedAt": "2026-01-01"
+}

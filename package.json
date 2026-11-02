@@ -6,6 +6,7 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc --noEmit && vite build",
+    "validate-data": "tsx scripts/validate-data.ts",
     "typecheck": "tsc --noEmit",
     "test": "vitest run",
     "lint": "eslint .",
