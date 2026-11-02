@@ -35,6 +35,8 @@
 
 ---
 
+> Task 12 (restyle to the SALN Tracker PH design) was added 2026-11-02 at the user's request; the smoke test and launch docs are Task 13.
+
 ## File Structure (new project `saln-bukidnon`)
 
 ```
@@ -272,7 +274,27 @@ tests/unit/*.test.ts, tests/e2e/*.spec.ts, tests/fixtures/
 
 ---
 
-### Task 12: End-to-end pass and launch readiness
+### Task 12: Restyle to match saln-tracker-ph
+
+**Files:**
+- Create: `src/styles/index.css` (Tailwind entry + theme tokens), `src/components/ui/{Button,Badge,Card}.tsx`, `src/components/layout/{Header,Footer}.tsx`, `public/logo.svg` (copied from the main site's `assets/images/logo/better-bukidnon-logo.svg`), `tests/e2e/visual.spec.ts`
+- Modify: `package.json` (tailwind, `@fontsource-variable/inter`), `vite.config.ts`, every page and component under `src/` (class names and markup only; no logic changes), `src/App.tsx`, `src/lib/strings.ts` (any new header/footer/hero strings in all 3 languages)
+- Remove: the plain CSS from Tasks 5-6 once Tailwind covers it
+- Reference (read-only, MIT): `JHNLWHD/saln-tracker-ph` design copy in the scratchpad `design-ref/` (tailwind.config.ts, Header/Footer, ui/{Badge,Button,Card}, OfficialsGrid, SALNRecordsView, routes/{home,about,official.$slug})
+
+**Interfaces:**
+- Consumes: all pages/components from Tasks 5-10 (behavior, roles, labels and every string asserted by existing e2e tests must be preserved).
+- Produces: theme tokens `ph.red #F70000`, `ph.blue #0038A8`, `ph.yellow #FCD116`, `primary-50..900` (500 = `#0038A8`), `accent-50..900` (400 = `#FCD116`), `danger-50..900` (500 = `#F70000`); fonts Inter (self-hosted via `@fontsource-variable/inter`, no CDN); `bg-flag-gradient`; `<Card hoverable>`, `<Badge variant="ph-red|ph-blue|ph-yellow|gray|verified|unverified" size>`, `<Button variant="primary|ghost" size>`.
+
+- [ ] **Step 1: Write the failing tests.** `visual.spec.ts` (Playwright, e2e fixture data): `getComputedStyle` of the primary button background is rgb(0, 56, 168); the header is sticky; Inter is the computed font-family of `body`; no horizontal overflow at 360px and 1280px on `/`, `/official/:id`, `/about`; text contrast of the unverified badge, empty-state text and primary button meets WCAG AA (compute from computed colors in the test with a small helper; yellow text on white must not be used); keyboard focus ring is visible on buttons, links and selects; all e2e tests from Tasks 5-10 still pass.
+- [ ] **Step 2: Run to verify it fails** (`npx playwright test tests/e2e/visual.spec.ts`).
+- [ ] **Step 3: Implement** the theme, layout (sticky header with logo, "SALN Tracker" title and "Bukidnon" subtitle, nav Home/About, language switcher; flag-gradient hero on the list page with the title and the disclaimer summary; footer with credits to BetterBukidnon / BetterGov.ph and the design credit "Design adapted from SALN Tracker PH (MIT)"), cards for officials (position badge colour by level: province = ph-blue, district = ph-yellow with dark text, city/municipality = ph-red, barangay = gray; `Unverified` badge amber with text, never colour-only), SALN table in a card, mobile-first container `container mx-auto px-3 sm:px-4 lg:px-8`. No analytics, no external CDNs, no dark mode, no net-worth chart (data has totals for single years).
+- [ ] **Step 4: Run** `npm test && npm run lint && npm run build && npm run validate-data` and the full Playwright suite. Expected: all pass.
+- [ ] **Step 5: Commit** `feat: restyle to match SALN Tracker PH design system`.
+
+---
+
+### Task 13: End-to-end pass and launch readiness
 
 **Files:**
 - Modify: `README.md` (setup, data workflow, verification rules, how to refresh after elections), `.github/workflows/ci.yml`

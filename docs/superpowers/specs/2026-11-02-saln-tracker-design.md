@@ -130,6 +130,13 @@ Filters (state kept in the URL so views are shareable):
 - Level, current/former (derived from term dates), has-SALN-data, name search.
 - Sort by net worth, assets, liabilities, name.
 
+Visual design (added 2026-11-02 at the user's request): match the look of
+`JHNLWHD/saln-tracker-ph` (MIT) / saln.bettergov.ph: Philippine flag palette (blue `#0038A8`,
+red `#F70000`, yellow `#FCD116`), Inter, Tailwind CSS, sticky header, flag-gradient hero, card
+grid with colour-coded level badges, bordered SALN table. Differences by decision: the font is
+self-hosted (no CDN), no analytics, light theme only, no net-worth chart, and the BetterBukidnon
+logo replaces the BetterGov logo. Colour is never the only carrier of meaning (badges carry text).
+
 Always visible: "Aggregator, not the original source; not an official government website."
 Unverified roster rows carry a badge. Trilingual strings follow the main site's EN/FIL/CEB
 approach. Accessibility and Lighthouse targets match the main site.
