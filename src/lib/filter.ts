@@ -31,22 +31,29 @@ const STATUSES: Status[] = ['current', 'former', 'all']
 const SORTS: SortKey[] = ['name', 'netWorth', 'assets', 'liabilities']
 const DIRS: Dir[] = ['asc', 'desc']
 
-// Dates are compared as UTC YYYY-MM-DD strings.
-function day(d: Date): string {
-  return d.toISOString().slice(0, 10)
+// Calendar day is computed in fixed UTC+8 (Asia/Manila, no DST), independent of
+// the machine timezone, and compared as YYYY-MM-DD strings. An Invalid Date has
+// no calendar day: day() returns null and such a date is neither current nor
+// former (no throw).
+function day(d: Date): string | null {
+  const t = d.getTime()
+  if (Number.isNaN(t)) return null
+  return new Date(t + 8 * 3600 * 1000).toISOString().slice(0, 10)
 }
 
 export function isCurrent(o: Official, today: Date): boolean {
   const t = day(today)
+  if (t === null) return false
   return o.termStart <= t && (o.termEnd === null || t <= o.termEnd)
 }
 
 function isFormer(o: Official, today: Date): boolean {
-  return o.termEnd !== null && o.termEnd < day(today)
+  const t = day(today)
+  return t !== null && o.termEnd !== null && o.termEnd < t
 }
 
 function norm(s: string): string {
-  return s.normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase()
+  return s.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase()
 }
 
 export function filterOfficials(

@@ -134,3 +134,60 @@ describe('parse/serialize', () => {
     expect(serializeFilters(parsed).get('barangay')).toBe('A1')
   })
 })
+
+describe('Asia/Manila calendar day (machine-TZ independent)', () => {
+  const mk = (extra: Partial<Official>) => off('t', 'T', 'city', 'A', extra)
+  it('Manila next day: termEnd previous day is not current and is former', () => {
+    const t = new Date('2026-11-01T17:00:00Z')
+    const o = mk({ termEnd: '2026-11-01' })
+    expect(isCurrent(o, t)).toBe(false)
+    expect(filterOfficials([o], new Map(), geo, f({ status: 'former' }), t)).toEqual([o])
+  })
+  it('termStart on Manila date is current', () => {
+    expect(isCurrent(mk({ termStart: '2026-11-02' }), new Date('2026-11-01T17:00:00Z'))).toBe(true)
+  })
+  it('23:59:59 Manila on termEnd is current', () => {
+    expect(isCurrent(mk({ termEnd: '2026-11-02' }), new Date('2026-11-02T15:59:59Z'))).toBe(true)
+  })
+  it('00:00 Manila next day is not current', () => {
+    expect(isCurrent(mk({ termEnd: '2026-11-02' }), new Date('2026-11-02T16:00:00Z'))).toBe(false)
+  })
+  it('Invalid Date is not current and does not throw', () => {
+    expect(isCurrent(mk({}), new Date('nope'))).toBe(false)
+  })
+  it('former excludes termEnd equal to today', () => {
+    const o = mk({ termEnd: '2026-11-02' })
+    expect(filterOfficials([o], new Map(), geo, f({ status: 'former' }), today)).toEqual([])
+  })
+})
+
+describe('duplicate barangay names and province-wide', () => {
+  const g2: Geo = {
+    nodes: [
+      ...geo.nodes,
+      { psgc: 'AP', name: 'Poblacion', type: 'barangay', parent: 'A' },
+      { psgc: 'BP', name: 'Poblacion', type: 'barangay', parent: 'B' },
+    ],
+  }
+  const capAP = off('cap', 'Capt AP', 'barangay', 'AP')
+  const capBP = off('cbp', 'Capt BP', 'barangay', 'BP')
+  const dist = off('d1', 'District Rep', 'district', P, { district: 1 })
+  const pool = [capAP, capBP, mayorA, dist]
+  const run2 = (qs: string, today2 = today) => {
+    const fl = parseFilters(new URLSearchParams(qs), g2)
+    return filterOfficials(pool, new Map(), g2, { ...fl, status: 'all' }, today2).map((o) => o.id).sort()
+  }
+  it('own Poblacion returns only that captain', () => expect(run2('lgu=A&barangay=AP')).toEqual(['cap']))
+  it("other LGU's Poblacion is dropped, whole LGU shown", () => {
+    expect(parseFilters(new URLSearchParams('lgu=A&barangay=BP'), g2).barangay).toBeUndefined()
+    expect(run2('lgu=A&barangay=BP')).toEqual(['cap', 'ma'])
+  })
+  it('bad lgu with valid barangay gives defaults', () => {
+    expect(parseFilters(new URLSearchParams('lgu=zzz&barangay=AP'), g2)).toEqual(defaultFilters)
+  })
+  it('district is province-wide', () => {
+    expect(run2('')).toContain('d1')
+    expect(run2('lgu=A')).not.toContain('d1')
+    expect(run2('lgu=A&pw=1')).toContain('d1')
+  })
+})
