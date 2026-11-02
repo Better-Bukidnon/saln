@@ -6,8 +6,8 @@ type Size = 'sm' | 'md' | 'lg'
 const base =
   'inline-flex min-h-11 items-center justify-center rounded-lg font-medium tracking-tight transition-all duration-200 disabled:cursor-not-allowed disabled:opacity-50'
 const variants: Record<Variant, string> = {
-  primary: 'bg-primary-500 text-white shadow-md hover:bg-primary-600 hover:shadow-lg',
-  ghost: 'border border-gray-400 bg-transparent text-gray-800 hover:bg-gray-100',
+  primary: 'bg-primary-500 text-white shadow-sm hover:bg-primary-700 hover:shadow-md',
+  ghost: 'border border-gray-400 bg-white text-gray-800 hover:bg-surface-alt',
 }
 const sizes: Record<Size, string> = {
   sm: 'px-3 py-2 text-sm',

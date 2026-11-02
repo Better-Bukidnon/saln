@@ -4,16 +4,18 @@ import { join } from 'node:path'
 
 const css = readFileSync(join(__dirname, '..', '..', 'src', 'styles', 'index.css'), 'utf8').toLowerCase()
 
-describe('Tailwind theme tokens (SALN Tracker PH palette)', () => {
+describe('Tailwind theme tokens (BetterBukidnon main-site palette)', () => {
   it.each([
-    ['--color-ph-red', '#f70000'],
-    ['--color-ph-blue', '#0038a8'],
-    ['--color-ph-yellow', '#fcd116'],
-    ['--color-primary-500', '#0038a8'],
-    ['--color-primary-600', '#002d8a'],
-    ['--color-primary-900', '#001230'],
-    ['--color-accent-400', '#fcd116'],
-    ['--color-danger-500', '#f70000'],
+    ['--color-primary-500', '#0032a0'],
+    ['--color-primary-700', '#002170'],
+    ['--color-secondary', '#003d82'],
+    ['--color-accent-500', '#f77f00'],
+    ['--color-success', '#06a77d'],
+    ['--color-danger-500', '#d62828'],
+    ['--color-info', '#0077be'],
+    ['--color-ink', '#1a1a1a'],
+    ['--color-ink-light', '#666666'],
+    ['--color-surface-alt', '#f8f9fa'],
   ])('%s is %s', (name, hex) => {
     expect(css).toMatch(new RegExp(`${name}:\\s*${hex}`))
   })
@@ -24,16 +26,14 @@ describe('Tailwind theme tokens (SALN Tracker PH palette)', () => {
         expect(css).toContain(`--color-${scale}-${step}:`)
   })
 
-  it('defines the flag gradient and animations', () => {
-    expect(css).toContain('bg-flag-gradient')
-    expect(css).toContain('linear-gradient(135deg, #0038a8 0%, #f70000 50%, #fcd116 100%)')
-    expect(css).toContain('bg-ph-blue-gradient')
-    expect(css).toContain('bg-ph-red-gradient')
+  it('has no flag colours or gradient utilities left, and keeps the animations', () => {
+    expect(css).not.toMatch(/flag|gradient|#f70000|#fcd116|#0038a8|--color-ph-/)
     for (const a of ['fade-in', 'slide-up', 'scale-up']) expect(css).toContain(`--animate-${a}:`)
   })
 
   it('uses the self-hosted Inter variable font', () => {
     expect(css).toMatch(/--font-sans:\s*"inter variable"/)
-    expect(css).not.toMatch(/googleapis|gstatic|https?:\/\//)
+    // the inline SVG data URI carries an xmlns string that is not a request
+    expect(css.replaceAll('http://www.w3.org/2000/svg', '')).not.toMatch(/googleapis|gstatic|https?:\/\//)
   })
 })

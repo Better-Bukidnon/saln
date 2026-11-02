@@ -1,4 +1,5 @@
 import { expect, test } from '@playwright/test'
+import { chooseLang, openLangMenu } from './helpers'
 
 const DISCLAIMER = 'Aggregator, not the original source; not an official government website.'
 const BAUNGON = '1001301000'
@@ -77,36 +78,40 @@ test('switching to Binisaya translates the page, updates <html lang> and persist
   await page.goto('/official/test-rep-1')
   await expect(page.locator('html')).toHaveAttribute('lang', 'en')
   await expect(page.getByText('No SALN data yet')).toBeVisible()
-  await page.getByRole('button', { name: 'Binisaya' }).click()
+  await chooseLang(page, 'Binisaya')
   await expect(page.getByText(NO_SALN_CEB)).toBeVisible()
   await expect(page.getByText('No SALN data yet')).toHaveCount(0)
   await expect(page.locator('html')).toHaveAttribute('lang', 'ceb')
   await expect(page).toHaveTitle('SALN Tracker - Bukidnon')
   await expect(page.getByRole('navigation', { name: 'Panguna' })).toBeVisible()
+  await openLangMenu(page)
   await expect(page.getByRole('button', { name: 'Binisaya' })).toHaveAttribute('aria-pressed', 'true')
   await expect(page.getByRole('button', { name: 'English' })).toHaveAttribute('aria-pressed', 'false')
   await page.reload()
   await expect(page.getByText(NO_SALN_CEB)).toBeVisible()
   await expect(page.locator('html')).toHaveAttribute('lang', 'ceb')
-  await page.getByRole('button', { name: 'Filipino' }).click()
+  await chooseLang(page, 'Filipino')
   await expect(page.locator('html')).toHaveAttribute('lang', 'fil')
   await expect(page.getByText('Wala pang datos ng SALN')).toBeVisible()
 })
 
 test('the disclaimer is translated too', async ({ page }) => {
   await page.goto('/')
-  await page.getByRole('button', { name: 'Filipino' }).click()
+  await chooseLang(page, 'Filipino')
   await expect(page.getByRole('note')).toContainText('Tagapagtipon lamang')
 })
 
 test('the language switcher is keyboard operable', async ({ page }) => {
   await page.goto('/')
+  await page.locator('#lang-toggle').focus()
+  await page.keyboard.press('Enter') // the menu is closed until opened
   const group = page.getByRole('group', { name: 'Language' })
   await expect(group).toBeVisible()
   const ceb = page.getByRole('button', { name: 'Binisaya' })
   await ceb.focus()
   await page.keyboard.press('Enter')
   await expect(page.locator('html')).toHaveAttribute('lang', 'ceb')
+  await openLangMenu(page)
   await page.getByRole('button', { name: 'English' }).focus()
   await page.keyboard.press('Space')
   await expect(page.locator('html')).toHaveAttribute('lang', 'en')
@@ -121,6 +126,6 @@ test('a language choice works with localStorage disabled', async ({ page }) => {
     })
   })
   await page.goto('/official/test-rep-1')
-  await page.getByRole('button', { name: 'Binisaya' }).click()
+  await chooseLang(page, 'Binisaya')
   await expect(page.getByText(NO_SALN_CEB)).toBeVisible()
 })

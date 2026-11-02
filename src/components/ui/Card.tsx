@@ -10,10 +10,10 @@ export function Card({
   className = '',
   ...props
 }: HTMLAttributes<HTMLDivElement> & { hoverable?: boolean; padding?: Padding }) {
-  const hover = hoverable ? 'hover:shadow-xl motion-safe:hover:scale-[1.02]' : ''
+  const hover = hoverable ? 'hover:shadow-md motion-safe:hover:-translate-y-0.5' : ''
   return (
     <div
-      className={`rounded-xl border border-gray-100 bg-white shadow-md transition-all duration-200 ${hover} ${paddings[padding]} ${className}`}
+      className={`rounded-xl border border-gray-200 bg-white shadow-sm transition-all duration-200 ${hover} ${paddings[padding]} ${className}`}
       {...props}
     />
   )

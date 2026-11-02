@@ -6,7 +6,7 @@ export { strings }
 export type { Lang }
 
 export const LANGS: Lang[] = ['en', 'fil', 'ceb']
-export const LANG_NAMES: Record<Lang, string> = { en: 'English', fil: 'Filipino', ceb: 'Binisaya' }
+export const LANG_NAMES: Record<Lang, string> = { en: 'English', fil: 'Filipino', ceb: 'Cebuano (Binisaya)' }
 const STORAGE_KEY = 'saln-lang'
 
 export type TFn = (key: string, params?: Record<string, string | number>) => string

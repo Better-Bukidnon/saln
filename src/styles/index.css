@@ -5,43 +5,51 @@
   --font-sans: "Inter Variable", ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji",
     "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
 
-  /* Philippine flag colours */
-  --color-ph-red: #F70000;
-  --color-ph-blue: #0038A8;
-  --color-ph-yellow: #FCD116;
+  /* BetterBukidnon main-site palette: primary #0032a0, primary-dark #002170, accent #f77f00,
+     danger #d62828; scales are derived around those anchors. */
+  --color-primary-50: #eef3ff;
+  --color-primary-100: #dbe5fb;
+  --color-primary-200: #b8cbf5;
+  --color-primary-300: #8aa7ea;
+  --color-primary-400: #4d73d1;
+  --color-primary-500: #0032a0;
+  --color-primary-600: #002a88;
+  --color-primary-700: #002170;
+  --color-primary-800: #001a58;
+  --color-primary-900: #001038;
 
-  --color-primary-50: #eff6ff;
-  --color-primary-100: #dbeafe;
-  --color-primary-200: #bfdbfe;
-  --color-primary-300: #93c5fd;
-  --color-primary-400: #60a5fa;
-  --color-primary-500: #0038A8;
-  --color-primary-600: #002d8a;
-  --color-primary-700: #00246b;
-  --color-primary-800: #001b4d;
-  --color-primary-900: #001230;
-
-  --color-accent-50: #fffbeb;
-  --color-accent-100: #fef3c7;
-  --color-accent-200: #fde68a;
-  --color-accent-300: #fcd34d;
-  --color-accent-400: #FCD116;
-  --color-accent-500: #eab308;
-  --color-accent-600: #ca8a04;
-  --color-accent-700: #a16207;
-  --color-accent-800: #854d0e;
-  --color-accent-900: #713f12;
+  --color-accent-50: #fff7ed;
+  --color-accent-100: #ffedd5;
+  --color-accent-200: #fed7aa;
+  --color-accent-300: #fdba74;
+  --color-accent-400: #fb9b33;
+  --color-accent-500: #f77f00;
+  --color-accent-600: #d96d00;
+  --color-accent-700: #a85200;
+  --color-accent-800: #7c3d00;
+  --color-accent-900: #522900;
 
   --color-danger-50: #fef2f2;
-  --color-danger-100: #fee2e2;
-  --color-danger-200: #fecaca;
-  --color-danger-300: #fca5a5;
-  --color-danger-400: #f87171;
-  --color-danger-500: #F70000;
-  --color-danger-600: #dc2626;
-  --color-danger-700: #b91c1c;
-  --color-danger-800: #991b1b;
-  --color-danger-900: #7f1d1d;
+  --color-danger-100: #fde4e4;
+  --color-danger-200: #fbc9c9;
+  --color-danger-300: #f59c9c;
+  --color-danger-400: #e86060;
+  --color-danger-500: #d62828;
+  --color-danger-600: #b81f1f;
+  --color-danger-700: #961818;
+  --color-danger-800: #741212;
+  --color-danger-900: #520c0c;
+
+  --color-secondary: #003d82;
+  --color-success: #06a77d;
+  --color-info: #0077be;
+  --color-ink: #1a1a1a;
+  --color-ink-light: #666666;
+  --color-surface: #ffffff;
+  --color-surface-alt: #f8f9fa;
+
+  --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 8px rgba(0, 0, 0, 0.1);
 
   --animate-fade-in: fade-in 0.5s ease-out;
   --animate-slide-up: slide-up 0.4s ease-out;
@@ -61,14 +69,14 @@
   }
 }
 
-@utility bg-flag-gradient {
-  background-image: linear-gradient(135deg, #0038A8 0%, #F70000 50%, #FCD116 100%);
-}
-@utility bg-ph-blue-gradient {
-  background-image: linear-gradient(135deg, #0038A8 0%, #002d8a 100%);
-}
-@utility bg-ph-red-gradient {
-  background-image: linear-gradient(135deg, #F70000 0%, #dc2626 100%);
+/* Select with an inline-SVG chevron (no icon font, no network request). */
+@utility select-chevron {
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='none' stroke='%234b5563' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m5 8 5 5 5-5'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 0.75rem center;
+  background-size: 1rem;
+  padding-right: 2.5rem;
 }
 
 @layer base {
@@ -81,6 +89,16 @@
    it beats Tailwind utilities (shadow-*, ring-*), so nothing can hide it. Outline, not
    box-shadow, so shadow utilities cannot override it either. */
 :focus-visible {
-  outline: 2px solid #0038A8;
+  outline: 2px solid #0032a0;
   outline-offset: 2px;
+}
+
+/* On the dark footer the ring must be light to stay visible. Unlayered and more specific. */
+footer :focus-visible {
+  outline-color: #ffffff;
+}
+
+/* Same for controls on the blue hero/banner. */
+.on-dark :focus-visible {
+  outline-color: #ffffff;
 }

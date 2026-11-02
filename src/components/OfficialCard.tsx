@@ -11,10 +11,10 @@ import type { BadgeVariant } from './ui/Badge'
 import { Card } from './ui/Card'
 
 const LEVEL_VARIANT: Record<Level, BadgeVariant> = {
-  province: 'ph-blue',
-  district: 'ph-yellow',
-  city: 'ph-red',
-  municipality: 'ph-red',
+  province: 'primary',
+  district: 'accent',
+  city: 'danger',
+  municipality: 'danger',
   barangay: 'gray',
 }
 
