@@ -48,4 +48,4 @@ To edit a translation, change the entry in `src/lib/strings.ts` (the `en`, `fil`
 
 ## Submitting a SALN copy
 
-The issue form is `.github/ISSUE_TEMPLATE/submit-saln.yml`. It collects links and declared totals only and never asks for file uploads. Maintainers verify a submission before any record is published.
+The issue form is `.github/ISSUE_TEMPLATE/submit-saln.yml`. The GitHub label `saln-submission` must be created once in the repo (Issues > Labels), otherwise GitHub silently drops it. It collects links and declared totals only and never asks for file uploads. Maintainers verify a submission before any record is published.

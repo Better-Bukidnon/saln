@@ -17,7 +17,7 @@ export default function App() {
         <h1>
           {t('siteTitle')}: {portalConfig.provinceName}
         </h1>
-        <nav aria-label="Main">
+        <nav aria-label={t('navMain')}>
           <Link to="/">{t('navOfficials')}</Link>
           <Link to="/about">{t('navAbout')}</Link>
         </nav>

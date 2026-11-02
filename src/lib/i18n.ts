@@ -17,7 +17,7 @@ const isLang = (v: unknown): v is Lang => typeof v === 'string' && (LANGS as str
 export function translate(lang: Lang, key: string, params?: Record<string, string | number>): string {
   const raw = strings[lang]?.[key] ?? strings.en[key] ?? key
   if (!params) return raw
-  return raw.replace(/\{(\w+)\}/g, (m, name: string) => (name in params ? String(params[name]) : m))
+  return raw.replace(/\{(\w+)\}/g, (m, name: string) => (Object.hasOwn(params, name) ? String(params[name]) : m))
 }
 
 type StorageLike = Pick<Storage, 'getItem' | 'setItem'>
@@ -41,8 +41,12 @@ export function writeStoredLang(lang: Lang, getStorage: () => StorageLike = brow
   }
 }
 
-export function applyLang(lang: Lang, doc: { documentElement: { lang: string } } = document): void {
+export function applyLang(
+  lang: Lang,
+  doc: { documentElement: { lang: string }; title: string } = document,
+): void {
   doc.documentElement.lang = lang
+  doc.title = translate(lang, 'docTitle')
 }
 
 type Ctx = { lang: Lang; setLang: (l: Lang) => void }

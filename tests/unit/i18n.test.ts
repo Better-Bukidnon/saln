@@ -23,6 +23,7 @@ describe('dictionaries', () => {
   })
   it('keeps the English strings the e2e suite relies on', () => {
     expect(strings.en.noSaln).toBe('No SALN data yet')
+    expect(strings.en.docTitle).toBe('SALN Tracker - Bukidnon')
     expect(strings.en.disclaimer).toBe('Aggregator, not the original source; not an official government website.')
   })
   it('actually translates something (fil and ceb differ from en)', () => {
@@ -47,6 +48,18 @@ describe('translate', () => {
   })
   it('falls back to the key when missing everywhere', () => {
     expect(translate('fil', 'no.such.key')).toBe('no.such.key')
+  })
+  it('inserts param values literally', () => {
+    expect(translate('en', 'verifiedBy', { by: '{on} $& $1 $$', on: 'x' })).toBe('Verified by {on} $& $1 $$ on x')
+  })
+  it('does not resolve placeholders from the prototype', () => {
+    const saved = strings.en.probe
+    strings.en.probe = 'a {constructor} b {toString}'
+    try {
+      expect(translate('en', 'probe', {})).toBe('a {constructor} b {toString}')
+    } finally {
+      if (saved === undefined) delete strings.en.probe
+    }
   })
   it('leaves unknown placeholders untouched', () => {
     expect(translate('en', 'verifiedBy', { by: 'Ana' })).toBe('Verified by Ana on {on}')
@@ -87,8 +100,9 @@ describe('persistence', () => {
 
 describe('applyLang', () => {
   it.each(LANGS)('sets document.documentElement.lang to %s', (lang) => {
-    const doc = { documentElement: { lang: '' } }
+    const doc = { documentElement: { lang: '' }, title: '' }
     applyLang(lang, doc)
     expect(doc.documentElement.lang).toBe(lang)
+    expect(doc.title).toBe(strings[lang].docTitle)
   })
 })
