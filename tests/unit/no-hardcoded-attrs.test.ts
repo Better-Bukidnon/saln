@@ -5,7 +5,7 @@ import { join } from 'node:path'
 const root = join(__dirname, '..', '..', 'src')
 const files = [
   join(root, 'App.tsx'),
-  ...['pages', 'components'].flatMap((d) =>
+  ...['pages', 'components', 'components/layout', 'components/ui'].flatMap((d) =>
     readdirSync(join(root, d)).filter((f) => f.endsWith('.tsx')).map((f) => join(root, d, f)),
   ),
 ]

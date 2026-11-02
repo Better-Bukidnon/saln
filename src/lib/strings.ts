@@ -9,11 +9,9 @@ const en: Record<string, string> = {
   docTitle: 'SALN Tracker - Bukidnon',
   language: 'Language',
   navMain: 'Main',
-  navOfficials: 'Officials',
   navAbout: 'About',
   skipToContent: 'Skip to content',
   disclaimer: portalConfig.disclaimer,
-  officialsHeading: 'Officials',
   noSaln: 'No SALN data yet',
   netWorth: 'Latest net worth',
   netWorthYear: 'Latest net worth ({year})',
@@ -101,6 +99,16 @@ const en: Record<string, string> = {
   aboutSubmitBody:
     'If you have obtained a copy through lawful means, open the submission form and link to it. We store declared totals only and always keep the source link.',
   aboutSubmitLink: 'Open the SALN submission form',
+  navHome: 'Home',
+  logoAlt: 'BetterBukidnon logo',
+  heroTitle: 'Declared assets of Bukidnon public officials',
+  heroPurpose: 'Find an official, see their declared assets, liabilities and net worth, and follow the links to the original documents.',
+  heroSummary: 'Entries are flagged as unverified until a maintainer checks them against the source.',
+  viewProfile: 'View profile',
+  footerTagline: 'Public SALN totals for Bukidnon, always with a link to the source.',
+  footerBuiltBy: 'Built by',
+  footerDesignBy: 'Design adapted from',
+  footerDesignLink: 'SALN Tracker PH (MIT)',
 }
 
 const fil: Record<string, string> = {
@@ -108,11 +116,9 @@ const fil: Record<string, string> = {
   docTitle: 'SALN Tracker - Bukidnon',
   language: 'Wika',
   navMain: 'Pangunahin',
-  navOfficials: 'Mga Opisyal',
   navAbout: 'Tungkol',
   skipToContent: 'Lumaktaw sa nilalaman',
   disclaimer: 'Tagapagtipon lamang, hindi ang orihinal na pinagmulan; hindi ito opisyal na website ng pamahalaan.',
-  officialsHeading: 'Mga Opisyal',
   noSaln: 'Wala pang datos ng SALN',
   netWorth: 'Pinakabagong net worth',
   netWorthYear: 'Pinakabagong net worth ({year})',
@@ -202,6 +208,16 @@ const fil: Record<string, string> = {
   aboutSubmitBody:
     'Kung nakakuha kayo ng kopya sa legal na paraan, buksan ang form ng pagsusumite at ilagay ang link nito. Mga idineklarang kabuuan lamang ang iniimbak namin at lagi naming iniingatan ang link ng pinagmulan.',
   aboutSubmitLink: 'Buksan ang form ng pagsusumite ng SALN',
+  navHome: 'Tahanan',
+  logoAlt: 'Logo ng BetterBukidnon',
+  heroTitle: 'Mga idineklarang ari-arian ng mga opisyal ng Bukidnon',
+  heroPurpose: 'Maghanap ng opisyal, tingnan ang idineklara niyang ari-arian, utang at net worth, at sundan ang mga link sa orihinal na dokumento.',
+  heroSummary: 'Minamarkahang hindi pa napatutunayan ang mga entry hanggang masuri ng maintainer laban sa pinagmulan.',
+  viewProfile: 'Tingnan ang profile',
+  footerTagline: 'Mga kabuuang SALN ng Bukidnon, laging may link sa pinagmulan.',
+  footerBuiltBy: 'Ginawa ng',
+  footerDesignBy: 'Disenyong hango sa',
+  footerDesignLink: 'SALN Tracker PH (MIT)',
 }
 
 const ceb: Record<string, string> = {
@@ -209,11 +225,9 @@ const ceb: Record<string, string> = {
   docTitle: 'SALN Tracker - Bukidnon',
   language: 'Pinulongan',
   navMain: 'Panguna',
-  navOfficials: 'Mga Opisyal',
   navAbout: 'Mahitungod',
   skipToContent: 'Laktaw ngadto sa sulod',
   disclaimer: 'Tigtigom lang, dili ang orihinal nga tinubdan; dili kini opisyal nga website sa gobyerno.',
-  officialsHeading: 'Mga Opisyal',
   noSaln: 'Wala pay datos sa SALN',
   netWorth: 'Pinakabag-ong net worth',
   netWorthYear: 'Pinakabag-ong net worth ({year})',
@@ -303,6 +317,16 @@ const ceb: Record<string, string> = {
   aboutSubmitBody:
     'Kon nakakuha mo ug kopya sa legal nga paagi, ablihi ang form sa pagsumite ug ibutang ang link niini. Mga gideklarar nga total lang ang among tipigan ug kanunay namong tipigan ang link sa tinubdan.',
   aboutSubmitLink: 'Ablihi ang form sa pagsumite sa SALN',
+  navHome: 'Panimalay',
+  logoAlt: 'Logo sa BetterBukidnon',
+  heroTitle: 'Gideklarar nga mga kabtangan sa mga opisyal sa Bukidnon',
+  heroPurpose: 'Pangita og opisyal, tan-awa ang iyang gideklarar nga kabtangan, utang ug net worth, ug sunda ang mga link ngadto sa orihinal nga dokumento.',
+  heroSummary: 'Gimarkahan nga wala pa mapamatud-i ang mga entry hangtod masusi sa maintainer batok sa gigikanan.',
+  viewProfile: 'Tan-awa ang profile',
+  footerTagline: 'Mga total sa SALN sa Bukidnon, kanunay nga naay link sa gigikanan.',
+  footerBuiltBy: 'Gihimo ni',
+  footerDesignBy: 'Disenyo nga gikuha gikan sa',
+  footerDesignLink: 'SALN Tracker PH (MIT)',
 }
 
 export const strings: Record<Lang, Record<string, string>> = { en, fil, ceb }

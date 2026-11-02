@@ -6,6 +6,7 @@ import { loadAll } from '../lib/data'
 import { filterOfficials, parseFilters, serializeFilters, sortOfficials } from '../lib/filter'
 import type { Filters } from '../lib/filter'
 import { useT } from '../lib/i18n'
+import { Card } from '../components/ui/Card'
 
 const data = loadAll()
 
@@ -25,21 +26,36 @@ export default function OfficialsPage() {
   const onChange = (next: Filters, replace = false) => setParams(serializeFilters(next), { replace })
 
   return (
-    <>
-      <h2>{t('officialsHeading')}</h2>
-      <FilterBar geo={data.geo} filters={filters} onChange={onChange} />
-      <p className="count" role="status">
+    <div className="space-y-6 sm:space-y-8">
+      <section className="overflow-hidden rounded-xl bg-linear-to-br from-primary-500 to-primary-600 text-white shadow-md motion-safe:animate-fade-in">
+        <div className="h-1.5 bg-flag-gradient" aria-hidden="true" />
+        <div className="px-4 py-8 text-center sm:px-6 sm:py-12">
+          <h2 data-testid="hero-title" className="mb-3 text-2xl font-bold leading-tight tracking-tight sm:mb-4 sm:text-4xl">
+            {t('heroTitle')}
+          </h2>
+          <p className="mx-auto mb-2 max-w-2xl text-base text-primary-100 sm:text-xl">{t('heroPurpose')}</p>
+          <p data-testid="hero-summary" className="mx-auto max-w-2xl text-sm leading-relaxed text-primary-100 sm:text-base">
+            {t('heroSummary')}
+          </p>
+        </div>
+      </section>
+      <Card padding="sm" className="sm:p-6">
+        <FilterBar geo={data.geo} filters={filters} onChange={onChange} />
+      </Card>
+      <p className="text-sm font-semibold text-gray-700" role="status">
         {shown.length === 1 ? t('resultCount.one') : t('resultCount.other', { n: shown.length })}
       </p>
       {shown.length === 0 ? (
-        <p>{t('noResults')}</p>
+        <Card>
+          <p className="text-gray-700">{t('noResults')}</p>
+        </Card>
       ) : (
-        <ul className="cards">
+        <ul className="grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-6 lg:grid-cols-3">
           {shown.map((o) => (
             <OfficialCard key={o.id} official={o} saln={data.salnByPerson.get(o.personId)} geo={data.geo} />
           ))}
         </ul>
       )}
-    </>
+    </div>
   )
 }

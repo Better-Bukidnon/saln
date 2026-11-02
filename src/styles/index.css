@@ -1,0 +1,84 @@
+@import "tailwindcss" source("../");
+
+/* Theme tokens follow the SALN Tracker PH design system (MIT). */
+@theme {
+  --font-sans: "Inter Variable", ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji",
+    "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+
+  /* Philippine flag colours */
+  --color-ph-red: #F70000;
+  --color-ph-blue: #0038A8;
+  --color-ph-yellow: #FCD116;
+
+  --color-primary-50: #eff6ff;
+  --color-primary-100: #dbeafe;
+  --color-primary-200: #bfdbfe;
+  --color-primary-300: #93c5fd;
+  --color-primary-400: #60a5fa;
+  --color-primary-500: #0038A8;
+  --color-primary-600: #002d8a;
+  --color-primary-700: #00246b;
+  --color-primary-800: #001b4d;
+  --color-primary-900: #001230;
+
+  --color-accent-50: #fffbeb;
+  --color-accent-100: #fef3c7;
+  --color-accent-200: #fde68a;
+  --color-accent-300: #fcd34d;
+  --color-accent-400: #FCD116;
+  --color-accent-500: #eab308;
+  --color-accent-600: #ca8a04;
+  --color-accent-700: #a16207;
+  --color-accent-800: #854d0e;
+  --color-accent-900: #713f12;
+
+  --color-danger-50: #fef2f2;
+  --color-danger-100: #fee2e2;
+  --color-danger-200: #fecaca;
+  --color-danger-300: #fca5a5;
+  --color-danger-400: #f87171;
+  --color-danger-500: #F70000;
+  --color-danger-600: #dc2626;
+  --color-danger-700: #b91c1c;
+  --color-danger-800: #991b1b;
+  --color-danger-900: #7f1d1d;
+
+  --animate-fade-in: fade-in 0.5s ease-out;
+  --animate-slide-up: slide-up 0.4s ease-out;
+  --animate-scale-up: scale-up 0.3s ease-out;
+
+  @keyframes fade-in {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+  @keyframes slide-up {
+    from { transform: translateY(20px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+  }
+  @keyframes scale-up {
+    from { transform: scale(0.95); opacity: 0; }
+    to { transform: scale(1); opacity: 1; }
+  }
+}
+
+@utility bg-flag-gradient {
+  background-image: linear-gradient(135deg, #0038A8 0%, #F70000 50%, #FCD116 100%);
+}
+@utility bg-ph-blue-gradient {
+  background-image: linear-gradient(135deg, #0038A8 0%, #002d8a 100%);
+}
+@utility bg-ph-red-gradient {
+  background-image: linear-gradient(135deg, #F70000 0%, #dc2626 100%);
+}
+
+@layer base {
+  body {
+    overflow-wrap: anywhere;
+  }
+  /* One visible keyboard focus ring for every interactive element. */
+  :focus-visible {
+    outline: 2px solid transparent;
+    outline-offset: 2px;
+    box-shadow: 0 0 0 2px #fff, 0 0 0 4px var(--color-primary-500);
+  }
+}
