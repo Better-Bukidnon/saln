@@ -1,15 +1,15 @@
 {
   "nodes": [
     {
-      "psgc": "1013000000",
+      "psgc": "1001300000",
       "name": "Bukidnon",
       "type": "province"
     },
     {
-      "psgc": "1013101000",
+      "psgc": "1001301000",
       "name": "Baungon",
       "type": "municipality",
-      "parent": "1013000000"
+      "parent": "1001300000"
     }
   ]
 }

@@ -4,7 +4,7 @@
   "name": "Test Mayor",
   "position": "Mayor",
   "level": "municipality",
-  "geoCode": "1013101000",
+  "geoCode": "1001301000",
   "termStart": "2025-06-30",
   "termEnd": null,
   "rosterSource": "manual",

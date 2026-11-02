@@ -4,7 +4,7 @@
   "name": "Test Governor",
   "position": "Governor",
   "level": "province",
-  "geoCode": "1013000000",
+  "geoCode": "1001300000",
   "termStart": "2025-06-30",
   "termEnd": "2025-01-01",
   "rosterSource": "manual",
