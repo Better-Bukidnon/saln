@@ -3,7 +3,7 @@
  * Changes for this project: shadcn theme tokens replaced by our Tailwind tokens and type-* utilities,
  * a local `cn` instead of clsx + tailwind-merge, tooltip `valueFormatter` prop, and the Recharts
  * surface keeps the global focus ring so the keyboard-reachable chart (accessibilityLayer) shows focus.
- * See NOTICE.md.
+ * See NOTICE.
  */
 import * as React from "react"
 import * as RechartsPrimitive from "recharts"
