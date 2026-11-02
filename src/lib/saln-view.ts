@@ -14,6 +14,12 @@ export function comparePreferred(a: SalnRecord, b: SalnRecord): number {
   return a.id === b.id ? 0 : a.id < b.id ? -1 : 1
 }
 
+/** The record every surface treats as "latest": the first of newestFirst. */
+export function latestSaln(records: SalnRecord[] | undefined): SalnRecord | undefined {
+  if (!records?.length) return undefined
+  return records.reduce((a, b) => (comparePreferred(b, a) > 0 ? b : a))
+}
+
 export const newestFirst = (records: SalnRecord[]): SalnRecord[] => [...records].sort((a, b) => comparePreferred(b, a))
 
 export const sourceTypeKey = (t: SalnRecord['sourceType']): string => `sourceTypes.${t}`

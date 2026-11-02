@@ -1,4 +1,4 @@
-import { comparePreferred } from './saln-view'
+import { latestSaln } from './saln-view'
 import type { Geo, Official, SalnRecord } from './types'
 
 // '@data' is aliased in vite.config.ts: ./data normally, tests/fixtures/e2e-data in mode e2e.
@@ -22,10 +22,7 @@ const flat = <T>(files: Record<string, T | T[]>): T[] =>
     .sort()
     .flatMap((k) => files[k])
 
-export function latestSaln(records: SalnRecord[] | undefined): SalnRecord | undefined {
-  if (!records?.length) return undefined
-  return records.reduce((a, b) => (comparePreferred(b, a) > 0 ? b : a))
-}
+export { latestSaln }
 
 export function loadAll(): { geo: Geo; officials: Official[]; salnByPerson: Map<string, SalnRecord[]> } {
   const geo = Object.values(geoFiles)[0] ?? { nodes: [] }

@@ -1,5 +1,6 @@
 import type { Geo, Level, Official, SalnRecord } from './types'
 import { nodeByCode } from './geo'
+import { latestSaln } from './saln-view'
 
 export type Status = 'current' | 'former' | 'all'
 export type SortKey = 'name' | 'netWorth' | 'assets' | 'liabilities'
@@ -85,11 +86,6 @@ export function filterOfficials(
   })
 }
 
-function latest(records: SalnRecord[] | undefined): SalnRecord | undefined {
-  if (!records?.length) return undefined
-  return records.reduce((a, b) => (b.year > a.year ? b : a))
-}
-
 const FIELD = { netWorth: 'netWorth', assets: 'totalAssets', liabilities: 'totalLiabilities' } as const
 
 export function sortOfficials(
@@ -109,7 +105,7 @@ export function sortOfficials(
     })
   }
   const field = FIELD[f.sort]
-  const val = (o: Official) => latest(salnByPerson.get(o.personId))?.[field]
+  const val = (o: Official) => latestSaln(salnByPerson.get(o.personId))?.[field]
   return out.sort((a, b) => {
     const va = val(a)
     const vb = val(b)

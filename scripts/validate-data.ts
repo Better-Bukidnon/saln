@@ -3,6 +3,7 @@ import { join, resolve } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { netWorthMatches } from '../src/lib/money'
 import { safeHref } from '../src/lib/url'
+import { SALN_SOURCE_TYPES, SALN_STATUSES } from '../src/lib/types'
 import type { Geo, Official, SalnRecord } from '../src/lib/types'
 
 function readJsonDir<T>(dir: string): { file: string; value: T }[] {
@@ -15,6 +16,12 @@ function readJsonDir<T>(dir: string): { file: string; value: T }[] {
       const parsed = JSON.parse(readFileSync(join(dir, f), 'utf8')) as T | T[]
       return (Array.isArray(parsed) ? parsed : [parsed]).map((value) => ({ file: f, value }))
     })
+}
+
+function validIsoDate(v: unknown): boolean {
+  if (typeof v !== 'string' || !/^\d{4}-\d{2}-\d{2}(T[\d:.]+(Z|[+-]\d{2}:\d{2})?)?$/.test(v)) return false
+  const d = new Date(v)
+  return !Number.isNaN(d.getTime()) && d.toISOString().slice(0, 10) === v.slice(0, 10)
 }
 
 export function validateData(dir: string, opts: { strictGeoCounts?: boolean } = {}): string[] {
@@ -60,6 +67,7 @@ export function validateData(dir: string, opts: { strictGeoCounts?: boolean } = 
   }
 
   const seen = new Set<string>()
+  const seenSalnId = new Map<string, string>()
   for (const { file, value: r } of salns) {
     const at = `saln/${file}[${r.id}]`
     if (!personIds.has(r.personId)) {
@@ -70,6 +78,27 @@ export function validateData(dir: string, opts: { strictGeoCounts?: boolean } = 
       errors.push(`${at}: bad-source-url: record ${r.id} sourceUrl must be an http(s) URL`)
     }
     if (!r.status) errors.push(`${at}: missing-status: status is required`)
+    else if (!(SALN_STATUSES as readonly string[]).includes(r.status)) {
+      errors.push(`${at}: bad-status: status "${String(r.status)}" must be one of ${SALN_STATUSES.join(', ')}`)
+    }
+    if (!(SALN_SOURCE_TYPES as readonly string[]).includes(r.sourceType)) {
+      errors.push(`${at}: bad-source-type: sourceType "${String(r.sourceType)}" must be one of ${SALN_SOURCE_TYPES.join(', ')}`)
+    }
+    if (!Number.isInteger(r.year) || r.year < 1987 || r.year > new Date().getFullYear() + 1) {
+      errors.push(`${at}: bad-year: year ${String(r.year)} must be an integer between 1987 and next year`)
+    }
+    for (const k of ['totalAssets', 'totalLiabilities', 'netWorth'] as const) {
+      if (typeof r[k] !== 'number' || !Number.isFinite(r[k])) {
+        errors.push(`${at}: bad-amount: ${k} must be a finite number`)
+      }
+    }
+    if (r.verifiedAt !== undefined && !validIsoDate(r.verifiedAt)) {
+      errors.push(`${at}: bad-verifiedAt: verifiedAt "${String(r.verifiedAt)}" must be an ISO date (YYYY-MM-DD)`)
+    }
+    const prior = seenSalnId.get(r.id)
+    if (prior !== undefined) {
+      errors.push(`${at}: duplicate-saln-id: id ${r.id} also appears in saln/${prior}`)
+    } else seenSalnId.set(r.id, file)
     if (!netWorthMatches(r)) {
       errors.push(`${at}: net-worth-mismatch: netWorth must equal totalAssets - totalLiabilities`)
     }

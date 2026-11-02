@@ -28,6 +28,9 @@ export interface Official {
   sample?: { badge: string; notice: string }
 }
 
+export const SALN_SOURCE_TYPES = ['house-summary', 'ombudsman', 'lgu', 'submitted'] as const
+export const SALN_STATUSES = ['submitted', 'verified', 'under_review', 'flagged'] as const
+
 export interface SalnRecord {
   id: string
   personId: string
@@ -36,9 +39,9 @@ export interface SalnRecord {
   totalAssets: number
   totalLiabilities: number
   netWorth: number
-  sourceType: 'house-summary' | 'ombudsman' | 'lgu' | 'submitted'
+  sourceType: (typeof SALN_SOURCE_TYPES)[number]
   sourceUrl: string
-  status: 'submitted' | 'verified' | 'under_review' | 'flagged'
+  status: (typeof SALN_STATUSES)[number]
   verifiedBy?: string
   verifiedAt?: string
 }
