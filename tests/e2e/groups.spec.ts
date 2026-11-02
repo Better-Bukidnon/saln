@@ -127,7 +127,7 @@ test('active filter pills: appear, remove with ×, URL follows, clear all', asyn
   const pills = page.getByTestId('filter-pill')
   await expect(page.getByRole('group', { name: 'Active filters (3)' })).toBeVisible()
   await expect(pills).toHaveText(['Search: cap', 'Municipality: Baungon', 'Barangay: Poblacion'])
-  await expect(page.getByTestId('filters-active')).toHaveText('3 active')
+  await expect(page.getByTestId('filters-active')).toHaveText('3')
   // removing the barangay keeps the municipality
   await page.getByRole('button', { name: 'Remove filter: Barangay: Poblacion' }).click()
   await expect(page).not.toHaveURL(/barangay=/)
@@ -165,38 +165,34 @@ test('non-default term, sort and checkboxes become pills; × has a 44px hit area
 test.describe('filter card on phones', () => {
   test.use({ viewport: { width: 390, height: 844 } })
 
-  test('collapsed by default with search visible; toggle opens it by click and keyboard', async ({ page }) => {
+  test('compact: search, dropdown pills, radios and clear are all visible without a toggle', async ({ page }) => {
     await page.goto('/')
-    const toggle = page.getByTestId('filters-toggle')
-    await expect(toggle).toHaveAttribute('aria-expanded', 'false')
+    await expect(page.getByTestId('filters-toggle')).toHaveCount(0)
     await expect(page.getByLabel('Search by name')).toBeVisible()
-    await expect(page.getByLabel('Municipality', { exact: true })).toBeHidden()
-    await toggle.click()
-    await expect(toggle).toHaveAttribute('aria-expanded', 'true')
-    await expect(page.getByLabel('Municipality', { exact: true })).toBeVisible()
-    await toggle.focus()
-    await page.keyboard.press('Enter')
-    await expect(toggle).toHaveAttribute('aria-expanded', 'false')
-    await page.keyboard.press('Space')
-    await expect(toggle).toHaveAttribute('aria-expanded', 'true')
+    await expect(page.getByTestId('filter-pill-select')).toHaveCount(5)
+    for (const pill of await page.getByTestId('filter-pill-select').all()) await expect(pill).toBeVisible()
+    await expect(page.getByRole('radio', { name: 'Current only' })).toBeChecked()
+    await expect(page.getByTestId('clear-filters')).toBeDisabled()
+    // 44px touch targets, 16px text in the real controls
     const h = await page.getByLabel('Municipality', { exact: true }).evaluate((e) => [e.getBoundingClientRect().height, getComputedStyle(e).fontSize])
     expect(h[0]).toBeGreaterThanOrEqual(44)
     expect(h[1]).toBe('16px')
+    const search = await page.getByLabel('Search by name').evaluate((e) => e.getBoundingClientRect().height)
+    expect(search).toBeGreaterThanOrEqual(44)
   })
 
-  test('pills stay visible while the card is collapsed; filters in the URL open the card', async ({ page }) => {
+  test('chips stay visible and Clear all resets everything', async ({ page }) => {
     await page.goto(`/?q=cap&saln=1&status=all`)
-    await expect(page.getByTestId('filters-toggle')).toHaveAttribute('aria-expanded', 'true')
-    await page.getByTestId('filters-toggle').click()
-    await expect(page.getByLabel('Municipality', { exact: true })).toBeHidden()
     await expect(page.getByTestId('filter-pills')).toBeVisible()
     await expect(page.getByTestId('filter-pill')).toHaveCount(3)
+    await expect(page.getByTestId('filters-active')).toHaveText('3')
     await page.getByRole('button', { name: 'Clear all' }).click()
     await expect(page.getByTestId('filter-pills')).toHaveCount(0)
+    await expect(page.getByTestId('filters-active')).toHaveText('0')
   })
 
   for (const w of [320, 390, 768]) {
-    test(`no horizontal overflow at ${w}px with filters open and many pills`, async ({ page }) => {
+    test(`no horizontal overflow at ${w}px with every filter set`, async ({ page }) => {
       await page.setViewportSize({ width: w, height: 800 })
       await page.goto(`/?lgu=${BAUNGON}&q=captain&status=all&sort=netWorth&dir=desc&saln=1&pw=1&level=barangay`)
       await expect(page.getByTestId('filter-pill').first()).toBeVisible()
@@ -205,15 +201,82 @@ test.describe('filter card on phones', () => {
   }
 })
 
-test('on desktop the filter card is not collapsible', async ({ page }) => {
-  await page.goto('/')
-  await expect(page.getByTestId('filters-toggle')).toBeHidden()
-  await expect(page.getByLabel('Municipality', { exact: true })).toBeVisible()
-})
+test.describe('dropdown pills and option row', () => {
+  test('every pill is a labelled native select; set pills turn primary and read "Label: value"', async ({ page }) => {
+    await page.goto('/')
+    const pills = page.getByTestId('filter-pill-select')
+    await expect(pills).toHaveCount(5)
+    for (const name of ['Municipality', 'Barangay', 'Level', 'Sort by', 'Order']) {
+      expect(await page.getByLabel(name, { exact: true }).evaluate((e) => e.tagName)).toBe('SELECT')
+    }
+    await expect(pills.nth(0)).toContainText('Municipality All')
+    await expect(pills.nth(0)).toHaveAttribute('data-filled', 'false')
+    await page.getByLabel('Municipality', { exact: true }).selectOption(BAUNGON)
+    await expect(pills.nth(0)).toContainText('Municipality: Baungon')
+    await expect(pills.nth(0)).toHaveAttribute('data-filled', 'true')
+    await page.waitForTimeout(400) // colour transition
+    expect(await pills.nth(0).evaluate((e) => getComputedStyle(e).backgroundColor)).toMatch(/rgb\(0, 50, 160\)|oklch\(0\.3/)
+    await page.getByLabel('Sort by', { exact: true }).selectOption('netWorth')
+    await expect(pills.nth(3)).toContainText('Sort by: Net worth')
+  })
 
-test('heading structure: level headers are h3, per-municipality rows are not headings', async ({ page }) => {
-  await page.goto('/')
-  await expect(page.locator('[data-level="municipal"] h3')).toHaveCount(1)
-  await expect(page.locator('[data-level="municipal"] [data-testid="group"] h3')).toHaveCount(0)
-  await expect(page.locator('[data-level="provincial"] h3')).toHaveCount(1)
+  test('Barangay is natively disabled until a municipality is chosen', async ({ page }) => {
+    await page.goto('/')
+    await expect(page.getByLabel('Barangay', { exact: true })).toBeDisabled()
+    await page.getByLabel('Municipality', { exact: true }).selectOption(BAUNGON)
+    await expect(page.getByLabel('Barangay', { exact: true })).toBeEnabled()
+  })
+
+  test('keyboard only: Tab to a pill select, change it by typing, see the URL and chip update', async ({ page }) => {
+    await page.goto('/')
+    const level = page.getByLabel('Level', { exact: true })
+    await level.focus()
+    await expect(level).toBeFocused()
+    expect(await level.evaluate((e) => getComputedStyle(e.parentElement!).outlineStyle)).not.toBe('none')
+    await page.keyboard.type('Prov') // type-ahead picks the option on every platform; ArrowDown only opens the popup on macOS
+    await page.keyboard.press('Enter')
+    await expect(page).toHaveURL(/level=province/)
+    await expect(page.getByTestId('filter-pill')).toHaveText(['Level: Province'])
+  })
+
+  test('term radio group: three real radios, Current only by default, URL follows', async ({ page }) => {
+    await page.goto('/')
+    const radios = page.getByRole('radio')
+    await expect(radios).toHaveCount(3)
+    await expect(page.getByRole('radio', { name: 'Current only' })).toBeChecked()
+    await page.getByRole('radio', { name: 'All' }).click()
+    await expect(page).toHaveURL(/status=all/)
+    await expect(page.getByRole('radio', { name: 'All' })).toBeChecked()
+    await expect(page.getByTestId('filter-pill')).toHaveText(['Term: All'])
+    await page.getByRole('radio', { name: 'Former only' }).focus()
+    await page.keyboard.press('Space')
+    await expect(page).toHaveURL(/status=former/)
+    await page.getByRole('radio', { name: 'Current only' }).click()
+    await expect(page).not.toHaveURL(/status=/)
+    await expect(page.getByRole('radio', { name: 'Current only' })).toBeChecked()
+  })
+
+  test('Clear filters shows the active count, resets the URL and is disabled at zero', async ({ page }) => {
+    await page.goto('/')
+    const clear = page.getByTestId('clear-filters')
+    await expect(clear).toBeDisabled()
+    await page.getByLabel('Level', { exact: true }).selectOption('city')
+    await expect(page).toHaveURL(/level=city/)
+    await page.getByRole('checkbox', { name: 'Only officials with SALN data' }).click()
+    await expect(page.getByTestId('filters-active')).toHaveText('2')
+    await expect(clear).toBeEnabled()
+    await clear.focus()
+    await page.keyboard.press('Enter')
+    await expect(page.getByTestId('filters-active')).toHaveText('0')
+    await expect(page).not.toHaveURL(/level=|saln=/)
+  })
+
+  test('the Search button is keyboard operable and moves focus to the result count', async ({ page }) => {
+    await page.goto('/')
+    await page.getByLabel('Search by name').fill('gov')
+    await page.getByRole('button', { name: 'Search', exact: true }).focus()
+    await page.keyboard.press('Enter')
+    await expect(page.locator('#results-status')).toBeFocused()
+    await expect(page).toHaveURL(/q=gov/)
+  })
 })

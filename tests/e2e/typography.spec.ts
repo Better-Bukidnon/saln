@@ -66,6 +66,5 @@ test('inputs and selects are 16px on phones (no iOS zoom)', async ({ page }) => 
   await page.setViewportSize({ width: 390, height: 844 })
   await page.goto('/')
   expect((await style(page, '#f-q')).size).toBe('16px')
-  await page.getByTestId('filters-toggle').click()
   expect((await style(page, '#f-lgu')).size).toBe('16px')
 })
