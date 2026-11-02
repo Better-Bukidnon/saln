@@ -1,3 +1,4 @@
+import { positionRank } from './position-rank'
 import type { Geo, Level, Official, SalnRecord } from './types'
 import { nodeByCode } from './geo'
 import { latestSaln } from './saln-view'
@@ -88,31 +89,41 @@ export function filterOfficials(
 
 const FIELD = { netWorth: 'netWorth', assets: 'totalAssets', liabilities: 'totalLiabilities' } as const
 
+/**
+ * Order officials. Sort by Name: higher position first, then name; Descending reverses the whole order.
+ * Sort by an amount: that amount is primary, then position, then name. Former officials (when `today` is
+ * given) with equal rank go most recent term end first.
+ */
 export function sortOfficials(
   officials: Official[],
   salnByPerson: Map<string, SalnRecord[]>,
   f: Filters,
+  today?: Date,
 ): Official[] {
   const sign = f.dir === 'desc' ? -1 : 1
   const byId = (a: Official, b: Official) => (a.id < b.id ? -1 : a.id > b.id ? 1 : 0)
   const out = [...officials]
-  if (f.sort === 'name') {
-    const keys = new Map(out.map((o) => [o.id, norm(o.name)]))
-    return out.sort((a, b) => {
-      const ka = keys.get(a.id)!
-      const kb = keys.get(b.id)!
-      return ka === kb ? byId(a, b) : sign * (ka < kb ? -1 : 1)
-    })
+  const names = new Map(out.map((o) => [o.id, norm(o.name)]))
+  const ranks = new Map(out.map((o) => [o.id, positionRank(o)]))
+  // rank, then (former only) latest term end, then name, then id
+  const byRankThenName = (a: Official, b: Official): number => {
+    const r = ranks.get(a.id)! - ranks.get(b.id)!
+    if (r) return r
+    if (today && isFormer(a, today) && isFormer(b, today) && a.termEnd !== b.termEnd) return a.termEnd! < b.termEnd! ? 1 : -1
+    const ka = names.get(a.id)!
+    const kb = names.get(b.id)!
+    return ka === kb ? byId(a, b) : ka < kb ? -1 : 1
   }
+  if (f.sort === 'name') return out.sort((a, b) => sign * byRankThenName(a, b))
   const field = FIELD[f.sort]
   const val = (o: Official) => latestSaln(salnByPerson.get(o.personId))?.[field]
   return out.sort((a, b) => {
     const va = val(a)
     const vb = val(b)
-    if (va === undefined && vb === undefined) return byId(a, b)
+    if (va === undefined && vb === undefined) return byRankThenName(a, b)
     if (va === undefined) return 1
     if (vb === undefined) return -1
-    return va === vb ? byId(a, b) : sign * (va - vb)
+    return va === vb ? byRankThenName(a, b) : sign * (va - vb)
   })
 }
 

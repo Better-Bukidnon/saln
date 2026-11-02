@@ -26,6 +26,7 @@ export default function OfficialsPage() {
         filterOfficials(data.officials, data.salnByPerson, data.geo, filters, new Date()),
         data.salnByPerson,
         filters,
+        new Date(),
       ),
     [filters],
   )

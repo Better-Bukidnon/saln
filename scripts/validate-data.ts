@@ -2,6 +2,7 @@ import { existsSync, readdirSync, readFileSync } from 'node:fs'
 import { join, resolve } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { netWorthMatches } from '../src/lib/money'
+import { rankOfPosition } from '../src/lib/position-rank'
 import { safeHref } from '../src/lib/url'
 import { SALN_SOURCE_TYPES, SALN_STATUSES } from '../src/lib/types'
 import type { Geo, Official, SalnRecord } from '../src/lib/types'
@@ -59,6 +60,9 @@ export function validateData(dir: string, opts: { strictGeoCounts?: boolean } = 
     }
     if (o.termEnd !== null && o.termEnd < o.termStart) {
       errors.push(`${at}: term-order: termEnd ${o.termEnd} is before termStart ${o.termStart}`)
+    }
+    if (rankOfPosition(o.position) === null) {
+      errors.push(`${at}: unranked-position: "${o.position}" has no rank in src/lib/position-rank.ts`)
     }
     const first = seenOfficial.get(o.id)
     if (first !== undefined) {
