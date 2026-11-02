@@ -7,9 +7,9 @@ import { loadAll } from '../lib/data'
 import { filterOfficials, parseFilters, serializeFilters, sortOfficials } from '../lib/filter'
 import type { Filters } from '../lib/filter'
 import { useT } from '../lib/i18n'
+import portalConfig from '../../portal.config'
 import { Card } from '../components/ui/Card'
 
-const HASHTAGS = '#OpenSALN #PublicSALNNow'
 const data = loadAll()
 
 export default function OfficialsPage() {
@@ -39,7 +39,7 @@ export default function OfficialsPage() {
             {t('heroSummary')}
           </p>
           <p data-testid="hero-hashtags" className="inline-block rounded-lg border border-white/30 bg-white/10 px-4 py-2 text-sm font-semibold text-accent-300">
-            {HASHTAGS}
+            {portalConfig.hashtags}
           </p>
         </div>
       </section>

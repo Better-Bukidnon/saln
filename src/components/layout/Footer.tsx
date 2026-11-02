@@ -3,8 +3,8 @@ import portalConfig from '../../../portal.config'
 import { useT } from '../../lib/i18n'
 import Disclaimer from '../Disclaimer'
 
-const REPO_URL = 'https://github.com/Better-Bukidnon/saln'
-const VOLUNTEER_MAIL = 'mailto:volunteer@betterbukidnon.org'
+const REPO_URL = portalConfig.repoUrl
+const VOLUNTEER_MAIL = `mailto:${portalConfig.volunteerEmail}`
 
 const svg = { width: 20, height: 20, viewBox: '0 0 24 24', fill: 'none', stroke: 'currentColor', strokeWidth: 2, strokeLinecap: 'round', strokeLinejoin: 'round', 'aria-hidden': true } as const
 const GithubIcon = () => (
@@ -31,7 +31,7 @@ const ext = { target: '_blank', rel: 'noopener noreferrer' } as const
 export default function Footer() {
   const t = useT()
   return (
-    <footer className="mt-12 bg-linear-to-b from-[#1a1a1a] to-[#111111] text-white sm:mt-16">
+    <footer className="mt-12 bg-linear-to-b from-ink to-ink-deep text-white sm:mt-16">
       <div className="container mx-auto px-3 sm:px-4 lg:px-8">
         <div className="grid grid-cols-1 gap-8 border-b border-white/10 py-10 sm:grid-cols-2 sm:gap-10 lg:grid-cols-[1.5fr_1fr_1fr_1fr] lg:gap-12 lg:py-14">
           <section className="sm:col-span-2 lg:col-span-1" data-testid="footer-brand">
@@ -58,15 +58,15 @@ export default function Footer() {
           <section data-testid="footer-resources">
             <h2 className={heading}>{t('footerResources')}</h2>
             <ul>
-              <li><a className={link} href="https://robertrleung.github.io/OpenHalalan/" {...ext}>{t('footerOpenHalalan')}</a></li>
-              <li><a className={link} href="https://saln.bettergov.ph/" {...ext}>{t('footerBetterGovSaln')}</a></li>
-              <li><a className={link} href="https://github.com/JHNLWHD/saln-tracker-ph" {...ext}>{t('footerDesignLink')}</a></li>
-              <li><a className={link} href="https://www.ombudsman.gov.ph/" {...ext}>{t('footerOmbudsman')}</a></li>
+              <li><a className={link} href={portalConfig.openHalalanUrl} {...ext}>{t('footerOpenHalalan')}</a></li>
+              <li><a className={link} href={portalConfig.betterGovSalnUrl} {...ext}>{t('footerBetterGovSaln')}</a></li>
+              <li><a className={link} href={portalConfig.designCreditUrl} {...ext}>{t('footerDesignLink')}</a></li>
+              <li><a className={link} href={portalConfig.ombudsmanUrl} {...ext}>{t('footerOmbudsman')}</a></li>
             </ul>
           </section>
           <section data-testid="footer-contribute" className="flex flex-col items-start gap-3">
             <p className="inline-flex items-center gap-1.5 rounded-md bg-success/15 px-3 py-1.5 text-xs text-white/90">
-              {t('footerCostPrefix')} <span className="font-bold text-[#2fd9ad]">{'₱'}0</span>
+              {t('footerCostPrefix')} <span className="font-bold text-success-light">{'₱'}0</span>
             </p>
             <a className={pill} href={VOLUNTEER_MAIL}>
               <MailIcon />
@@ -76,7 +76,7 @@ export default function Footer() {
               <GithubIcon />
               {t('footerContribute')}
             </a>
-            <a href="https://bettergov.ph" {...ext} className="mt-1 inline-flex rounded opacity-90 transition-opacity hover:opacity-100">
+            <a href={portalConfig.betterGovUrl} {...ext} className="mt-1 inline-flex rounded opacity-90 transition-opacity hover:opacity-100">
               <img src="/bettergov-footer.svg" alt={t('footerPartnerAlt')} className="h-16 w-auto" loading="lazy" />
             </a>
           </section>
@@ -87,14 +87,14 @@ export default function Footer() {
             <span aria-hidden="true">&middot;</span>
             <span>{t('footerLicense')}</span>
           </div>
-          <Disclaimer />
+          <Disclaimer textClass="text-white/80" />
           <p>
             {t('footerBuiltBy')}{' '}
             <a className="rounded font-medium text-white underline underline-offset-2" href={portalConfig.mainSiteUrl} {...ext}>BetterBukidnon</a>
             {' '}&middot;{' '}
-            <a className="rounded font-medium text-white underline underline-offset-2" href="https://bettergov.ph/" {...ext}>BetterGov.ph</a>
+            <a className="rounded font-medium text-white underline underline-offset-2" href={portalConfig.betterGovUrl} {...ext}>BetterGov.ph</a>
             {' '}&middot; {t('footerDesignBy')}{' '}
-            <a className="rounded font-medium text-white underline underline-offset-2" href="https://github.com/JHNLWHD/saln-tracker-ph" {...ext}>{t('footerDesignLink')}</a>
+            <a className="rounded font-medium text-white underline underline-offset-2" href={portalConfig.designCreditUrl} {...ext}>{t('footerDesignLink')}</a>
           </p>
         </div>
       </div>

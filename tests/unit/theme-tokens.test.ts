@@ -8,13 +8,12 @@ describe('Tailwind theme tokens (BetterBukidnon main-site palette)', () => {
   it.each([
     ['--color-primary-500', '#0032a0'],
     ['--color-primary-700', '#002170'],
-    ['--color-secondary', '#003d82'],
     ['--color-accent-500', '#f77f00'],
     ['--color-success', '#06a77d'],
     ['--color-danger-500', '#d62828'],
-    ['--color-info', '#0077be'],
+    ['--color-success-light', '#2fd9ad'],
     ['--color-ink', '#1a1a1a'],
-    ['--color-ink-light', '#666666'],
+    ['--color-ink-deep', '#111111'],
     ['--color-surface-alt', '#f8f9fa'],
   ])('%s is %s', (name, hex) => {
     expect(css).toMatch(new RegExp(`${name}:\\s*${hex}`))

@@ -40,14 +40,13 @@
   --color-danger-800: #741212;
   --color-danger-900: #520c0c;
 
-  --color-secondary: #003d82;
   --color-success: #06a77d;
-  --color-info: #0077be;
+  --color-success-light: #2fd9ad; /* success on the dark footer */
   --color-ink: #1a1a1a;
-  --color-ink-light: #666666;
-  --color-surface: #ffffff;
+  --color-ink-deep: #111111;
   --color-surface-alt: #f8f9fa;
 
+  /* Main-site shadows (override Tailwind's shadow-sm / shadow-md) */
   --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.05);
   --shadow-md: 0 4px 8px rgba(0, 0, 0, 0.1);
 
@@ -89,16 +88,16 @@
    it beats Tailwind utilities (shadow-*, ring-*), so nothing can hide it. Outline, not
    box-shadow, so shadow utilities cannot override it either. */
 :focus-visible {
-  outline: 2px solid #0032a0;
+  outline: 2px solid var(--color-primary-500);
   outline-offset: 2px;
 }
 
 /* On the dark footer the ring must be light to stay visible. Unlayered and more specific. */
 footer :focus-visible {
-  outline-color: #ffffff;
+  outline-color: var(--color-white);
 }
 
 /* Same for controls on the blue hero/banner. */
 .on-dark :focus-visible {
-  outline-color: #ffffff;
+  outline-color: var(--color-white);
 }

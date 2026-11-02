@@ -2,7 +2,6 @@ import { Link } from 'react-router'
 import portalConfig from '../../portal.config'
 import { useT } from '../lib/i18n'
 
-const HASHTAGS = '#OpenSALN #PublicSALNNow'
 const base =
   'inline-flex min-h-11 w-full items-center justify-center rounded-lg px-5 py-2.5 text-sm font-semibold transition-colors lg:w-auto'
 const solid = `${base} bg-white text-primary-500 shadow-sm hover:bg-primary-50`
@@ -23,7 +22,7 @@ export default function HelpBanner() {
         </h3>
         <p className="max-w-3xl text-sm leading-relaxed sm:text-base">{t('bannerBody')}</p>
         <p className="inline-block rounded-md border border-white/30 bg-white/10 px-2.5 py-1 text-xs font-semibold text-accent-300">
-          {HASHTAGS}
+          {portalConfig.hashtags}
         </p>
         <p className="text-sm sm:text-base">
           {t('bannerOmbudsman')}{' '}
@@ -36,7 +35,7 @@ export default function HelpBanner() {
         <a className={solid} href={portalConfig.submitUrl} target="_blank" rel="noopener noreferrer">
           {t('bannerSubmit')}
         </a>
-        <a className={tint} href="mailto:volunteer@betterbukidnon.org">
+        <a className={tint} href={`mailto:${portalConfig.volunteerEmail}`}>
           {t('bannerContact')}
         </a>
         <Link className={ghost} to="/about">

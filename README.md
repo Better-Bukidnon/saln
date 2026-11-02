@@ -49,3 +49,8 @@ To edit a translation, change the entry in `src/lib/strings.ts` (the `en`, `fil`
 ## Submitting a SALN copy
 
 The issue form is `.github/ISSUE_TEMPLATE/submit-saln.yml`. The GitHub label `saln-submission` must be created once in the repo (Issues > Labels), otherwise GitHub silently drops it. It collects links and declared totals only and never asks for file uploads. Maintainers verify a submission before any record is published.
+
+## Assets and credits
+
+- `public/logo.svg`, `public/logo-white.svg`, `public/favicon.svg`, `public/favicon.ico` and `public/bettergov-footer.svg` are copied unchanged from the BetterBukidnon site (`betterbukidnon/assets/images/logo/`: `better-bukidnon-logo.svg`, `better-bukidnon-logo-white.svg`, `favicon.svg`, `favicon.ico`, `bettergov-footer.svg`). That repository is dual-licensed MIT (code) and CC BY 4.0 (content, including images); the logo files carry their own notes inside (province outline from OpenStreetMap, ODbL 1.0; wordmark Inter Display, SIL OFL 1.1). `bettergov-footer.svg` is the BetterGov.ph partner mark that the main site displays in its footer; it stays the property of BetterGov.ph and is used here only to credit the partner.
+- Layout and styling follow [SALN Tracker PH](https://github.com/JHNLWHD/saln-tracker-ph) (MIT) and the BetterBukidnon site's design tokens.

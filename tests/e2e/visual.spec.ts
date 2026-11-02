@@ -112,7 +112,8 @@ test('keyboard focus shows the 2px primary outline on every interactive element'
   await page.goto('/')
   const seen = new Set<string>()
   const bad: string[] = []
-  for (let i = 0; i < 80; i++) {
+  const rings = { footer: 0, onDark: 0 }
+  for (let i = 0; i < 100; i++) {
     await page.keyboard.press('Tab')
     await page.waitForTimeout(250) // let `transition-all` finish so the outline is at its final width
     const info = await page.evaluate(() => {
@@ -123,14 +124,26 @@ test('keyboard focus shows the 2px primary outline on every interactive element'
         parseFloat(s.outlineWidth) >= 2 &&
         // light ring on the dark footer and the blue banner, primary blue elsewhere
         s.outlineColor === (e.closest('footer, .on-dark') ? 'rgb(255, 255, 255)' : 'rgb(0, 50, 160)')
-      return { tag: e.tagName.toLowerCase(), type: (e as HTMLInputElement).type ?? '', outline, id: e.id }
+      return {
+        tag: e.tagName.toLowerCase(),
+        type: (e as HTMLInputElement).type ?? '',
+        outline,
+        id: e.id,
+        inFooter: !!e.closest('footer'),
+        inOnDark: !!e.closest('.on-dark'),
+      }
     })
     if (info.tag === 'body') continue // focus wrapped around past the last control
     const kind = info.tag === 'input' ? `input:${info.type}` : info.tag
     seen.add(kind)
+    if (info.inFooter) rings.footer++
+    if (info.inOnDark) rings.onDark++
     if (!info.outline) bad.push(`${kind}#${info.id}`)
   }
   expect(bad).toEqual([])
+  // the white-ring branch must really have been exercised on the dark surfaces
+  expect(rings.footer, 'footer elements reached').toBeGreaterThanOrEqual(8)
+  expect(rings.onDark, 'blue banner elements reached').toBeGreaterThanOrEqual(3)
   for (const k of ['a', 'button', 'select', 'input:search', 'input:checkbox']) expect(seen.has(k), k).toBe(true)
 })
 
