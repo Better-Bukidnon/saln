@@ -66,8 +66,20 @@ describe('parseHouseSummary', () => {
       { name: 'DE VENECIA, CHRISTOPHER "TOFF" VERA PEREZ', district: '4th District, Bukidnon', totalAssets: 32752445, totalLiabilities: 2068884, netWorth: 30683561 },
     ])
   })
-  it('ignores malformed amounts on other provinces (fixture has one) without failing', () => {
+  it('does not throw on a malformed-amount row of another province (fixture has a Davao Oriental one)', () => {
     expect(text).toContain('9,878,302,76')
+    let got: HouseRow[] = []
+    expect(() => {
+      got = parseHouseSummary(text, 'Bukidnon')
+    }).not.toThrow()
+    expect(got.map((r) => r.name)).toEqual([
+      'ACOSTA-ALBA, MA. LOURDES',
+      'FLORES, FLORENCIO JR. T.',
+      'ROQUE, ROGELIO NEIL P.',
+      'ZUBIRI, MANUEL F.',
+    ])
+  })
+  it('throws "unparseable amounts" when the malformed row belongs to the target province', () => {
     expect(() => parseHouseSummary(text, 'Davao Oriental')).toThrow(/unparseable amounts/)
   })
   it('throws loudly when a matching province row has unparseable amounts', () => {
