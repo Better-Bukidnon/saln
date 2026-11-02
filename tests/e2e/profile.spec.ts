@@ -85,7 +85,7 @@ test('unknown id shows not found with a link home', async ({ page }) => {
 
 test('about page has its sections and the submit link', async ({ page }) => {
   await page.goto('/about')
-  for (const h of ['Sources', 'Verification', 'How to request a SALN', 'How to submit a SALN copy']) {
+  for (const h of ['What is a SALN?', 'Our Mission', 'Data Sources and Disclaimer', 'How to request a SALN', 'Legal Framework', 'Support Transparency']) {
     await expect(page.getByRole('heading', { level: 3, name: h })).toBeVisible()
   }
   await expect(page.getByRole('link', { name: /Ombudsman/ }).first()).toBeVisible()

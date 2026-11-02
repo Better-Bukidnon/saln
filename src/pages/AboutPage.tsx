@@ -1,49 +1,116 @@
 import type { ReactNode } from 'react'
+import HelpBanner from '../components/HelpBanner'
 import { Button } from '../components/ui/Button'
 import { Card } from '../components/ui/Card'
 import { useT } from '../lib/i18n'
 import portalConfig from '../../portal.config'
 
-function Section({ title, children }: { title: string; children: ReactNode }) {
+const h3 = 'mb-3 text-xl font-bold tracking-tight text-gray-900 sm:text-2xl'
+const h4 = 'mb-1 text-sm font-semibold text-gray-900 sm:text-base'
+const body = 'text-sm leading-relaxed text-gray-800 sm:text-base'
+
+function Section({ id, title, children }: { id: string; title: string; children: ReactNode }) {
   return (
-    <Card>
-      <h3 className="mb-3 text-xl font-bold tracking-tight text-gray-900 sm:text-2xl">{title}</h3>
-      <div className="space-y-3 text-gray-800">{children}</div>
+    <Card aria-labelledby={id} role="region">
+      <h3 id={id} className={h3}>
+        {title}
+      </h3>
+      <div className="space-y-3">{children}</div>
     </Card>
   )
 }
 
+const LEGAL = ['constitution', 'ra6713', 'ra3019', 'eo2'] as const
+
 export default function AboutPage() {
   const t = useT()
   return (
-    <div className="mx-auto max-w-3xl space-y-4 sm:space-y-6">
-      <Card className="border-2 border-primary-200 bg-primary-50 motion-safe:animate-fade-in">
-        <h2 className="mb-2 text-2xl font-bold leading-tight tracking-tight text-gray-900 sm:text-3xl lg:text-4xl lg:leading-10">{t('aboutHeading')}</h2>
-        <p className="text-gray-800">{t('aboutBody')}</p>
-      </Card>
-      <Section title={t('aboutSources')}>
-        <ul className="list-disc space-y-2 pl-5">
+    <div className="mx-auto max-w-4xl space-y-6 sm:space-y-8">
+      <section className="overflow-hidden rounded-xl bg-linear-to-br from-primary-500 to-primary-700 text-white shadow-md motion-safe:animate-fade-in">
+        <div className="px-4 py-8 text-center sm:px-6 sm:py-12">
+          <h2 data-testid="about-hero-title" className="mb-3 text-2xl font-bold leading-tight tracking-tight sm:mb-4 sm:text-3xl lg:text-4xl lg:leading-10">
+            {t('aboutHeading')}
+          </h2>
+          <p className="mx-auto mb-5 max-w-2xl text-base text-white sm:text-xl">{t('aboutBody')}</p>
+          <p className="inline-block rounded-lg border border-white/30 bg-white/10 px-4 py-2 text-xs font-medium text-accent-300 sm:text-sm">
+            {portalConfig.hashtags}
+          </p>
+        </div>
+      </section>
+
+      <HelpBanner />
+
+      <Section id="about-what" title={t('aboutWhatTitle')}>
+        {[1, 2].map((n) => (
+          <p key={n} className={body}>
+            {t(`aboutWhat.${n}`)}
+          </p>
+        ))}
+      </Section>
+
+      <Section id="about-mission" title={t('aboutMissionTitle')}>
+        <p className={body}>{t('aboutMissionIntro')}</p>
+        <ul className={`list-disc space-y-2 pl-5 ${body}`}>
+          {[1, 2, 3, 4].map((n) => (
+            <li key={n}>{t(`aboutMission.${n}`)}</li>
+          ))}
+        </ul>
+      </Section>
+
+      <Section id="about-data" title={t('aboutDataTitle')}>
+        <div data-testid="about-important" className="rounded-lg border-2 border-accent-700 bg-accent-50 p-4">
+          <p className="mb-1 inline-block rounded-full bg-accent-700 px-2.5 py-0.5 text-xs font-bold uppercase tracking-wide text-white">
+            {t('aboutImportant')}
+          </p>
+          <p className="text-sm leading-relaxed text-gray-900 sm:text-base">{t('aboutDataBody')}</p>
+        </div>
+        <h4 className={h4}>{t('aboutSources')}</h4>
+        <ul className={`list-disc space-y-2 pl-5 ${body}`}>
           {[1, 2, 3, 4].map((n) => (
             <li key={n}>{t(`aboutSourcesList.${n}`)}</li>
           ))}
         </ul>
-      </Section>
-      <Section title={t('aboutVerification')}>
+        <h4 className={`${h4} pt-2`}>{t('aboutVerification')}</h4>
         {[1, 2].map((n) => (
-          <p key={n}>{t(`aboutVerificationBody.${n}`)}</p>
+          <p key={n} className={body}>
+            {t(`aboutVerificationBody.${n}`)}
+          </p>
         ))}
+        <p className={body}>{t('aboutSubmitBody')}</p>
+        <Button href={portalConfig.submitUrl} target="_blank" rel="noopener noreferrer">
+          {t('aboutSubmitLink')}
+        </Button>
       </Section>
-      <Section title={t('aboutRequest')}>
-        <p>{t('aboutRequestBody')}</p>
+
+      <Section id="about-request" title={t('aboutRequest')}>
+        {[1, 2].map((n) => (
+          <p key={n} className={body}>
+            {t(`aboutRequestBody.${n}`)}
+          </p>
+        ))}
         <Button href={portalConfig.ombudsmanRequestUrl} target="_blank" rel="noopener noreferrer">
           {t('aboutRequestLink')}
         </Button>
       </Section>
-      <Section title={t('aboutSubmit')}>
-        <p>{t('aboutSubmitBody')}</p>
-        <Button href={portalConfig.submitUrl} target="_blank" rel="noopener noreferrer">
-          {t('aboutSubmitLink')}
-        </Button>
+
+      <Section id="about-legal" title={t('aboutLegalTitle')}>
+        <p className={body}>{t('aboutLegalIntro')}</p>
+        <div className="grid gap-3 sm:grid-cols-2 sm:gap-4">
+          {LEGAL.map((k) => (
+            <div key={k} className="rounded-lg bg-gray-50 p-4">
+              <h4 className={h4}>{t(`aboutLegal.${k}.title`)}</h4>
+              <p className="text-xs leading-relaxed text-gray-800 sm:text-sm">{t(`aboutLegal.${k}.body`)}</p>
+            </div>
+          ))}
+        </div>
+      </Section>
+
+      <Section id="about-support" title={t('aboutSupportTitle')}>
+        <p className={body}>{t('aboutSupportBody')}</p>
+        <p className={body}>
+          {t('aboutSupportTags')}:{' '}
+          <strong className="text-primary-700">{portalConfig.hashtags} #TransparencyPH</strong>
+        </p>
       </Section>
     </div>
   )

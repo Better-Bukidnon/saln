@@ -245,17 +245,17 @@ test('filter card groups exist and the checkboxes are real, labelled inputs', as
   await expect(page.getByTestId('filters-active')).toHaveCount(0)
 })
 
-test('the help banner is on the list page only, with its three actions', async ({ page }) => {
+test('the help banner is on the list and About pages (not profiles), with its three actions', async ({ page }) => {
   await page.goto('/')
   const banner = page.getByRole('region', { name: 'Help us open up SALN data' })
   await expect(banner.getByRole('link', { name: 'Submit SALN Data' })).toBeVisible()
   await expect(banner.getByRole('link', { name: 'Contact Us' })).toHaveAttribute('href', 'mailto:volunteer@betterbukidnon.org')
   await expect(banner.getByRole('link', { name: 'Learn More' })).toHaveAttribute('href', '/about')
   await expect(banner.getByRole('link', { name: /ombudsman.gov.ph/ })).toBeVisible()
-  for (const p of ['/about', '/official/dual-gov']) {
-    await page.goto(p)
-    await expect(page.getByText('Help us open up SALN data')).toHaveCount(0)
-  }
+  await page.goto('/about')
+  await expect(page.getByRole('region', { name: 'Help us open up SALN data' })).toHaveCount(1)
+  await page.goto('/official/dual-gov')
+  await expect(page.getByText('Help us open up SALN data')).toHaveCount(0)
 })
 
 test('banner text and buttons on the blue meet AA', async ({ page }) => {
