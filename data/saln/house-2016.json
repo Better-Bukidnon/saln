@@ -1,0 +1,50 @@
+[
+  {
+    "id": "house-2016-oh-399466caba",
+    "personId": "oh-399466caba",
+    "year": 2016,
+    "filingType": "House summary (as of 31 Dec)",
+    "totalAssets": 29469927.14,
+    "totalLiabilities": 4512738.16,
+    "netWorth": 24957188.98,
+    "sourceType": "house-summary",
+    "sourceUrl": "https://docs.congress.hrep.online/download/docs/saln.alpha.31Dec2016.pdf",
+    "status": "submitted"
+  },
+  {
+    "id": "house-2016-oh-5f91dbaee4",
+    "personId": "oh-5f91dbaee4",
+    "year": 2016,
+    "filingType": "House summary (as of 31 Dec)",
+    "totalAssets": 11200000,
+    "totalLiabilities": 0,
+    "netWorth": 11200000,
+    "sourceType": "house-summary",
+    "sourceUrl": "https://docs.congress.hrep.online/download/docs/saln.alpha.31Dec2016.pdf",
+    "status": "submitted"
+  },
+  {
+    "id": "house-2016-oh-834629e901",
+    "personId": "oh-834629e901",
+    "year": 2016,
+    "filingType": "House summary (as of 31 Dec)",
+    "totalAssets": 16366487.45,
+    "totalLiabilities": 6507000,
+    "netWorth": 9859487.45,
+    "sourceType": "house-summary",
+    "sourceUrl": "https://docs.congress.hrep.online/download/docs/saln.alpha.31Dec2016.pdf",
+    "status": "submitted"
+  },
+  {
+    "id": "house-2016-oh-c9067aa8cf",
+    "personId": "oh-c9067aa8cf",
+    "year": 2016,
+    "filingType": "House summary (as of 31 Dec)",
+    "totalAssets": 90134705.53,
+    "totalLiabilities": 5315643.53,
+    "netWorth": 84819062,
+    "sourceType": "house-summary",
+    "sourceUrl": "https://docs.congress.hrep.online/download/docs/saln.alpha.31Dec2016.pdf",
+    "status": "submitted"
+  }
+]
