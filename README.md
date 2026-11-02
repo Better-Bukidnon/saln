@@ -2,6 +2,8 @@
 
 Public aggregator of Statements of Assets, Liabilities and Net Worth (SALN) links for Bukidnon officials. Aggregator, not the original source; not an official government website.
 
+**Based on the BetterGov SALN project.** This portal is the Bukidnon edition of the [SALN Tracker Philippines](https://saln.bettergov.ph/) by [BetterGov.ph](https://bettergov.ph/) ([source: JHNLWHD/saln-tracker-ph](https://github.com/JHNLWHD/saln-tracker-ph), MIT). It follows that project's record shape and design ideas, narrows the scope to the Province of Bukidnon and adds filtering by municipality and barangay. It is part of [BetterBukidnon](https://betterbukidnon.org), alongside the [Bukidnon budget portal](https://budget.betterbukidnon.org/) ([Better-Bukidnon/budget](https://github.com/Better-Bukidnon/budget)), which is itself built on BetterGov.ph data.
+
 ## Setup
 
 Requires Node 22 and npm.
