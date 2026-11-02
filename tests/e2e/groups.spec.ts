@@ -105,3 +105,13 @@ test('level headers: h3 per level with description, total badge and neutral rows
   const levels = await page.locator('main h2, main h3, main h4').evaluateAll((els) => els.map((e) => Number(e.tagName[1])))
   for (let i = 1; i < levels.length; i++) expect(levels[i] - levels[i - 1]).toBeLessThanOrEqual(1)
 })
+
+test('group header band is gray, holds the description, and sits above a white content area', async ({ page }) => {
+  await page.goto('/')
+  const row = group(page, 'provincial')
+  const band = row.locator('> div > div').first()
+  expect(await band.evaluate((e) => getComputedStyle(e).backgroundColor)).toMatch(/oklch\(0\.985|rgb\(249, 250, 251\)/)
+  const desc = row.getByText('The governor and vice governor of Bukidnon')
+  const [bb, db] = [await band.boundingBox(), await desc.boundingBox()]
+  expect(db!.y + db!.height).toBeLessThanOrEqual(bb!.y + bb!.height + 0.5)
+})

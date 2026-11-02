@@ -57,30 +57,32 @@ export default function OfficialGroupSection({
   const n = group.officials.length
   return (
     <li data-testid="group" data-group={group.key}>
-      <div className={`rounded-xl border border-gray-200 bg-white shadow-sm`}>
-        <h3>
-          <button
-            type="button"
-            aria-expanded={open}
-            aria-controls={panelId}
-            aria-describedby={description ? descId : undefined}
-            onClick={() => setOpen((v) => !v)}
-            className="flex min-h-14 w-full items-center gap-3 rounded-xl px-4 py-3 text-left hover:bg-gray-50 sm:gap-4 sm:px-5"
-          >
-            <Chevron open={open} />
-            <span className="min-w-0 flex-1 text-base font-bold leading-6 text-gray-900 sm:text-lg sm:leading-7">{title}</span>
-            <Badge variant="primary" size="md" className="shrink-0">
-              {n === 1 ? t('groupCount.one') : t('groupCount.other', { n })}
-            </Badge>
-          </button>
-        </h3>
-        {description && (
-          <p id={descId} className="-mt-1 px-4 pb-3 pl-12 text-sm text-gray-700 sm:pl-14">
-            {description}
-          </p>
-        )}
+      <div className="rounded-xl border border-gray-200 bg-white shadow-sm">
+        <div className={`bg-gray-50 ${open ? 'rounded-t-xl border-b border-gray-200' : 'rounded-xl'}`}>
+          <h3>
+            <button
+              type="button"
+              aria-expanded={open}
+              aria-controls={panelId}
+              aria-describedby={description ? descId : undefined}
+              onClick={() => setOpen((v) => !v)}
+              className="flex min-h-14 w-full items-center gap-3 rounded-xl px-4 py-3 text-left hover:bg-gray-100 sm:gap-4 sm:px-5"
+            >
+              <Chevron open={open} />
+              <span className="min-w-0 flex-1 text-base font-bold leading-6 text-gray-900 sm:text-lg sm:leading-7">{title}</span>
+              <Badge variant="primary" size="md" className="shrink-0 px-3">
+                {n === 1 ? t('groupCount.one') : t('groupCount.other', { n })}
+              </Badge>
+            </button>
+          </h3>
+          {description && (
+            <p id={descId} className="-mt-2 pb-3 pl-12 pr-4 text-sm text-gray-600 sm:pl-14 sm:pr-5">
+              {description}
+            </p>
+          )}
+        </div>
         {open && (
-          <div id={panelId} className="border-t border-gray-200 p-3 sm:p-4">
+          <div id={panelId} className="p-3 sm:p-4">
             <ul className="grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-6 lg:grid-cols-3">
               {group.officials.map((o) => (
                 <OfficialCard key={o.id} official={o} saln={salnByPerson.get(o.personId)} geo={geo} />

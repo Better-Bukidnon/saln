@@ -71,10 +71,6 @@ export default function OfficialsPage() {
 }
 
 type Level = 'provincial' | 'sp' | 'house' | 'municipal' | 'barangay'
-const LEVEL_ACCENT: Partial<Record<Level, string>> = {
-  municipal: 'border-l-danger-500',
-  barangay: 'border-l-gray-500',
-}
 const LEVEL_ORDER: Level[] = ['provincial', 'sp', 'house', 'municipal', 'barangay']
 const levelOf = (g: OfficialGroup): Level =>
   g.kind === 'lgu' ? 'municipal' : g.kind
@@ -136,7 +132,7 @@ function GroupSet({
           const hid = `${id}-${level}-heading`
           return (
             <div key={level} data-level={level} className="space-y-3">
-              <div className={`flex items-start justify-between gap-3 border-l-4 py-1 pl-4 ${LEVEL_ACCENT[level] ?? ''}`}>
+              <div className="flex items-start justify-between gap-3 py-1">
                 <div className="min-w-0">
                   <h3 id={hid} className="text-base font-bold text-gray-900 sm:text-lg">
                     {titles[level]}
