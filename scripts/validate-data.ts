@@ -44,35 +44,42 @@ export function validateData(dir: string, opts: { strictGeoCounts?: boolean } = 
   const salns = readJsonDir<SalnRecord>(join(dir, 'saln'))
   const personIds = new Set(officials.map((o) => o.value.personId))
 
+  const seenOfficial = new Map<string, string>()
   for (const { file, value: o } of officials) {
+    const at = `officials/${file}[${o.id}]`
     if (!geoCodes.has(o.geoCode)) {
-      errors.push(`officials/${file}: unknown-geoCode: ${o.geoCode} is not in geo.json`)
+      errors.push(`${at}: unknown-geoCode: ${o.geoCode} is not in geo.json`)
     }
     if (o.termEnd !== null && o.termEnd < o.termStart) {
-      errors.push(`officials/${file}: term-order: termEnd ${o.termEnd} is before termStart ${o.termStart}`)
+      errors.push(`${at}: term-order: termEnd ${o.termEnd} is before termStart ${o.termStart}`)
     }
+    const first = seenOfficial.get(o.id)
+    if (first !== undefined) {
+      errors.push(`${at}: duplicate-official-id: id ${o.id} also appears in officials/${first}`)
+    } else seenOfficial.set(o.id, file)
   }
 
   const seen = new Set<string>()
   for (const { file, value: r } of salns) {
+    const at = `saln/${file}[${r.id}]`
     if (!personIds.has(r.personId)) {
-      errors.push(`saln/${file}: orphan-personId: no official with personId ${r.personId}`)
+      errors.push(`${at}: orphan-personId: no official with personId ${r.personId}`)
     }
-    if (!r.sourceUrl) errors.push(`saln/${file}: missing-sourceUrl: sourceUrl is required`)
+    if (!r.sourceUrl) errors.push(`${at}: missing-sourceUrl: sourceUrl is required`)
     else if (!safeHref(r.sourceUrl)) {
-      errors.push(`saln/${file}: bad-source-url: record ${r.id} sourceUrl must be an http(s) URL`)
+      errors.push(`${at}: bad-source-url: record ${r.id} sourceUrl must be an http(s) URL`)
     }
-    if (!r.status) errors.push(`saln/${file}: missing-status: status is required`)
+    if (!r.status) errors.push(`${at}: missing-status: status is required`)
     if (!netWorthMatches(r)) {
-      errors.push(`saln/${file}: net-worth-mismatch: netWorth must equal totalAssets - totalLiabilities`)
+      errors.push(`${at}: net-worth-mismatch: netWorth must equal totalAssets - totalLiabilities`)
     }
     if (r.status === 'verified') {
-      if (!r.verifiedBy) errors.push(`saln/${file}: verified-missing-verifiedBy: verified requires verifiedBy`)
-      if (!r.verifiedAt) errors.push(`saln/${file}: verified-missing-verifiedAt: verified requires verifiedAt`)
+      if (!r.verifiedBy) errors.push(`${at}: verified-missing-verifiedBy: verified requires verifiedBy`)
+      if (!r.verifiedAt) errors.push(`${at}: verified-missing-verifiedAt: verified requires verifiedAt`)
     }
     const key = `${r.personId}|${r.year}|${r.sourceType}`
     if (seen.has(key)) {
-      errors.push(`saln/${file}: duplicate-saln: duplicate (personId, year, sourceType) ${key}`)
+      errors.push(`${at}: duplicate-saln: duplicate (personId, year, sourceType) ${key}`)
     }
     seen.add(key)
   }

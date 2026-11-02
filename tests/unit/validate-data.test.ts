@@ -12,6 +12,7 @@ const cases: [string, string][] = [
   ['verified-no-verifiedby', 'verified-missing-verifiedBy'],
   ['duplicate-saln', 'duplicate-saln'],
   ['term-reversed', 'term-order'],
+  ['duplicate-official-id', 'duplicate-official-id'],
   ['orphan-person', 'orphan-personId'],
   ['bad-source-url-javascript', 'bad-source-url'],
   ['bad-source-url-data', 'bad-source-url'],
@@ -28,6 +29,21 @@ describe('validateData', () => {
     const errs = validateData(join(fx, 'invalid', dir))
     expect(errs).toHaveLength(1)
     expect(errs[0]).toContain(rule)
+  })
+})
+
+describe('validateData record ids in messages', () => {
+  it('term-order message names the record id', () => {
+    const [e] = validateData(join(fx, 'invalid', 'term-reversed'))
+    expect(e).toContain('officials/gov.json[o1]:')
+  })
+  it('duplicate-official-id names the id and the first file', () => {
+    const [e] = validateData(join(fx, 'invalid', 'duplicate-official-id'))
+    expect(e).toContain('[o1]')
+  })
+  it('saln errors name the record id', () => {
+    const [e] = validateData(join(fx, 'invalid', 'missing-sourceurl'))
+    expect(e).toMatch(/saln\/[^:]+\[[^\]]+\]: missing-sourceUrl/)
   })
 })
 

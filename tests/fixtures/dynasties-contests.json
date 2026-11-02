@@ -1,0 +1,145 @@
+{
+  "_note": "Trimmed from officials.bettergov.ph/api/v1/contests (Open Halalan, CC0). Kept contest fields: id,year,position,district,city,city_slug,candidates; candidate fields: person_id,display_name,party,won; at most 2 winners + 1 loser per contest. Edits: the 2025 governor contest is the 2022 one with year/id changed (tests skip rule); the councilor contest's town was renamed ATLANTIS (tests unmapped).",
+  "data": {
+    "contests": [
+      {
+        "id": "2022-bukidnon-_-_-gov",
+        "year": 2022,
+        "position": "GOVERNOR",
+        "district": "",
+        "city": null,
+        "city_slug": null,
+        "candidates": [
+          {
+            "person_id": "25ad3faad1",
+            "display_name": "ONEIL PEPITO ROQUE",
+            "party": "PRP",
+            "won": 1
+          },
+          {
+            "person_id": "c9067aa8cf",
+            "display_name": "MANUEL ANTONIO ZUBIRI",
+            "party": "BPP",
+            "won": 0
+          }
+        ]
+      },
+      {
+        "id": "2025-bukidnon-_-_-gov",
+        "year": 2025,
+        "position": "GOVERNOR",
+        "district": "",
+        "city": null,
+        "city_slug": null,
+        "candidates": [
+          {
+            "person_id": "25ad3faad1",
+            "display_name": "ONEIL PEPITO ROQUE",
+            "party": "PRP",
+            "won": 1
+          },
+          {
+            "person_id": "c9067aa8cf",
+            "display_name": "MANUEL ANTONIO ZUBIRI",
+            "party": "BPP",
+            "won": 0
+          }
+        ]
+      },
+      {
+        "id": "2022-bukidnon-_-first-rep",
+        "year": 2022,
+        "position": "MEMBER, HOUSE OF REPRESENTATIVES",
+        "district": "FIRST",
+        "city": null,
+        "city_slug": null,
+        "candidates": [
+          {
+            "person_id": "fcf95d24ea",
+            "display_name": "JOEMAN ALBA",
+            "party": "BPP",
+            "won": 1
+          },
+          {
+            "person_id": "a6ea0153f8",
+            "display_name": "NERIC ACOSTA",
+            "party": "IND",
+            "won": 0
+          }
+        ]
+      },
+      {
+        "id": "2022-bukidnon-impasug-ong-_-mayor",
+        "year": 2022,
+        "position": "MAYOR",
+        "district": "",
+        "city": "IMPASUG ONG",
+        "city_slug": "impasug-ong",
+        "candidates": [
+          {
+            "person_id": "866bf54476",
+            "display_name": "CHECHE ANTIVO UY",
+            "party": "BPP",
+            "won": 1
+          },
+          {
+            "person_id": "2ee9f0360c",
+            "display_name": "RORY PEPITO ROQUE",
+            "party": "NP",
+            "won": 0
+          }
+        ]
+      },
+      {
+        "id": "2022-bukidnon-malaybalay-_-mayor",
+        "year": 2022,
+        "position": "MAYOR",
+        "district": "",
+        "city": "MALAYBALAY",
+        "city_slug": "malaybalay",
+        "candidates": [
+          {
+            "person_id": "2f0f1f879d",
+            "display_name": "WARREN WARREN PABILLARAN",
+            "party": "BPP",
+            "won": 1
+          },
+          {
+            "person_id": "5f91dbaee4",
+            "display_name": "FLORENCIO TADIAR FLORES JR",
+            "party": "NP",
+            "won": 0
+          }
+        ]
+      },
+      {
+        "id": "2022-bukidnon-atlantis-lone-coun",
+        "year": 2022,
+        "position": "COUNCILOR",
+        "district": "LONE",
+        "city": "ATLANTIS",
+        "city_slug": "atlantis",
+        "candidates": [
+          {
+            "person_id": "cb359143ef",
+            "display_name": "JING JACUTIN BAIGAD",
+            "party": "PRP",
+            "won": 1
+          },
+          {
+            "person_id": "408e1ee6cf",
+            "display_name": "DODO OMPOC BAJUYO",
+            "party": "BPP",
+            "won": 1
+          },
+          {
+            "person_id": "54ec72fb42",
+            "display_name": "EBO BACAS",
+            "party": "BPP",
+            "won": 0
+          }
+        ]
+      }
+    ]
+  }
+}
