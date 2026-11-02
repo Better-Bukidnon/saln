@@ -17,17 +17,25 @@ function long(abs: number): string {
 }
 
 export function formatPeso(amount: number, short = false): string {
-  const neg = amount < 0
   const abs = Math.abs(amount)
+  const cents = Math.round(abs * 100)
+  const neg = amount < 0 && cents > 0
   let body: string
   if (short && abs >= 1000) {
     const units: [number, string][] = [
-      [1e9, 'B'],
-      [1e6, 'M'],
       [1e3, 'K'],
+      [1e6, 'M'],
+      [1e9, 'B'],
     ]
-    const [div, suffix] = units.find(([d]) => abs >= d)!
-    body = `₱${(abs / div).toFixed(2)}${suffix}`
+    let i = 0
+    while (i < units.length - 1 && abs >= units[i + 1][0]) i++
+    let scaled = Math.round((abs / units[i][0]) * 100) / 100
+    // rounding may reach 1000 of the current unit: promote to the next one
+    if (scaled >= 1000 && i < units.length - 1) {
+      i++
+      scaled = Math.round((abs / units[i][0]) * 100) / 100
+    }
+    body = `₱${scaled.toFixed(2)}${units[i][1]}`
   } else {
     body = long(abs)
   }
