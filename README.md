@@ -121,7 +121,7 @@ The issue form is `.github/ISSUE_TEMPLATE/submit-saln.yml`. The GitHub label `sa
 - Roster data derives from Open Halalan (Leung, cited above) via the BetterGov Dynasties API, whose derived data is stated to be CC0. The SALN Tracker PH project (MIT) is the design reference, and logos and the BetterGov mark are BetterBukidnon assets, as described above.
 - Layout and styling follow [SALN Tracker PH](https://github.com/JHNLWHD/saln-tracker-ph) (MIT) and the BetterBukidnon site's design tokens.
 
-- The over-time chart (`src/components/ui/chart.tsx`, `src/components/SalnChart.tsx`) uses the shadcn/ui chart component (MIT) on top of Recharts (MIT, pinned in `package.json`). It is lazy-loaded, so only profile pages with two or more SALN years download it. Licence texts are in `NOTICE.md`.
+- The over-time chart (`src/components/ui/chart.tsx`, `src/components/SalnChart.tsx`) uses the shadcn/ui chart component (MIT) on top of Recharts (MIT, pinned in `package.json`). It is lazy-loaded, so only profile pages with two or more SALN years download it. Licence texts are in `NOTICE`.
 
 ## License
 
