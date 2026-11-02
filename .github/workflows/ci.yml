@@ -1,7 +1,13 @@
 name: CI
 on:
   push:
+    branches: [main, develop, 'feat/**']
   pull_request:
+permissions:
+  contents: read
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
 env:
   CI: '1'
 jobs:

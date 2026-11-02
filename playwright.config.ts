@@ -9,6 +9,8 @@ const reuseExistingServer = !process.env.CI
 
 export default defineConfig({
   testDir: 'tests/e2e',
+  retries: process.env.CI ? 1 : 0,
+  forbidOnly: !!process.env.CI,
   webServer: [
     {
       command: `npx vite build --mode e2e --outDir dist-e2e --emptyOutDir && npx vite preview --outDir dist-e2e --port ${E2E_PORT} --strictPort`,

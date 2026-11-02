@@ -68,16 +68,28 @@ test('municipality then barangay filter works on real data', async ({ page }) =>
   expect(shown.length).toBeGreaterThan(0)
   for (const id of shown) expect(inMuni(byId.get(id)!), `${id} belongs to ${muni!.name}`).toBe(true)
 
-  const bgy = barangaysOf(muni!.psgc)[0]
+  // Prefer a barangay that has a captain in the data; with no captain data (the file is
+  // optional and does not ship yet) the barangay filter must show nothing, explicitly.
+  const children = barangaysOf(muni!.psgc)
+  const withCaptain = children.find((b) => officials.some((o) => o.level === 'barangay' && o.geoCode === b.psgc))
+  const bgy = withCaptain ?? children[0]
   await barangaySelect.selectOption(bgy.psgc)
   await expect(page).toHaveURL(new RegExp(`barangay=${bgy.psgc}`))
-  for (const id of await listedIds(page)) expect(byId.get(id)!.geoCode).toBe(bgy.psgc)
+  const bgyShown = await listedIds(page)
+  for (const id of bgyShown) expect(byId.get(id)!.geoCode).toBe(bgy.psgc)
+  if (!withCaptain) {
+    // Captain-specific assertion is not possible without captain data: no data, no cards.
+    expect(bgyShown, 'no barangay captain data, so no cards for a barangay').toHaveLength(0)
+  } else {
+    expect(bgyShown.length).toBeGreaterThan(0)
+  }
 })
 
 test('2016 House officials show a House-sourced, unverified SALN row with a source link', async ({ page }) => {
   let checked = 0
   for (const rec of houseSaln) {
     const official = officials.find((o) => o.personId === rec.personId && o.termStart.startsWith('2016'))
+    expect(official, rec.personId).toBeTruthy()
     if (!official) continue
     checked++
     await page.goto(`/official/${official.id}`)
@@ -91,7 +103,7 @@ test('2016 House officials show a House-sourced, unverified SALN row with a sour
     await expect(row).toContainText(/not yet verified/i)
     await expect(row.getByText(/Verified by/)).toHaveCount(0)
   }
-  expect(checked, 'at least one House record resolves to an official').toBeGreaterThan(0)
+  expect(checked).toBe(houseSaln.length)
 })
 
 test('the disclaimer appears exactly once on the list, a profile and About', async ({ page }) => {

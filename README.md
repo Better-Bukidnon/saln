@@ -24,7 +24,7 @@ npm run dev
 - `npm run smoke` only `tests/e2e/smoke.spec.ts`. It runs against the normal production build of the REAL `data/` (port 4174)
 - `npm run lhci` Lighthouse CI on `/` (`.lighthouserc.json`, accessibility must be at least 0.9; the other categories warn). It needs a build in `dist/` and a Chrome: point `CHROME_PATH` at the Playwright Chromium, for example `CHROME_PATH="$(node -e "console.log(require('@playwright/test').chromium.executablePath())")" npm run lhci`. Reports go to `.lighthouseci/` (ignored by git)
 
-Playwright reuses an already running preview server locally but never in CI (`CI=1`).
+Playwright reuses an already running preview server locally but never in CI (`CI=1`). A reused server may serve a stale build, so stop old previews or run `npm run build` first when results look wrong.
 
 Deploys as static assets via Cloudflare Workers (`wrangler.jsonc`, worker name `saln-bukidnon`).
 
@@ -39,7 +39,7 @@ Deploys as static assets via Cloudflare Workers (`wrangler.jsonc`, worker name `
 
 ### Roster of officials
 
-`data/officials/openhalalan-<year>.json` (2016, 2019, 2022, 2025 elections) is generated from the BetterGov Dynasties API (`https://officials.bettergov.ph/api/v1`), which serves Open Halalan data: Leung, Robert R., *Open Halalan: The Philippine National and Local Election Dataset*, https://robertrleung.github.io/OpenHalalan/. The derived data is CC0 1.0 (BetterGov.ph).
+`data/officials/openhalalan-<year>.json` (2016, 2019, 2022, 2025 elections) is generated from the BetterGov Dynasties API (`https://officials.bettergov.ph/api/v1`), which serves Open Halalan data: Leung, Robert R., *Open Halalan: The Philippine National and Local Election Dataset*, https://robertrleung.github.io/OpenHalalan/. The BetterGov Dynasties API describes its derived data as CC0; check the Open Halalan page for the terms of the underlying dataset and always cite it.
 
 - Regenerate: `npx tsx scripts/import-roster.ts [--years 2016,2019,2022,2025] [--from-fixture <file>]`. Output is sorted and deterministic, so reruns diff cleanly. Towns that cannot be matched to a PSGC LGU are printed as `UNMAPPED` and never dropped silently.
 - For the 2025 term the governor, vice governor, board member and representative seats are not imported; the curated `data/officials/seed.json` covers them. Every imported row is `rosterVerified: false`.
@@ -114,7 +114,7 @@ The issue form is `.github/ISSUE_TEMPLATE/submit-saln.yml`. The GitHub label `sa
 ## Assets and credits
 
 - `public/logo.svg`, `public/logo-white.svg`, `public/favicon.svg`, `public/favicon.ico` and `public/bettergov-footer.svg` are copied unchanged from the BetterBukidnon site (`betterbukidnon/assets/images/logo/`: `better-bukidnon-logo.svg`, `better-bukidnon-logo-white.svg`, `favicon.svg`, `favicon.ico`, `bettergov-footer.svg`). That repository is dual-licensed MIT (code) and CC BY 4.0 (content, including images); the logo files carry their own notes inside (province outline from OpenStreetMap, ODbL 1.0; wordmark Inter Display, SIL OFL 1.1). `bettergov-footer.svg` is the BetterGov.ph partner mark that the main site displays in its footer; it stays the property of BetterGov.ph and is used here only to credit the partner.
-- Roster data derives from Open Halalan (Leung), CC0 1.0, via the BetterGov Dynasties API. The SALN Tracker PH project (MIT) is the design reference, and logos and the BetterGov mark are BetterBukidnon assets, as described above.
+- Roster data derives from Open Halalan (Leung, cited above) via the BetterGov Dynasties API, whose derived data is stated to be CC0. The SALN Tracker PH project (MIT) is the design reference, and logos and the BetterGov mark are BetterBukidnon assets, as described above.
 - Layout and styling follow [SALN Tracker PH](https://github.com/JHNLWHD/saln-tracker-ph) (MIT) and the BetterBukidnon site's design tokens.
 
 ## License
