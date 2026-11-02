@@ -1,0 +1,55 @@
+THIRD-PARTY NOTICES
+
+This project (SALN Tracker Bukidnon) is MIT licensed, see LICENSE. It includes
+or adapts the following third-party material.
+
+1. SALN Tracker PH (JHNLWHD/saln-tracker-ph)
+   https://github.com/JHNLWHD/saln-tracker-ph
+   Page layout, component structure and design ideas were adapted from this
+   project. Its licence notice, reproduced as published in that repository's
+   LICENSE file (the copyright line is exactly as it appears there):
+
+   MIT License
+
+   Copyright (c) 2024 Netlify
+
+   Permission is hereby granted, free of charge, to any person obtaining a copy
+   of this software and associated documentation files (the "Software"), to deal
+   in the Software without restriction, including without limitation the rights
+   to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+   copies of the Software, and to permit persons to whom the Software is
+   furnished to do so, subject to the following conditions:
+
+   The above copyright notice and this permission notice shall be included in all
+   copies or substantial portions of the Software.
+
+   THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+   IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+   FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+   AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+   LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+   SOFTWARE.
+
+2. Open Halalan and the BetterGov Dynasties API (roster of officials)
+   data/officials/openhalalan-<year>.json is generated from the BetterGov
+   Dynasties API (https://officials.bettergov.ph/api/v1), which serves Open
+   Halalan data. Citation: Leung, Robert R., Open Halalan: The Philippine
+   National and Local Election Dataset,
+   https://robertrleung.github.io/OpenHalalan/. The Dynasties API describes its
+   derived data as CC0; the terms of the underlying Open Halalan dataset are
+   those stated on the Open Halalan page. Always cite Open Halalan.
+
+3. BetterBukidnon assets
+   public/logo.svg, public/logo-white.svg, public/favicon.svg,
+   public/favicon.ico and public/bettergov-footer.svg are copied unchanged from
+   the BetterBukidnon site (betterbukidnon/assets/images/logo/). That repository
+   is dual-licensed MIT (code) and CC BY 4.0 (content, including images). The
+   logo files carry their own notes (province outline from OpenStreetMap, ODbL
+   1.0; wordmark Inter Display, SIL OFL 1.1). bettergov-footer.svg is the
+   BetterGov.ph partner mark; it remains the property of BetterGov.ph and is
+   used only to credit the partner.
+
+4. Inter variable font
+   Self-hosted through the @fontsource-variable/inter package (SIL Open Font
+   License 1.1).

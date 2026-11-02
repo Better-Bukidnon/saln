@@ -39,7 +39,7 @@ Kagawads and SK chairs are out of scope (YAGNI).
 - New repo `Better-Bukidnon/saln`: React + Vite + TypeScript static app, same stack and
   config approach as `Better-Bukidnon/budget` (`portal.config.ts`, Cloudflare Workers static
   assets, `wrangler.jsonc`). No Firebase, no backend.
-- The project lives in its own local folder, `/Users/ict/Documents/Personal_Projects/kode-projects/saln-bukidnon`,
+- The project lives in its own local folder, `saln-bukidnon/` (a sibling of `betterbukidnon/` under `kode-projects/`),
   separate from `betterbukidnon`.
 - Main site (`betterbukidnon`) change is **link-only** (decided 2026-11-02): add a link to
   the portal's URL in the nav/footer plus EN/FIL/CEB label strings. No landing page, no
@@ -130,12 +130,16 @@ Filters (state kept in the URL so views are shareable):
 - Level, current/former (derived from term dates), has-SALN-data, name search.
 - Sort by net worth, assets, liabilities, name.
 
-Visual design (added 2026-11-02 at the user's request): match the look of
-`JHNLWHD/saln-tracker-ph` (MIT) / saln.bettergov.ph: Philippine flag palette (blue `#0038A8`,
-red `#F70000`, yellow `#FCD116`), Inter, Tailwind CSS, sticky header, flag-gradient hero, card
-grid with colour-coded level badges, bordered SALN table. Differences by decision: the font is
-self-hosted (no CDN), no analytics, light theme only, no net-worth chart, and the BetterBukidnon
-logo replaces the BetterGov logo. Colour is never the only carrier of meaning (badges carry text).
+Visual design (updated 2026-11-02): the UI follows the BetterBukidnon design (main-site palette
+with primary blue `#0032A0` and accent orange `#F77F00`, Inter, Tailwind CSS, sticky header, hero
+banner, card grid with colour-coded level badges), with layout ideas from `JHNLWHD/saln-tracker-ph`
+(MIT, see `NOTICE`). The earlier plan to copy the Philippine flag palette was dropped. Differences
+by decision: the font is self-hosted (no CDN), no analytics, light theme only, and the
+BetterBukidnon logo is used. Net-worth chart: an over-time grouped bar chart of assets,
+liabilities and net worth is shown on a profile when the official has at least two filing years
+(with an accessible label and a data table). Every SALN figure carries its verification status,
+including the latest net worth on list cards. Colour is never the only carrier of meaning (badges
+carry text).
 
 Always visible: "Aggregator, not the original source; not an official government website."
 Unverified roster rows carry a badge. Trilingual strings follow the main site's EN/FIL/CEB

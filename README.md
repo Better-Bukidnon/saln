@@ -101,6 +101,10 @@ Nothing below has been performed. Do not merge the main site's link branch befor
 - [ ] Have a maintainer confirm roster rows and the aliases, and decide which records to mark `verified`.
 - [ ] Only after the subdomain is live: merge the betterbukidnon `feat/saln-link` branch.
 
+## Security headers
+
+`public/_headers` is served by Cloudflare static assets: `X-Content-Type-Options: nosniff`, `Referrer-Policy: strict-origin-when-cross-origin`, a `Permissions-Policy` that denies camera, microphone and geolocation, and `X-Frame-Options: DENY`. There is deliberately no Content-Security-Policy yet, because it would need to allow the inline styles the app uses.
+
 ## Translations
 
 The interface is available in English, Filipino (`fil`) and Binisaya/Cebuano (`ceb`). **The Filipino and Binisaya strings were machine-assisted and have NOT been reviewed by native speakers. They need native-speaker review before launch.** Shared terms were aligned with the main site's dictionaries (`betterbukidnon/assets/js/translations.js`). Legal terms stay as is (SALN, Ombudsman).
@@ -119,7 +123,7 @@ The issue form is `.github/ISSUE_TEMPLATE/submit-saln.yml`. The GitHub label `sa
 
 ## License
 
-The code is released under the MIT license (see `LICENSE`). Data comes from public sources named in "Data sources" and is always linked back to them; this repository does not claim a licence over those sources. The footer shows the app version from `package.json` ("Ver. x.y.z", injected at build time).
+The code is released under the MIT license (see `LICENSE`). Third-party notices (SALN Tracker PH MIT notice, Open Halalan citation, BetterBukidnon assets) are in `NOTICE`. Data comes from public sources named in "Data sources" and is always linked back to them; this repository does not claim a licence over those sources. The footer shows the app version from `package.json` ("Ver. x.y.z", injected at build time).
 
 ## Preview with demo data
 
