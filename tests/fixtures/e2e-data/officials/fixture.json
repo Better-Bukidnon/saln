@@ -1,0 +1,75 @@
+[
+  {
+    "id": "test-governor",
+    "personId": "test-governor",
+    "name": "Test Governor",
+    "position": "Governor",
+    "level": "province",
+    "geoCode": "1001300000",
+    "termStart": "2025-06-30",
+    "termEnd": "2028-06-30",
+    "rosterSource": "manual",
+    "rosterVerified": true
+  },
+  {
+    "id": "test-rep-1",
+    "personId": "test-rep-1",
+    "name": "Test Representative",
+    "position": "Representative, 1st District",
+    "level": "district",
+    "geoCode": "1001300000",
+    "termStart": "2025-06-30",
+    "termEnd": "2028-06-30",
+    "rosterSource": "manual",
+    "rosterVerified": true,
+    "district": 1
+  },
+  {
+    "id": "test-mayor-baungon",
+    "personId": "test-mayor-baungon",
+    "name": "Test Mayor Baungon",
+    "position": "Mayor",
+    "level": "municipality",
+    "geoCode": "1001301000",
+    "termStart": "2025-06-30",
+    "termEnd": "2028-06-30",
+    "rosterSource": "manual",
+    "rosterVerified": true
+  },
+  {
+    "id": "captain-poblacion-baungon",
+    "personId": "captain-poblacion-baungon",
+    "name": "Captain Poblacion Baungon",
+    "position": "Barangay Captain",
+    "level": "barangay",
+    "geoCode": "1001301001",
+    "termStart": "2025-06-30",
+    "termEnd": "2028-06-30",
+    "rosterSource": "manual",
+    "rosterVerified": true
+  },
+  {
+    "id": "captain-lacolac",
+    "personId": "captain-lacolac",
+    "name": "Captain Lacolac",
+    "position": "Barangay Captain",
+    "level": "barangay",
+    "geoCode": "1001301002",
+    "termStart": "2025-06-30",
+    "termEnd": "2028-06-30",
+    "rosterSource": "manual",
+    "rosterVerified": true
+  },
+  {
+    "id": "captain-poblacion-damulog",
+    "personId": "captain-poblacion-damulog",
+    "name": "Captain Poblacion Damulog",
+    "position": "Barangay Captain",
+    "level": "barangay",
+    "geoCode": "1001302001",
+    "termStart": "2025-06-30",
+    "termEnd": "2028-06-30",
+    "rosterSource": "manual",
+    "rosterVerified": false
+  }
+]

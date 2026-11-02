@@ -1,0 +1,51 @@
+{
+  "nodes": [
+    {
+      "psgc": "1001300000",
+      "name": "Bukidnon",
+      "type": "province"
+    },
+    {
+      "psgc": "1001301000",
+      "name": "Baungon",
+      "type": "municipality",
+      "parent": "1001300000"
+    },
+    {
+      "psgc": "1001302000",
+      "name": "Damulog",
+      "type": "municipality",
+      "parent": "1001300000"
+    },
+    {
+      "psgc": "1001301001",
+      "name": "Poblacion",
+      "type": "barangay",
+      "parent": "1001301000"
+    },
+    {
+      "psgc": "1001301002",
+      "name": "Lacolac",
+      "type": "barangay",
+      "parent": "1001301000"
+    },
+    {
+      "psgc": "1001301003",
+      "name": "Kiararum",
+      "type": "barangay",
+      "parent": "1001301000"
+    },
+    {
+      "psgc": "1001302001",
+      "name": "Poblacion",
+      "type": "barangay",
+      "parent": "1001302000"
+    },
+    {
+      "psgc": "1001302002",
+      "name": "Macapari",
+      "type": "barangay",
+      "parent": "1001302000"
+    }
+  ]
+}

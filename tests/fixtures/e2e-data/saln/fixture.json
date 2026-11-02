@@ -1,0 +1,50 @@
+[
+  {
+    "id": "test-governor-2023",
+    "personId": "test-governor",
+    "year": 2023,
+    "filingType": "annual",
+    "totalAssets": 10000000,
+    "totalLiabilities": 1000000,
+    "netWorth": 9000000,
+    "sourceType": "ombudsman",
+    "sourceUrl": "https://example.org/saln",
+    "status": "submitted"
+  },
+  {
+    "id": "test-governor-2024",
+    "personId": "test-governor",
+    "year": 2024,
+    "filingType": "annual",
+    "totalAssets": 12500000,
+    "totalLiabilities": 2000000,
+    "netWorth": 10500000,
+    "sourceType": "ombudsman",
+    "sourceUrl": "https://example.org/saln",
+    "status": "submitted"
+  },
+  {
+    "id": "test-mayor-baungon-2024",
+    "personId": "test-mayor-baungon",
+    "year": 2024,
+    "filingType": "annual",
+    "totalAssets": 500000,
+    "totalLiabilities": 800000,
+    "netWorth": -300000,
+    "sourceType": "ombudsman",
+    "sourceUrl": "https://example.org/saln",
+    "status": "submitted"
+  },
+  {
+    "id": "captain-lacolac-2024",
+    "personId": "captain-lacolac",
+    "year": 2024,
+    "filingType": "annual",
+    "totalAssets": 250000,
+    "totalLiabilities": 0,
+    "netWorth": 250000,
+    "sourceType": "ombudsman",
+    "sourceUrl": "https://example.org/saln",
+    "status": "submitted"
+  }
+]

@@ -9,7 +9,11 @@ function readJsonDir<T>(dir: string): { file: string; value: T }[] {
   return readdirSync(dir)
     .filter((f) => f.endsWith('.json'))
     .sort()
-    .map((f) => ({ file: f, value: JSON.parse(readFileSync(join(dir, f), 'utf8')) as T }))
+    .flatMap((f) => {
+      // a file holds one record or an array of records
+      const parsed = JSON.parse(readFileSync(join(dir, f), 'utf8')) as T | T[]
+      return (Array.isArray(parsed) ? parsed : [parsed]).map((value) => ({ file: f, value }))
+    })
 }
 
 export function validateData(dir: string, opts: { strictGeoCounts?: boolean } = {}): string[] {
