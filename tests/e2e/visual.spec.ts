@@ -147,9 +147,10 @@ test('keyboard focus shows the 2px primary outline on every interactive element'
   for (const k of ['a', 'button', 'select', 'input:search', 'input:checkbox']) expect(seen.has(k), k).toBe(true)
 })
 
-test('the scrollable SALN table region shows a focus outline that is not clipped', async ({ page }) => {
+test('the scrollable chart-data table region shows a focus outline that is not clipped', async ({ page }) => {
   await page.goto('/official/dual-gov')
-  const region = page.locator('[role="region"]')
+  await page.getByText('Show chart data as a table').click()
+  const region = page.getByRole('region', { name: 'SALN records table, scrollable' })
   for (let i = 0; i < 30; i++) {
     await page.keyboard.press('Tab')
     if (await region.evaluate((e) => e === document.activeElement)) break

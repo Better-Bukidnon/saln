@@ -81,9 +81,9 @@ test('2016 House officials show a House-sourced, unverified SALN row with a sour
     if (!official) continue
     checked++
     await page.goto(`/official/${official.id}`)
-    const row = page.getByRole('table').locator('tbody tr').filter({ hasText: formatPeso(rec.netWorth) })
+    const row = page.getByTestId('saln-card').filter({ hasText: formatPeso(rec.netWorth) })
     await expect(row).toHaveCount(1)
-    const link = row.getByRole('link')
+    const link = row.getByRole('link', { name: /View source/ })
     await expect(link).toHaveAttribute('href', rec.sourceUrl)
     expect(new URL(rec.sourceUrl).hostname).toBe('docs.congress.hrep.online')
     await expect(link).toHaveAttribute('rel', 'noopener noreferrer')

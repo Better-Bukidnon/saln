@@ -10,7 +10,7 @@ import { Badge } from './ui/Badge'
 import type { BadgeVariant } from './ui/Badge'
 import { Card } from './ui/Card'
 
-const LEVEL_VARIANT: Record<Level, BadgeVariant> = {
+export const LEVEL_VARIANT: Record<Level, BadgeVariant> = {
   province: 'primary',
   district: 'accent',
   city: 'danger',

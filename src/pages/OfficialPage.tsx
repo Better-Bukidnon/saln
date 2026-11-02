@@ -1,9 +1,13 @@
 import { Link, useParams } from 'react-router'
-import SalnTable from '../components/SalnTable'
+import { LEVEL_VARIANT } from '../components/OfficialCard'
+import SalnCards from '../components/SalnCards'
+import SalnChart from '../components/SalnChart'
 import UnverifiedBadge from '../components/UnverifiedBadge'
+import { Badge } from '../components/ui/Badge'
 import { Button } from '../components/ui/Button'
 import { Card } from '../components/ui/Card'
-import { loadAll } from '../lib/data'
+import { latestSaln, loadAll } from '../lib/data'
+import { chartSeries } from '../lib/saln-view'
 import { nodeByCode } from '../lib/geo'
 import { useT } from '../lib/i18n'
 import type { TFn } from '../lib/i18n'
@@ -44,6 +48,8 @@ export default function OfficialPage() {
     .sort((a, b) => b.termStart.localeCompare(a.termStart))
   const current = terms[0]
   const saln = data.salnByPerson.get(o.personId)
+  const latest = latestSaln(saln)
+  const series = saln ? chartSeries(saln) : null
   return (
     <div className="space-y-6 sm:space-y-8">
       <p>
@@ -53,10 +59,27 @@ export default function OfficialPage() {
         </Link>
       </p>
       <Card className="motion-safe:animate-slide-up">
-        <h2 className="text-xl font-bold leading-tight tracking-tight text-gray-900 sm:text-2xl sm:leading-8 lg:text-3xl lg:leading-9">{o.name}</h2>
-        <p className="mt-1 text-sm text-gray-700 sm:text-base">
-          {current.position}, {location(data.geo, current, t)}
-        </p>
+        <div className="flex flex-wrap items-start justify-between gap-3">
+          <div className="min-w-0">
+            <h2 className="text-xl font-bold leading-tight tracking-tight text-gray-900 sm:text-2xl sm:leading-8 lg:text-3xl lg:leading-9">{o.name}</h2>
+            <p className="mt-1 text-sm text-gray-700 sm:text-base">
+              {current.position}, {location(data.geo, current, t)}
+            </p>
+          </div>
+          <Badge variant={LEVEL_VARIANT[current.level]} size="md" data-testid="level-badge">
+            {t(`levels.${current.level}`)}
+          </Badge>
+        </div>
+        <dl className="mt-4 grid grid-cols-2 gap-3 sm:max-w-md">
+          <div className="rounded-lg bg-primary-50 p-3 text-center" data-testid="stat-records">
+            <dd className="text-xl font-bold tabular-nums text-primary-900 sm:text-2xl">{saln?.length ?? 0}</dd>
+            <dt className="text-xs font-medium text-primary-800 sm:text-sm">{t('statRecords')}</dt>
+          </div>
+          <div className="rounded-lg bg-primary-50 p-3 text-center" data-testid="stat-latest">
+            <dd className="text-xl font-bold tabular-nums text-primary-900 sm:text-2xl">{latest ? latest.year : '\u2014'}</dd>
+            <dt className="text-xs font-medium text-primary-800 sm:text-sm">{t('statLatestYear')}</dt>
+          </div>
+        </dl>
         <h3 className="mb-2 mt-5 text-base font-semibold text-gray-900">{t('termsHeading')}</h3>
         <ul aria-label={t('termsHeading')} className="space-y-2">
           {terms.map((term) => (
@@ -68,12 +91,20 @@ export default function OfficialPage() {
           ))}
         </ul>
       </Card>
-      <section>
-        <h3 className="mb-3 text-xl font-bold tracking-tight text-gray-900 sm:text-2xl">{t('salnHeading')}</h3>
+      <section aria-labelledby="saln-records-heading" className="space-y-4 sm:space-y-6">
+        <div>
+          <h3 id="saln-records-heading" className="text-xl font-bold tracking-tight text-gray-900 sm:text-2xl">{t('salnHeading')}</h3>
+          {saln?.length ? (
+            <p className="text-xs text-gray-700 sm:text-sm">
+              {saln.length === 1 ? t('recordsCount.one') : t('recordsCount.other', { n: saln.length })}
+            </p>
+          ) : null}
+        </div>
         {saln?.length ? (
           <>
-            <SalnTable records={saln} />
-            <p className="mt-3 text-sm text-gray-700">{t('salnNote')}</p>
+            {series && <SalnChart data={series} headingId="saln-chart-heading" />}
+            <SalnCards records={saln} />
+            <p className="text-sm text-gray-700">{t('salnNote')}</p>
           </>
         ) : (
           <Card

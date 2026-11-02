@@ -4,32 +4,55 @@ import portalConfig from '../../portal.config'
 test('profile shows long-form net worth and a source link equal to sourceUrl', async ({ page }) => {
   await page.goto('/official/dual-gov')
   await expect(page.getByRole('heading', { level: 2, name: 'Dual Term Person' })).toBeVisible()
-  const table = page.getByRole('table')
-  await expect(table.getByText('₱24,957,188.98')).toBeVisible()
-  const link = table.getByRole('link', { name: /Ombudsman/ })
+  const cards = page.getByTestId('saln-cards')
+  await expect(cards.getByText('₱24,957,188.98')).toBeVisible()
+  const link = cards.getByRole('link', { name: /View source.*Ombudsman/ })
   await expect(link).toHaveAttribute('href', 'https://example.org/ombudsman-2024')
   await expect(link).toHaveAttribute('target', '_blank')
   await expect(link).toHaveAttribute('rel', 'noopener noreferrer')
-  await expect(table.getByRole('link', { name: /House of Representatives summary/ })).toHaveAttribute(
+  await expect(cards.getByRole('link', { name: /View source.*House of Representatives summary/ })).toHaveAttribute(
     'href',
     'https://example.org/house-summary-2022',
   )
 })
 
-test('table is newest first, with caption, scoped headers and verified-by only when verified', async ({ page }) => {
+test('year cards are newest first with a status badge, and verified-by only when verified', async ({ page }) => {
   await page.goto('/official/dual-gov')
-  await expect(page.locator('table caption')).not.toBeEmpty()
-  expect(await page.locator('th[scope="col"]').count()).toBeGreaterThanOrEqual(7)
-  const years = await page.locator('tbody tr th[scope="row"]').allTextContents()
-  expect(years).toEqual(['2024', '2022'])
+  const years = await page.locator('[data-testid="saln-card"] h4').allTextContents()
+  expect(years).toEqual(['SALN 2024', 'SALN 2022'])
+  const badges = await page.getByTestId('status-badge').allTextContents()
+  expect(badges).toEqual(['Submitted, not yet verified', 'Verified'])
   await expect(page.getByText('Verified by Test Maintainer on 2026-10-01')).toHaveCount(1)
   await expect(page.getByText(/Verified by/)).toHaveCount(1)
   await expect(page.getByText('Totals only, as declared. Source documents are linked.')).toBeVisible()
+  await expect(page.getByTestId('stat-records')).toContainText('2')
+  await expect(page.getByTestId('stat-latest')).toContainText('2024')
+  await expect(page.getByText('Data source: Ombudsman copy')).toBeVisible()
+})
+
+test('no itemised Assets/Liabilities sections are rendered (totals only)', async ({ page }) => {
+  await page.goto('/official/dual-gov')
+  await expect(page.getByRole('heading', { name: /^(Assets|Liabilities) \(\d+\)$/ })).toHaveCount(0)
+})
+
+test('over-time chart appears only with two or more SALN years, with an accessible label and table', async ({ page }) => {
+  await page.goto('/official/dual-gov')
+  const chart = page.getByTestId('saln-chart')
+  await expect(chart).toBeVisible()
+  await expect(chart.getByRole('heading', { name: 'Assets, liabilities and net worth over time' })).toBeVisible()
+  await expect(chart).toContainText('Showing data from 2022 to 2024')
+  await expect(chart.getByRole('img')).toHaveAttribute('aria-label', /2022 to 2024/)
+  await chart.getByText('Show chart data as a table').click()
+  await expect(chart.getByRole('table').locator('tbody tr')).toHaveCount(2)
+  await page.goto('/official/test-mayor-baungon')
+  await expect(page.getByTestId('saln-chart')).toHaveCount(0)
+  await page.goto('/official/test-rep-1')
+  await expect(page.getByTestId('saln-chart')).toHaveCount(0)
 })
 
 test('negative net worth renders as -₱ not NaN', async ({ page }) => {
   await page.goto('/official/test-mayor-baungon')
-  await expect(page.getByRole('table').getByText('-₱300,000.00')).toBeVisible()
+  await expect(page.getByTestId('saln-cards').getByText('-₱300,000.00')).toBeVisible()
   await expect(page.getByText('NaN')).toHaveCount(0)
 })
 
@@ -73,6 +96,6 @@ test('about page has its sections and the submit link', async ({ page }) => {
 test('unsafe source scheme is not rendered as a link', async ({ page }) => {
   await page.goto('/official/unsafe-person')
   await expect(page.getByText('Source link unavailable')).toBeVisible()
-  await expect(page.getByRole('table').getByRole('link')).toHaveCount(0)
+  await expect(page.getByTestId('saln-cards').getByRole('link')).toHaveCount(0)
   await expect(page.locator('a[href^="javascript:" i]')).toHaveCount(0)
 })
