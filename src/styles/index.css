@@ -42,6 +42,10 @@
 
   --color-success: #06a77d;
   --color-success-light: #2fd9ad; /* success on the dark footer */
+  /* Chart bars: contrast on white 4.09 / 5.20 / 12.92 (all >= 3:1 for graphics) */
+  --color-chart-assets: #2f8f46;
+  --color-chart-liabilities: #c8372d;
+  --color-chart-networth: #0a2a7a;
   --color-ink: #1a1a1a;
   --color-ink-deep: #111111;
   --color-surface-alt: #f8f9fa;

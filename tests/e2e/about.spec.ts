@@ -39,8 +39,8 @@ test('about page: Ombudsman link, legal framework and hashtags', async ({ page }
   await page.goto('/about')
   const req = page.getByRole('region', { name: 'How to request a SALN' })
   await expect(req.getByRole('link', { name: /Ombudsman/ })).toHaveAttribute('href', portalConfig.ombudsmanRequestUrl)
-  await expect(req).toContainText('Memorandum Circular No. 3')
-  await expect(req).toContainText('regional deputy ombudsman')
+  await expect(req).toContainText('2025 guidance')
+  await expect(req).toContainText('offices designated by law')
   const legal = page.getByRole('region', { name: 'Legal Framework' })
   for (const s of ['Article XI, Section 17', 'Republic Act No. 6713', 'Republic Act No. 3019', 'Executive Order No. 2']) {
     await expect(legal).toContainText(s)

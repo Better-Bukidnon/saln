@@ -39,8 +39,20 @@ function record(year: number, assets: number, liabilities: number, extra: Partia
   }
 }
 
-export const sampleSaln: SalnRecord[] = [
-  record(2022, 4250000.5, 800000.25),
-  record(2023, 5100000, 650000.75, { status: 'verified', verifiedBy: 'Demo Maintainer', verifiedAt: '2026-01-15' }),
-  record(2024, 6320500.4, 400100.1),
+// Made-up figures for 2017 to 2024 (still fake), so the chart has enough years to be worth previewing.
+const FIGURES: [number, number, number][] = [
+  [2017, 2_150_000.0, 450_000.5],
+  [2018, 2_480_250.75, 520_000],
+  [2019, 2_990_000, 910_400.25],
+  [2020, 3_410_800.2, 1_250_000],
+  [2021, 3_800_000, 980_000.8],
+  [2022, 4_250_000.5, 800_000.25],
+  [2023, 5_100_000, 650_000.75],
+  [2024, 6_320_500.4, 400_100.1],
 ]
+
+export const sampleSaln: SalnRecord[] = FIGURES.map(([year, assets, liabilities]) =>
+  year === 2023
+    ? record(year, assets, liabilities, { status: 'verified', verifiedBy: 'Demo Maintainer', verifiedAt: '2026-01-15' })
+    : record(year, assets, liabilities),
+)

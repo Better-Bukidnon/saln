@@ -34,7 +34,7 @@ describe('demo data flag', () => {
     expect(load().officials.some((o) => o.sample)).toBe(false)
     vi.unstubAllEnvs()
   })
-  it('merges exactly one sample official and three SALN years with the flag', async () => {
+  it('merges exactly one sample official and eight SALN years with the flag', async () => {
     vi.resetModules()
     vi.stubEnv('VITE_DEMO_DATA', '1')
     const { loadAll: load } = await import('../../src/lib/data')
@@ -43,7 +43,7 @@ describe('demo data flag', () => {
     expect(sample).toHaveLength(1)
     expect(sample[0].name).toBe('Juan Dela Cruz (SAMPLE)')
     const recs = salnByPerson.get(sample[0].personId)!
-    expect(recs.map((r) => r.year).sort()).toEqual([2022, 2023, 2024])
+    expect(recs.map((r) => r.year).sort()).toEqual([2017, 2018, 2019, 2020, 2021, 2022, 2023, 2024])
     for (const r of recs) expect(Math.round((r.totalAssets - r.totalLiabilities) * 100)).toBe(Math.round(r.netWorth * 100))
     expect(recs.filter((r) => r.status === 'verified').map((r) => r.verifiedBy)).toEqual(['Demo Maintainer'])
     vi.unstubAllEnvs()
