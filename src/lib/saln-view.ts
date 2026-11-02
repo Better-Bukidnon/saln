@@ -66,3 +66,15 @@ export function compactPeso(amount: number): string {
   }
   return `${sign}\u20b1 ${Math.round(abs)}`
 }
+
+export interface LabelBox {
+  x: number
+  y: number
+  w: number
+  h: number
+}
+
+/** True when two chart value labels would overlap (touching edges do not count). */
+export function labelsCollide(a: LabelBox, b: LabelBox): boolean {
+  return a.x < b.x + b.w && b.x < a.x + a.w && a.y < b.y + b.h && b.y < a.y + a.h
+}

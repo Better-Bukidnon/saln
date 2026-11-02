@@ -1,7 +1,6 @@
-import { lazy, Suspense } from 'react'
 import { Link, useParams } from 'react-router'
 import { LEVEL_VARIANT } from '../components/OfficialCard'
-import { ChartSkeleton } from '../components/ChartSkeleton'
+import LazySalnChart from '../components/LazySalnChart'
 import SalnCards from '../components/SalnCards'
 import UnverifiedBadge from '../components/UnverifiedBadge'
 import { Badge } from '../components/ui/Badge'
@@ -14,9 +13,6 @@ import { useDocTitle, useT } from '../lib/i18n'
 import type { TFn } from '../lib/i18n'
 import type { Geo, Official } from '../lib/types'
 import portalConfig from '../../portal.config'
-
-// Recharts is ~half a megabyte of JS: only profiles with a chart pay for it.
-const SalnChart = lazy(() => import('../components/SalnChart'))
 
 const data = loadAll()
 
@@ -116,9 +112,7 @@ export default function OfficialPage() {
         {saln?.length ? (
           <>
             {series && (
-              <Suspense fallback={<ChartSkeleton />}>
-                <SalnChart data={series} headingId="saln-chart-heading" />
-              </Suspense>
+              <LazySalnChart data={series} headingId="saln-chart-heading" />
             )}
             <SalnCards records={saln} />
             <p className="type-body-sm text-gray-700">{t('salnNote')}</p>

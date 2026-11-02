@@ -43,7 +43,8 @@ test('keyboard: Tab reaches a group, Enter and Space toggle it, focus ring is vi
   const b = toggle(page, 'house')
   for (let i = 0; i < 40 && !(await b.evaluate((e) => e === document.activeElement)); i++) await page.keyboard.press('Tab')
   await expect(b).toBeFocused()
-  expect(await b.evaluate((el) => getComputedStyle(el).outlineStyle)).not.toBe('none')
+  // the ring is drawn inset on the whole header band, so it is never clipped by the card
+  expect(await b.evaluate((el) => getComputedStyle(el.closest('[data-testid="group-header"]')!).outlineStyle)).not.toBe('none')
   await page.keyboard.press('Enter')
   await expect(b).toHaveAttribute('aria-expanded', 'true')
   await page.keyboard.press('Space')
@@ -294,4 +295,31 @@ test.describe('dropdown pills and option row', () => {
     await expect(page.locator('#results-status')).toBeFocused()
     await expect(page).toHaveURL(/q=gov/)
   })
+})
+
+test('heading structure: level headers are h3, per-municipality rows are not headings', async ({ page }) => {
+  await page.goto('/')
+  await expect(page.locator('[data-level="municipal"] h3')).toHaveCount(1)
+  await expect(page.locator('[data-level="municipal"] [data-testid="group"] h3')).toHaveCount(0)
+  await expect(page.locator('[data-level="provincial"] h3')).toHaveCount(1)
+})
+
+test('typing in the search box replaces history instead of adding an entry per keystroke', async ({ page }) => {
+  await page.goto('/')
+  const before = await page.evaluate(() => history.length)
+  await page.getByLabel('Search by name').pressSequentially('test', { delay: 30 })
+  await expect(page).toHaveURL(/q=test/)
+  expect(await page.evaluate(() => history.length)).toBe(before)
+  await expect(page.getByRole('search', { name: 'Search and filters' })).toBeVisible()
+})
+
+test('higher position first: governor before vice governor, mayor before vice mayor before councilors', async ({ page }) => {
+  await page.goto('/')
+  const names = (key: string) => group(page, key).locator('h4').allTextContents()
+  expect(await names('provincial')).toEqual(['Dual Term Person', 'Test Governor', 'Aaron Test Vice Governor'])
+  await toggle(page, 'lgu:1001301000').click()
+  expect((await names('lgu:1001301000')).map((n) => n.trim())).toEqual(['Test Mayor Baungon', 'Aaron Test Vice Mayor Baungon', 'Zed Test Councilor Baungon'])
+  await page.getByLabel('Order', { exact: true }).selectOption('desc')
+  await page.getByLabel('Sort by', { exact: true }).selectOption('name')
+  expect(await names('provincial')).toEqual(['Aaron Test Vice Governor', 'Test Governor', 'Dual Term Person'])
 })

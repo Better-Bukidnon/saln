@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest'
 import type { SalnRecord } from '../../src/lib/types'
-import { chartSeries, compactPeso, comparePreferred, newestFirst, sourceTypeKey } from '../../src/lib/saln-view'
+import { chartSeries, compactPeso, comparePreferred, labelsCollide, newestFirst, sourceTypeKey } from '../../src/lib/saln-view'
 import { latestSaln } from '../../src/lib/data'
 
 function rec(year: number, assets: number, liab: number, id = `r${year}`): SalnRecord {
@@ -93,4 +93,14 @@ describe('compactPeso', () => {
     expect(compactPeso(750)).toBe('\u20b1 750')
     expect(compactPeso(-1_800_000)).toBe('-\u20b1 1.8M')
   })
+})
+
+describe('labelsCollide', () => {
+  const box = (x: number) => ({ x, y: 0, w: 40, h: 14 })
+  it('detects overlapping labels', () => expect(labelsCollide(box(0), box(30))).toBe(true))
+  it('touching or separate labels do not collide', () => {
+    expect(labelsCollide(box(0), box(40))).toBe(false)
+    expect(labelsCollide(box(0), box(100))).toBe(false)
+  })
+  it('labels at different heights do not collide', () => expect(labelsCollide(box(0), { ...box(10), y: 20 })).toBe(false))
 })

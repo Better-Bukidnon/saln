@@ -118,8 +118,8 @@ test('keyboard focus shows the 2px primary outline on every interactive element'
     await page.waitForTimeout(250) // let `transition-all` finish so the outline is at its final width
     const info = await page.evaluate(() => {
       const focused = document.activeElement as HTMLElement
-      // a pill select is an invisible overlay; its visible face (the wrapper) carries the focus ring
-      const e = focused.closest<HTMLElement>('[data-testid="filter-pill-select"]') ?? focused
+      // a pill select is an invisible overlay and a group button is stretched over its band: the wrapper carries the focus ring
+      const e = focused.closest<HTMLElement>('[data-testid="filter-pill-select"], [data-testid="group-header"]') ?? focused
       const s = getComputedStyle(e)
       const outline =
         s.outlineStyle !== 'none' &&

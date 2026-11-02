@@ -129,7 +129,7 @@ export default function FilterBar({
             placeholder={t('search')}
             className="block h-11 w-full rounded-md border border-gray-500 bg-gray-50 pl-10 pr-3 type-control text-ink shadow-xs transition-colors placeholder:text-gray-600 hover:border-gray-700"
             value={filters.q}
-            onChange={(e) => set({ q: e.target.value })}
+            onChange={(e) => onChange({ ...filters, q: e.target.value }, true)} // replace: one history entry, not one per keystroke
           />
         </div>
         <Button type="submit" className="w-full sm:w-auto">
