@@ -1,33 +1,34 @@
-import strings from '../lib/strings'
+import { useT } from '../lib/i18n'
 import portalConfig from '../../portal.config'
 
 export default function AboutPage() {
+  const t = useT()
   return (
     <>
-      <h2>{strings.aboutHeading}</h2>
-      <p>{strings.aboutBody}</p>
-      <h3>{strings.aboutSources}</h3>
+      <h2>{t('aboutHeading')}</h2>
+      <p>{t('aboutBody')}</p>
+      <h3>{t('aboutSources')}</h3>
       <ul>
-        {strings.aboutSourcesList.map((s) => (
-          <li key={s}>{s}</li>
+        {[1, 2, 3, 4].map((n) => (
+          <li key={n}>{t(`aboutSourcesList.${n}`)}</li>
         ))}
       </ul>
-      <h3>{strings.aboutVerification}</h3>
-      {strings.aboutVerificationBody.map((s) => (
-        <p key={s}>{s}</p>
+      <h3>{t('aboutVerification')}</h3>
+      {[1, 2].map((n) => (
+        <p key={n}>{t(`aboutVerificationBody.${n}`)}</p>
       ))}
-      <h3>{strings.aboutRequest}</h3>
-      <p>{strings.aboutRequestBody}</p>
+      <h3>{t('aboutRequest')}</h3>
+      <p>{t('aboutRequestBody')}</p>
       <p>
         <a href={portalConfig.ombudsmanRequestUrl} target="_blank" rel="noopener noreferrer">
-          {strings.aboutRequestLink}
+          {t('aboutRequestLink')}
         </a>
       </p>
-      <h3>{strings.aboutSubmit}</h3>
-      <p>{strings.aboutSubmitBody}</p>
+      <h3>{t('aboutSubmit')}</h3>
+      <p>{t('aboutSubmitBody')}</p>
       <p>
         <a href={portalConfig.submitUrl} target="_blank" rel="noopener noreferrer">
-          {strings.aboutSubmitLink}
+          {t('aboutSubmitLink')}
         </a>
       </p>
     </>

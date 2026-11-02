@@ -1,23 +1,24 @@
 import { formatPeso } from '../lib/money'
-import strings from '../lib/strings'
+import { useT } from '../lib/i18n'
 import { safeHref } from '../lib/url'
 import type { SalnRecord } from '../lib/types'
 
 export default function SalnTable({ records }: { records: SalnRecord[] }) {
+  const t = useT()
   const rows = [...records].sort((a, b) => b.year - a.year)
   return (
     <div className="table-wrap">
       <table className="saln">
-        <caption>{strings.salnCaption}</caption>
+        <caption>{t('salnCaption')}</caption>
         <thead>
           <tr>
-            <th scope="col">{strings.cols.year}</th>
-            <th scope="col">{strings.cols.filingType}</th>
-            <th scope="col">{strings.cols.assets}</th>
-            <th scope="col">{strings.cols.liabilities}</th>
-            <th scope="col">{strings.cols.netWorth}</th>
-            <th scope="col">{strings.cols.source}</th>
-            <th scope="col">{strings.cols.status}</th>
+            <th scope="col">{t('cols.year')}</th>
+            <th scope="col">{t('cols.filingType')}</th>
+            <th scope="col">{t('cols.assets')}</th>
+            <th scope="col">{t('cols.liabilities')}</th>
+            <th scope="col">{t('cols.netWorth')}</th>
+            <th scope="col">{t('cols.source')}</th>
+            <th scope="col">{t('cols.status')}</th>
           </tr>
         </thead>
         <tbody>
@@ -33,16 +34,16 @@ export default function SalnTable({ records }: { records: SalnRecord[] }) {
               <td>
                 {safeHref(r.sourceUrl) ? (
                   <a href={r.sourceUrl} target="_blank" rel="noopener noreferrer">
-                    {strings.sourceTypes[r.sourceType]}
+                    {t(`sourceTypes.${r.sourceType}`)}
                   </a>
                 ) : (
-                  <span>{strings.sourceUnavailable}</span>
+                  <span>{t('sourceUnavailable')}</span>
                 )}
               </td>
               <td>
-                <span>{strings.salnStatuses[r.status]}</span>
+                <span>{t(`salnStatuses.${r.status}`)}</span>
                 {r.status === 'verified' && r.verifiedBy && r.verifiedAt && (
-                  <div className="verified">{strings.verifiedBy(r.verifiedBy, r.verifiedAt)}</div>
+                  <div className="verified">{t('verifiedBy', { by: r.verifiedBy, on: r.verifiedAt })}</div>
                 )}
               </td>
             </tr>

@@ -1,4 +1,5 @@
 import { expect, test } from '@playwright/test'
+import portalConfig from '../../portal.config'
 
 test('profile shows long-form net worth and a source link equal to sourceUrl', async ({ page }) => {
   await page.goto('/official/dual-gov')
@@ -65,10 +66,7 @@ test('about page has its sections and the submit link', async ({ page }) => {
     await expect(page.getByRole('heading', { level: 3, name: h })).toBeVisible()
   }
   await expect(page.getByRole('link', { name: /Ombudsman/ }).first()).toBeVisible()
-  await expect(page.getByRole('link', { name: /submission form/i })).toHaveAttribute(
-    'href',
-    'https://github.com/Better-Bukidnon/saln/issues/new?template=submit-saln.yml',
-  )
+  await expect(page.getByRole('link', { name: /submission form/i })).toHaveAttribute('href', portalConfig.submitUrl)
   await expect(page.getByText('Aggregator, not the original source; not an official government website.')).toBeVisible()
 })
 

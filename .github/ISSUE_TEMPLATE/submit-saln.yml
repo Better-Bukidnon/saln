@@ -1,0 +1,79 @@
+name: Submit a SALN copy
+description: Tell us about a SALN you obtained lawfully so a maintainer can check it and add the declared totals.
+title: "[SALN submission] "
+labels: ["saln-submission"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thank you for helping. We store declared totals only (total assets, total liabilities, net worth) and always keep a link to the source.
+
+        **Do not attach files.** Do not paste IDs, signatures, home addresses or other personal data. Links only.
+  - type: input
+    id: official-name
+    attributes:
+      label: Official's full name
+      placeholder: "Juan Dela Cruz"
+    validations:
+      required: true
+  - type: input
+    id: position-lgu
+    attributes:
+      label: Position and LGU or barangay
+      description: For example, Mayor of Baungon, or Barangay Captain of Poblacion, Damulog.
+    validations:
+      required: true
+  - type: input
+    id: saln-year
+    attributes:
+      label: SALN year
+      description: The year the statement covers, for example 2024.
+    validations:
+      required: true
+  - type: textarea
+    id: source
+    attributes:
+      label: Where the copy came from
+      description: Say whether it was an Ombudsman release, LGU records or something else, and how it was lawfully obtained.
+    validations:
+      required: true
+  - type: input
+    id: document-link
+    attributes:
+      label: Link to the document, if already public online
+      description: Links only. Do not attach files, IDs, signatures or home addresses.
+      placeholder: "https://"
+    validations:
+      required: false
+  - type: input
+    id: total-assets
+    attributes:
+      label: Total assets as stated on the document
+      description: Optional. Enter the declared figure in pesos.
+    validations:
+      required: false
+  - type: input
+    id: total-liabilities
+    attributes:
+      label: Total liabilities as stated on the document
+      description: Optional. Enter the declared figure in pesos.
+    validations:
+      required: false
+  - type: input
+    id: net-worth
+    attributes:
+      label: Net worth as stated on the document
+      description: Optional. Enter the declared figure in pesos.
+    validations:
+      required: false
+  - type: checkboxes
+    id: confirmations
+    attributes:
+      label: Confirmations
+      options:
+        - label: I confirm the copy was lawfully obtained.
+          required: true
+        - label: I confirm this issue contains no personal data beyond the declared totals.
+          required: true
+        - label: I understand a maintainer will verify the record before it is published.
+          required: true

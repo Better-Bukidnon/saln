@@ -1,7 +1,7 @@
 import { barangaysOf, lgus } from '../lib/geo'
 import type { Dir, Filters, SortKey, Status } from '../lib/filter'
 import { defaultFilters } from '../lib/filter'
-import strings from '../lib/strings'
+import { useT } from '../lib/i18n'
 import type { Geo, Level } from '../lib/types'
 
 const LEVELS: Level[] = ['province', 'district', 'city', 'municipality', 'barangay']
@@ -18,11 +18,12 @@ export default function FilterBar({
   filters: Filters
   onChange: (next: Filters, replace?: boolean) => void
 }) {
+  const t = useT()
   const barangays = filters.lgu ? barangaysOf(geo, filters.lgu) : []
   return (
-    <form className="filters" role="search" aria-label={strings.filtersHeading} onSubmit={(e) => e.preventDefault()}>
+    <form className="filters" role="search" aria-label={t('filtersHeading')} onSubmit={(e) => e.preventDefault()}>
       <div className="field">
-        <label htmlFor="f-q">{strings.search}</label>
+        <label htmlFor="f-q">{t('search')}</label>
         <input
           id="f-q"
           type="search"
@@ -31,13 +32,13 @@ export default function FilterBar({
         />
       </div>
       <div className="field">
-        <label htmlFor="f-lgu">{strings.municipality}</label>
+        <label htmlFor="f-lgu">{t('municipality')}</label>
         <select
           id="f-lgu"
           value={filters.lgu ?? ''}
           onChange={(e) => onChange({ ...filters, lgu: e.target.value || undefined, barangay: undefined })}
         >
-          <option value="">{strings.allMunicipalities}</option>
+          <option value="">{t('allMunicipalities')}</option>
           {lgus(geo).map((n) => (
             <option key={n.psgc} value={n.psgc}>
               {n.name}
@@ -46,14 +47,14 @@ export default function FilterBar({
         </select>
       </div>
       <div className="field">
-        <label htmlFor="f-brgy">{strings.barangay}</label>
+        <label htmlFor="f-brgy">{t('barangay')}</label>
         <select
           id="f-brgy"
           disabled={!filters.lgu}
           value={filters.barangay ?? ''}
           onChange={(e) => onChange({ ...filters, barangay: e.target.value || undefined })}
         >
-          <option value="">{strings.allBarangays}</option>
+          <option value="">{t('allBarangays')}</option>
           {barangays.map((n) => (
             <option key={n.psgc} value={n.psgc}>
               {n.name}
@@ -68,25 +69,25 @@ export default function FilterBar({
           checked={filters.provinceWide}
           onChange={(e) => onChange({ ...filters, provinceWide: e.target.checked })}
         />
-        <label htmlFor="f-pw">{strings.includeProvinceWide}</label>
+        <label htmlFor="f-pw">{t('includeProvinceWide')}</label>
       </div>
       <div className="field">
-        <label htmlFor="f-level">{strings.level}</label>
+        <label htmlFor="f-level">{t('level')}</label>
         <select
           id="f-level"
           value={filters.level ?? ''}
           onChange={(e) => onChange({ ...filters, level: (e.target.value || undefined) as Level | undefined })}
         >
-          <option value="">{strings.allLevels}</option>
+          <option value="">{t('allLevels')}</option>
           {LEVELS.map((l) => (
             <option key={l} value={l}>
-              {strings.levels[l]}
+              {t(`levels.${l}`)}
             </option>
           ))}
         </select>
       </div>
       <div className="field">
-        <label htmlFor="f-status">{strings.term}</label>
+        <label htmlFor="f-status">{t('term')}</label>
         <select
           id="f-status"
           value={filters.status}
@@ -94,7 +95,7 @@ export default function FilterBar({
         >
           {STATUSES.map((s) => (
             <option key={s} value={s}>
-              {strings.statuses[s]}
+              {t(`statuses.${s}`)}
             </option>
           ))}
         </select>
@@ -106,10 +107,10 @@ export default function FilterBar({
           checked={filters.hasSaln}
           onChange={(e) => onChange({ ...filters, hasSaln: e.target.checked })}
         />
-        <label htmlFor="f-saln">{strings.hasSaln}</label>
+        <label htmlFor="f-saln">{t('hasSaln')}</label>
       </div>
       <div className="field">
-        <label htmlFor="f-sort">{strings.sortBy}</label>
+        <label htmlFor="f-sort">{t('sortBy')}</label>
         <select
           id="f-sort"
           value={filters.sort}
@@ -117,13 +118,13 @@ export default function FilterBar({
         >
           {SORTS.map((s) => (
             <option key={s} value={s}>
-              {strings.sorts[s]}
+              {t(`sorts.${s}`)}
             </option>
           ))}
         </select>
       </div>
       <div className="field">
-        <label htmlFor="f-dir">{strings.direction}</label>
+        <label htmlFor="f-dir">{t('direction')}</label>
         <select
           id="f-dir"
           value={filters.dir}
@@ -131,13 +132,13 @@ export default function FilterBar({
         >
           {DIRS.map((d) => (
             <option key={d} value={d}>
-              {strings[d]}
+              {t(d)}
             </option>
           ))}
         </select>
       </div>
       <button type="button" onClick={() => onChange({ ...defaultFilters })}>
-        {strings.reset}
+        {t('reset')}
       </button>
     </form>
   )

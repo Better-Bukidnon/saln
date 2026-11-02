@@ -1,9 +1,10 @@
-import portalConfig from '../../portal.config'
+import { useT } from '../lib/i18n'
 
 export default function Disclaimer() {
+  const t = useT()
   return (
     <p className="disclaimer" role="note">
-      {portalConfig.disclaimer}
+      {t('disclaimer')}
     </p>
   )
 }

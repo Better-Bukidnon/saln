@@ -5,11 +5,12 @@ import OfficialCard from '../components/OfficialCard'
 import { loadAll } from '../lib/data'
 import { filterOfficials, parseFilters, serializeFilters, sortOfficials } from '../lib/filter'
 import type { Filters } from '../lib/filter'
-import strings from '../lib/strings'
+import { useT } from '../lib/i18n'
 
 const data = loadAll()
 
 export default function OfficialsPage() {
+  const t = useT()
   const [params, setParams] = useSearchParams()
   const filters = useMemo(() => parseFilters(params, data.geo), [params])
   const shown = useMemo(
@@ -25,13 +26,13 @@ export default function OfficialsPage() {
 
   return (
     <>
-      <h2>{strings.officialsHeading}</h2>
+      <h2>{t('officialsHeading')}</h2>
       <FilterBar geo={data.geo} filters={filters} onChange={onChange} />
       <p className="count" role="status">
-        {strings.resultCount(shown.length)}
+        {shown.length === 1 ? t('resultCount.one') : t('resultCount.other', { n: shown.length })}
       </p>
       {shown.length === 0 ? (
-        <p>{strings.noResults}</p>
+        <p>{t('noResults')}</p>
       ) : (
         <ul className="cards">
           {shown.map((o) => (

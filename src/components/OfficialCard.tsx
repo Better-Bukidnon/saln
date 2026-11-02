@@ -2,12 +2,13 @@ import { Link } from 'react-router'
 import { formatPeso } from '../lib/money'
 import { latestSaln } from '../lib/data'
 import { nodeByCode } from '../lib/geo'
-import strings from '../lib/strings'
+import { useT } from '../lib/i18n'
+import type { TFn } from '../lib/i18n'
 import type { Geo, Official, SalnRecord } from '../lib/types'
 import UnverifiedBadge from './UnverifiedBadge'
 
-function location(geo: Geo, o: Official): string {
-  if (o.level === 'province' || o.level === 'district') return strings.provinceWide
+function location(geo: Geo, o: Official, t: TFn): string {
+  if (o.level === 'province' || o.level === 'district') return t('provinceWide')
   const n = nodeByCode(geo, o.geoCode)
   if (!n) return ''
   if (n.type === 'barangay') {
@@ -26,6 +27,7 @@ export default function OfficialCard({
   saln: SalnRecord[] | undefined
   geo: Geo
 }) {
+  const t = useT()
   const latest = latestSaln(saln)
   return (
     <li className="card">
@@ -33,15 +35,15 @@ export default function OfficialCard({
         <Link to={`/official/${official.id}`}>{official.name}</Link>
       </h3>
       <p className="position">{official.position}</p>
-      <p className="where">{location(geo, official)}</p>
+      <p className="where">{location(geo, official, t)}</p>
       <p className="networth">
         {latest ? (
           <>
-            <span className="label">{strings.netWorth} ({latest.year}): </span>
+            <span className="label">{t('netWorthYear', { year: latest.year })}: </span>
             <strong>{formatPeso(latest.netWorth, true)}</strong>
           </>
         ) : (
-          strings.noSaln
+          t('noSaln')
         )}
       </p>
       {!official.rosterVerified && <UnverifiedBadge />}

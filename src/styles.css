@@ -35,3 +35,7 @@ table.saln td.num { text-align: right; white-space: nowrap; }
 .note { color: var(--muted); }
 .terms { padding-left: 20px; }
 .empty { border: 1px solid var(--line); border-radius: 8px; padding: 4px 16px; }
+
+.lang-switch { display: flex; flex-wrap: wrap; gap: 8px; margin: 8px 0; }
+.lang-switch button { cursor: pointer; }
+.lang-switch button[aria-pressed="true"] { font-weight: 700; background: var(--accent); color: var(--bg); }

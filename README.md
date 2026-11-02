@@ -39,3 +39,13 @@ No captain data ships with the repo. The importer turns a CSV you supply (a COME
 - Every row imports as `rosterVerified: false` (shown with the unverified badge), `position: 'Punong Barangay'`, term 2023-11-30 to 2026-11-30. Ids are `2023-<barangayCode>-punong-barangay`; `personId` is `cap-<barangayCode>-2023` because identity across terms is unknown.
 - Run: `npx tsx scripts/import-barangays.ts captains.csv [--out data/officials/barangay-captains.json] [--allow-partial] [--force]`. It prints counts, unmatched/duplicate/invalid rows and the barangays that still have no captain (count plus first 20 when more than 20). It exits non-zero and writes nothing if any row is unmatched or invalid, unless `--allow-partial`. Two rows for one barangay: the first wins and the rest are listed as duplicates. An existing output file is not overwritten without `--force`.
 - Workflow: obtain the CSV, run the importer, fix reported rows in the CSV and rerun, then `npm run validate-data`. After the next barangay election, only the CSV and the term dates in the script change.
+
+## Translations
+
+The interface is available in English, Filipino (`fil`) and Binisaya/Cebuano (`ceb`). **The Filipino and Binisaya strings were machine-assisted and have NOT been reviewed by native speakers. They need native-speaker review before launch.** Shared terms were aligned with the main site's dictionaries (`betterbukidnon/assets/js/translations.js`). Legal terms stay as is (SALN, Ombudsman).
+
+To edit a translation, change the entry in `src/lib/strings.ts` (the `en`, `fil` and `ceb` objects share the same keys). `{name}` placeholders must stay identical in every language. Run `npm test`: `tests/unit/i18n.test.ts` fails on a missing key, an empty value or a placeholder mismatch. A key missing in one language falls back to English at runtime. The chosen language is saved in `localStorage` (key `saln-lang`) and defaults to English.
+
+## Submitting a SALN copy
+
+The issue form is `.github/ISSUE_TEMPLATE/submit-saln.yml`. It collects links and declared totals only and never asks for file uploads. Maintainers verify a submission before any record is published.
