@@ -75,10 +75,12 @@
   body {
     overflow-wrap: anywhere;
   }
-  /* One visible keyboard focus ring for every interactive element. */
-  :focus-visible {
-    outline: 2px solid transparent;
-    outline-offset: 2px;
-    box-shadow: 0 0 0 2px #fff, 0 0 0 4px var(--color-primary-500);
-  }
+}
+
+/* One visible keyboard focus ring for every interactive element. Unlayered on purpose:
+   it beats Tailwind utilities (shadow-*, ring-*), so nothing can hide it. Outline, not
+   box-shadow, so shadow utilities cannot override it either. */
+:focus-visible {
+  outline: 2px solid #0038A8;
+  outline-offset: 2px;
 }

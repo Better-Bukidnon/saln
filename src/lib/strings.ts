@@ -99,6 +99,7 @@ const en: Record<string, string> = {
   aboutSubmitBody:
     'If you have obtained a copy through lawful means, open the submission form and link to it. We store declared totals only and always keep the source link.',
   aboutSubmitLink: 'Open the SALN submission form',
+  salnTableRegion: 'SALN records table, scrollable',
   navHome: 'Home',
   logoAlt: 'BetterBukidnon logo',
   heroTitle: 'Declared assets of Bukidnon public officials',
@@ -208,6 +209,7 @@ const fil: Record<string, string> = {
   aboutSubmitBody:
     'Kung nakakuha kayo ng kopya sa legal na paraan, buksan ang form ng pagsusumite at ilagay ang link nito. Mga idineklarang kabuuan lamang ang iniimbak namin at lagi naming iniingatan ang link ng pinagmulan.',
   aboutSubmitLink: 'Buksan ang form ng pagsusumite ng SALN',
+  salnTableRegion: 'Talaan ng mga SALN, maaaring i-scroll',
   navHome: 'Tahanan',
   logoAlt: 'Logo ng BetterBukidnon',
   heroTitle: 'Mga idineklarang ari-arian ng mga opisyal ng Bukidnon',
@@ -317,6 +319,7 @@ const ceb: Record<string, string> = {
   aboutSubmitBody:
     'Kon nakakuha mo ug kopya sa legal nga paagi, ablihi ang form sa pagsumite ug ibutang ang link niini. Mga gideklarar nga total lang ang among tipigan ug kanunay namong tipigan ang link sa tinubdan.',
   aboutSubmitLink: 'Ablihi ang form sa pagsumite sa SALN',
+  salnTableRegion: 'Talaan sa mga SALN, mahimong i-scroll',
   navHome: 'Panimalay',
   logoAlt: 'Logo sa BetterBukidnon',
   heroTitle: 'Gideklarar nga mga kabtangan sa mga opisyal sa Bukidnon',

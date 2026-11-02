@@ -105,7 +105,7 @@ test('every level badge colour meets AA', async ({ page }) => {
   }
 })
 
-test('keyboard focus shows a visible ring on links, buttons, selects and inputs', async ({ page }) => {
+test('keyboard focus shows a visible indicator on every interactive element', async ({ page }) => {
   await page.goto('/')
   const seen = new Set<string>()
   const bad: string[] = []
@@ -114,15 +114,31 @@ test('keyboard focus shows a visible ring on links, buttons, selects and inputs'
     const info = await page.evaluate(() => {
       const e = document.activeElement as HTMLElement
       const s = getComputedStyle(e)
-      const outline = s.outlineStyle !== 'none' && parseFloat(s.outlineWidth) > 0
-      const shadow = s.boxShadow !== 'none' && /\d+px/.test(s.boxShadow)
-      return { tag: e.tagName.toLowerCase(), type: (e as HTMLInputElement).type ?? '', visible: outline || shadow, id: e.id }
+      const ctx = document.createElement('canvas').getContext('2d', { willReadFrequently: true })!
+      const alpha = (css: string) => {
+        ctx.clearRect(0, 0, 1, 1)
+        ctx.fillStyle = css
+        ctx.fillRect(0, 0, 1, 1)
+        return ctx.getImageData(0, 0, 1, 1).data[3]
+      }
+      // Outline counts only with a real style, a width and a near-opaque colour.
+      const outline = s.outlineStyle !== 'none' && parseFloat(s.outlineWidth) > 0 && alpha(s.outlineColor) >= 200
+      // Box-shadow counts only if some layer paints: near-opaque colour (so a faint decorative shadow-sm does not count) and non-zero extent.
+      const layers = s.boxShadow === 'none' ? [] : s.boxShadow.split(/,(?![^(]*\))/)
+      const shadow = layers.some((l) => {
+        const color = l.match(/(rgba?|oklch|oklab|color|hsla?)\([^)]*\)|#[0-9a-f]{3,8}/i)?.[0] ?? ''
+        const nums = l.replace(color, '').match(/-?[\d.]+px/g) ?? []
+        return color !== '' && alpha(color) >= 200 && nums.some((n) => parseFloat(n) !== 0)
+      })
+      const pressed = e.getAttribute('aria-pressed') === 'true'
+      return { tag: e.tagName.toLowerCase(), type: (e as HTMLInputElement).type ?? '', visible: outline || shadow, id: e.id, pressed }
     })
     if (info.tag === 'body') continue // focus wrapped around past the last control
     const kind = info.tag === 'input' ? `input:${info.type}` : info.tag
     seen.add(kind)
+    if (info.pressed) seen.add('primary-button') // the active language button is a primary Button
     if (!info.visible) bad.push(`${kind}#${info.id}`)
   }
   expect(bad).toEqual([])
-  for (const k of ['a', 'button', 'select', 'input:search', 'input:checkbox']) expect(seen.has(k), k).toBe(true)
+  for (const k of ['a', 'button', 'primary-button', 'select', 'input:search', 'input:checkbox']) expect(seen.has(k), k).toBe(true)
 })

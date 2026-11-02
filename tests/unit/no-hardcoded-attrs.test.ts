@@ -9,6 +9,8 @@ const files = [
     readdirSync(join(root, d)).filter((f) => f.endsWith('.tsx')).map((f) => join(root, d, f)),
   ),
 ]
+// Only an explicitly empty alt (alt={''}, a decorative image) is allowed and is not matched here
+// because it is written as an expression. A string-literal alt (even "") would be flagged.
 // aria-label="x", title='x', placeholder="x", alt="x": a string literal, not {expression}
 const literal = /\b(aria-label|aria-description|title|placeholder|alt)\s*=\s*(["'])/g
 

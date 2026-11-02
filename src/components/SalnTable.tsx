@@ -14,7 +14,7 @@ export default function SalnTable({ records }: { records: SalnRecord[] }) {
   const rows = [...records].sort((a, b) => b.year - a.year)
   return (
     <Card padding="none" className="overflow-hidden">
-      <div className="overflow-x-auto">
+      <div className="overflow-x-auto" role="region" tabIndex={0} aria-label={t('salnTableRegion')}>
         <table className="w-full min-w-[640px] border-collapse [overflow-wrap:normal]">
           <caption className="p-3 text-left text-sm text-gray-700 sm:p-4">{t('salnCaption')}</caption>
           <thead>
