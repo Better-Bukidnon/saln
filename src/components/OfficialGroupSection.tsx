@@ -62,8 +62,13 @@ export default function OfficialGroupSection({
   const Wrap = asHeading ? 'h3' : 'div'
   return (
     <li data-testid="group" data-group={group.key}>
-      <div className="rounded-xl border border-gray-200 bg-white shadow-sm">
-        <div className={`bg-gray-50 ${open ? 'rounded-t-xl border-b border-gray-200' : 'rounded-xl'}`}>
+      <div className="overflow-hidden rounded-xl border border-gray-200 bg-white shadow-sm">
+        {/* One band for title and description: the button is stretched over all of it, so hover and the
+            focus ring cover the whole band, and nothing inside it can fall outside the gray. */}
+        <div
+          data-testid="group-header"
+          className={`relative bg-gray-50 transition-colors hover:bg-gray-100 has-[:focus-visible]:outline-2 has-[:focus-visible]:-outline-offset-2 has-[:focus-visible]:outline-primary-500`}
+        >
           <Wrap>
             <button
               type="button"
@@ -71,7 +76,7 @@ export default function OfficialGroupSection({
               aria-controls={panelId}
               aria-describedby={description ? descId : undefined}
               onClick={() => setOpen((v) => !v)}
-              className="flex min-h-14 w-full items-center gap-3 rounded-xl px-4 py-3 text-left hover:bg-gray-100 sm:gap-4 sm:px-5"
+              className="flex min-h-14 w-full items-center gap-3 px-4 py-3 text-left band-button after:absolute after:inset-0 after:content-[''] sm:gap-4 sm:px-5"
             >
               <Chevron open={open} />
               <span className="min-w-0 flex-1 type-group-title text-gray-900">{title}</span>
@@ -81,7 +86,7 @@ export default function OfficialGroupSection({
             </button>
           </Wrap>
           {description && (
-            <p id={descId} className="-mt-2 pb-3 pl-12 pr-4 type-body-sm text-gray-600 sm:pl-14 sm:pr-5">
+            <p id={descId} data-testid="group-description" className="-mt-2 pb-3 pl-12 pr-4 type-body-sm text-gray-600 sm:pl-14 sm:pr-5">
               {description}
             </p>
           )}

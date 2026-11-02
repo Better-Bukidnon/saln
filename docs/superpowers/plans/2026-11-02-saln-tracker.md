@@ -12,7 +12,7 @@
 
 ## Global Constraints
 
-- Project folder: `/Users/ict/Documents/Personal_Projects/kode-projects/saln-bukidnon` (own git repo). Main site repo is `.../betterbukidnon`.
+- Project folder: `saln-bukidnon/` (own git repo, a sibling of `betterbukidnon/` under `kode-projects/`). Main site repo is `.../betterbukidnon`.
 - No Firebase, no backend, no user uploads. Zero hosting cost.
 - Bukidnon PSGC province code `1001300000`; 2 cities, 20 municipalities, 464 barangays.
 - Store declared totals only. No addresses, spouse/children details, signatures or ID numbers.

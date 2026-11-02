@@ -1,56 +1,87 @@
+import { useRef } from 'react'
+import { Bar, BarChart, CartesianGrid, LabelList, ReferenceLine, XAxis, YAxis } from 'recharts'
 import { formatPeso } from '../lib/money'
 import { useT } from '../lib/i18n'
-import { chartScale, compactPeso, placeLabels } from '../lib/saln-view'
-import type { ChartData, LabelBox } from '../lib/saln-view'
+import { compactPeso, labelsCollide } from '../lib/saln-view'
+import type { LabelBox } from '../lib/saln-view'
+import type { ChartData } from '../lib/saln-view'
+import { CHART_HEIGHT } from './ChartSkeleton'
+import ChartDataTable from './ChartDataTable'
 import { Card } from './ui/Card'
+import { ChartContainer, ChartLegend, ChartLegendContent, ChartTooltip, ChartTooltipContent } from './ui/chart'
+import type { ChartConfig } from './ui/chart'
 
-const PLOT_H = 240
-const PAD = { l: 76, r: 16, t: 28 }
+const GROUP_W = 150 // px per year when there is room; the region scrolls rather than squeezing the bars
 const BAR_W = 34
-const BAR_GAP = 3
-const GROUP_GAP = 36
-const GROUP_W = 3 * BAR_W + 2 * BAR_GAP + GROUP_GAP
-const LABEL_H = 12
-const CHAR_W = 6.4 // approx width of one 11px bold digit, used only to detect label collisions
+const CHAR_W = 6.4 // approx width of one 11px bold digit, used only to hide labels wider than their bar allows
+const KEYS = ['assets', 'liabilities', 'netWorth'] as const
 
-const SERIES = [
-  { key: 'assets', label: 'chartSeries.assets', fill: 'fill-chart-assets', bg: 'bg-chart-assets' },
-  { key: 'liabilities', label: 'chartSeries.liabilities', fill: 'fill-chart-liabilities', bg: 'bg-chart-liabilities' },
-  { key: 'netWorth', label: 'chartSeries.netWorth', fill: 'fill-chart-networth', bg: 'bg-chart-networth' },
-] as const
+// Colours come from the project tokens; ChartStyle exposes them to Recharts as --color-assets etc.
+const COLORS = { assets: 'var(--color-chart-assets)', liabilities: 'var(--color-chart-liabilities)', netWorth: 'var(--color-chart-networth)' }
 
-// Bar with the two corners on its free end rounded (top for positive values, bottom for negative).
-function barPath(x: number, y0: number, y1: number, w: number): string {
-  const r = Math.min(5, w / 2, Math.abs(y1 - y0))
-  if (y0 === y1) return ''
-  if (y1 < y0) return `M${x},${y0}V${y1 + r}Q${x},${y1} ${x + r},${y1}H${x + w - r}Q${x + w},${y1} ${x + w},${y1 + r}V${y0}Z`
-  return `M${x},${y0}V${y1 - r}Q${x},${y1} ${x + r},${y1}H${x + w - r}Q${x + w},${y1} ${x + w},${y1 - r}V${y0}Z`
+interface ValueLabelProps {
+  x?: number | string
+  y?: number | string
+  width?: number | string
+  height?: number | string
+  value?: unknown
+  index?: number
 }
 
-// Dependency-free grouped bar chart of declared totals by year (assets, liabilities, net worth).
-// Colour is never the only cue: value labels, legend text and the data table carry the same numbers.
+// Boxes of the labels drawn so far, keyed by series and bar. A label is hidden when it would overlap an
+// earlier one (the table below keeps every number). Only earlier labels are consulted, so a stale entry
+// from a previous layout can never hide a label that now fits.
+const SIDE_BOX_H = 14
+type Placed = Map<string, { rank: number; box: LabelBox }>
+
+// Value label above a positive bar and below a negative one; dropped when it is much wider than the bar
+// or would overlap an earlier label.
+function ValueLabelView({ placed, order, x, y, width, height, value, index }: ValueLabelProps & { placed: Placed; order: number }) {
+  const [nx, ny, nw, nh, v] = [Number(x), Number(y), Number(width), Number(height), Number(value)]
+  if (![nx, ny, nw, nh, v].every(Number.isFinite)) return null
+  const text = compactPeso(v)
+  const key = `${order}:${index}`
+  const rank = order * 1000 + (index ?? 0)
+  const textW = text.length * CHAR_W
+  const top = Math.min(ny, ny + nh)
+  const bottom = Math.max(ny, ny + nh)
+  const ty = v >= 0 ? top - 5 : bottom + 14
+  const box = { x: nx + nw / 2 - textW / 2, y: ty - SIDE_BOX_H + 3, w: textW, h: SIDE_BOX_H }
+  const clash = [...placed.entries()].some(([k, o]) => k !== key && o.rank < rank && labelsCollide(box, o.box))
+  if (textW > nw * 2.2 || clash) {
+    placed.delete(key)
+    return null
+  }
+  placed.set(key, { rank, box })
+  return (
+    <text
+      x={nx + nw / 2}
+      y={ty}
+      textAnchor="middle"
+      className="fill-ink stroke-white type-chart-value"
+      strokeWidth={3}
+      strokeLinejoin="round"
+      style={{ paintOrder: 'stroke' }}
+      data-testid="chart-value"
+    >
+      {text}
+    </text>
+  )
+}
+
+// Grouped bar chart of declared totals by year, built on the shadcn/ui chart primitives (Recharts).
+// Colour is never the only cue: value labels, legend text, tooltip and the data table carry the same numbers.
 export default function SalnChart({ data, headingId }: { data: ChartData; headingId: string }) {
   const t = useT()
-  const sc = chartScale(data, PLOT_H)
   const n = data.points.length
+  const placed = useRef<Placed>(new Map()).current // per chart instance, so profiles never see each other's labels
+  const labelRenderers = KEYS.map((_, order) => (p: ValueLabelProps) => <ValueLabelView placed={placed} order={order} {...p} />)
   const rotate = n > 5
-  const padB = rotate ? 64 : 36
-  const W = PAD.l + PAD.r + n * GROUP_W
-  const H = PAD.t + PLOT_H + padB
-  const yy = (v: number) => PAD.t + sc.y(v)
-  const y0 = yy(0)
-
-  const bars = data.points.flatMap((p, i) =>
-    SERIES.map((s, k) => {
-      const v = p[s.key]
-      const x = PAD.l + i * GROUP_W + GROUP_GAP / 2 + k * (BAR_W + BAR_GAP)
-      const text = compactPeso(v)
-      const w = text.length * CHAR_W
-      const ly = v >= 0 ? yy(v) - 5 : yy(v) + 14
-      return { id: `${p.year}-${s.key}`, year: p.year, s, v, x, text, w, ly, box: { id: `${p.year}-${s.key}`, x: x + BAR_W / 2, y: ly, w, h: LABEL_H } as LabelBox }
-    }),
-  )
-  const shown = placeLabels(bars.map((b) => b.box))
+  const config: ChartConfig = {
+    assets: { label: t('chartSeries.assets'), color: COLORS.assets },
+    liabilities: { label: t('chartSeries.liabilities'), color: COLORS.liabilities },
+    netWorth: { label: t('chartSeries.netWorth'), color: COLORS.netWorth },
+  }
 
   return (
     <Card data-testid="saln-chart" aria-labelledby={headingId} role="region">
@@ -58,84 +89,28 @@ export default function SalnChart({ data, headingId }: { data: ChartData; headin
         {t('chartHeading')}
       </h4>
       <div className="mt-3 overflow-x-auto rounded" role="region" tabIndex={0} aria-label={t('chartRegion')}>
-        <svg
-          viewBox={`0 0 ${W} ${H}`}
-          preserveAspectRatio="xMidYMid meet"
-          role="img"
-          aria-label={t('chartAlt', { from: data.from, to: data.to })}
-          className="h-auto w-full"
-          style={{ minWidth: Math.min(W, 360 + n * 40) }}
-        >
-          {sc.ticks.map((v) => (
-            <g key={v}>
-              {v !== 0 && <line x1={PAD.l} x2={W - PAD.r} y1={yy(v)} y2={yy(v)} className="stroke-gray-300" strokeDasharray="4 4" strokeWidth={1} />}
-              <text x={PAD.l - 8} y={yy(v)} textAnchor="end" dominantBaseline="middle" className="fill-gray-700 type-chart-label">
-                {compactPeso(v)}
-              </text>
-            </g>
-          ))}
-          <line x1={PAD.l} x2={PAD.l} y1={PAD.t} y2={PAD.t + PLOT_H} className="stroke-gray-500" strokeWidth={1} />
-          {bars.map((b) => (
-            <path key={b.id} d={barPath(b.x, y0, yy(b.v), BAR_W)} className={b.s.fill} data-testid="chart-bar" data-series={b.s.key} data-year={b.year} />
-          ))}
-          <line x1={PAD.l} x2={W - PAD.r} y1={y0} y2={y0} className="stroke-gray-700" strokeWidth={1.5} />
-          {bars.filter((b) => shown.has(b.id)).map((b) => (
-            <text key={b.id} x={b.x + BAR_W / 2} y={b.ly} textAnchor="middle" className="fill-ink stroke-white type-chart-value" strokeWidth={3} strokeLinejoin="round" style={{ paintOrder: 'stroke' }} data-testid="chart-value">
-              {b.text}
-            </text>
-          ))}
-          {data.points.map((p, i) => {
-            const cx = PAD.l + i * GROUP_W + GROUP_W / 2
-            const ty = PAD.t + PLOT_H + 20
-            return (
-              <text
-                key={p.year}
-                x={cx}
-                y={ty}
-                textAnchor={rotate ? 'end' : 'middle'}
-                transform={rotate ? `rotate(-45 ${cx} ${ty})` : undefined}
-                className="fill-gray-700 type-chart-label"
-              >
-                {p.year}
-              </text>
-            )
-          })}
-        </svg>
+        <div role="group" aria-label={t('chartAlt', { from: data.from, to: data.to })} style={{ minWidth: Math.min(n * GROUP_W + 90, 360 + n * 80), height: CHART_HEIGHT }}>
+          <ChartContainer config={config} className="h-full w-full">
+            <BarChart data={data.points} accessibilityLayer margin={{ top: 28, right: 16, left: 0, bottom: 0 }} barGap={3} barCategoryGap={rotate ? '18%' : '24%'}>
+              <CartesianGrid vertical={false} strokeDasharray="4 4" />
+              <XAxis dataKey="year" tickLine={false} axisLine={false} interval={0} angle={rotate ? -45 : 0} textAnchor={rotate ? 'end' : 'middle'} height={rotate ? 56 : 32} tickMargin={8} />
+              <YAxis width={76} tickLine={false} axisLine tickFormatter={compactPeso} />
+              <ChartTooltip cursor={{ fill: 'var(--color-gray-100)' }} content={<ChartTooltipContent indicator="dot" valueFormatter={formatPeso} labelFormatter={(_, payload) => String(payload?.[0]?.payload?.year ?? '')} />} />
+              <ChartLegend verticalAlign="bottom" align="left" wrapperStyle={{ left: 0 }} content={<ChartLegendContent className="justify-start pl-3 sm:pl-[76px]" />} />
+              <ReferenceLine y={0} stroke="var(--color-gray-700)" strokeWidth={1.5} ifOverflow="visible" />
+              {KEYS.map((k, i) => (
+                <Bar key={k} dataKey={k} fill={`var(--color-${k})`} maxBarSize={BAR_W} radius={[5, 5, 0, 0]} isAnimationActive={false}>
+                  <LabelList dataKey={k} content={labelRenderers[i]} />
+                </Bar>
+              ))}
+            </BarChart>
+          </ChartContainer>
+        </div>
       </div>
-      <ul className="mt-3 flex flex-wrap justify-center gap-x-5 gap-y-1 type-body-sm text-gray-800" data-testid="chart-legend">
-        {SERIES.map((s) => (
-          <li key={s.key} className="inline-flex items-center gap-2">
-            <span aria-hidden="true" className={`h-3 w-3 rounded-sm ${s.bg}`} />
-            {t(s.label)}
-          </li>
-        ))}
-      </ul>
       <p className="mt-2 text-center type-body-sm text-gray-700">{t('chartRange', { from: data.from, to: data.to })}</p>
       <details className="mt-3 type-body-sm">
         <summary className="inline-flex min-h-11 cursor-pointer items-center type-meta text-primary-600">{t('chartTable')}</summary>
-        <div className="overflow-x-auto rounded" role="region" tabIndex={0} aria-label={t('salnTableRegion')}>
-          <table className="mt-2 w-full min-w-[420px] border-collapse type-body-sm">
-            <thead>
-              <tr>
-                {['cols.year', 'cols.assets', 'cols.liabilities', 'cols.netWorth'].map((k) => (
-                  <th key={k} scope="col" className="border border-gray-300 bg-gray-100 px-3 py-2 text-left type-meta text-gray-900">
-                    {t(k)}
-                  </th>
-                ))}
-              </tr>
-            </thead>
-            <tbody>
-              {data.points.map((p) => (
-                <tr key={p.year}>
-                  <th scope="row" className="border border-gray-300 px-3 py-2 text-left type-meta tabular-nums">{p.year}</th>
-                  <td className="border border-gray-300 px-3 py-2 tabular-nums">{formatPeso(p.assets)}</td>
-                  <td className="border border-gray-300 px-3 py-2 tabular-nums">{formatPeso(p.liabilities)}</td>
-                  <td className="border border-gray-300 px-3 py-2 tabular-nums">{formatPeso(p.netWorth)}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
+        <ChartDataTable data={data} />
       </details>
     </Card>
   )

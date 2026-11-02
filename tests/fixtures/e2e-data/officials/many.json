@@ -1,0 +1,14 @@
+[
+  {
+    "id": "many-years",
+    "personId": "many-years",
+    "name": "Many Years Board Member",
+    "position": "Board Member",
+    "level": "province",
+    "geoCode": "1001300000",
+    "termStart": "2025-06-30",
+    "termEnd": "2028-06-30",
+    "rosterSource": "manual",
+    "rosterVerified": true
+  }
+]

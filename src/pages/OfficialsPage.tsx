@@ -8,7 +8,7 @@ import { filterOfficials, parseFilters, serializeFilters, sortOfficials } from '
 import type { Filters } from '../lib/filter'
 import { groupOfficials } from '../lib/group'
 import type { OfficialGroup } from '../lib/group'
-import { useT } from '../lib/i18n'
+import { useDocTitle, useT } from '../lib/i18n'
 import portalConfig from '../../portal.config'
 import { Badge } from '../components/ui/Badge'
 import { Card } from '../components/ui/Card'
@@ -17,6 +17,7 @@ const data = loadAll()
 
 export default function OfficialsPage() {
   const t = useT()
+  useDocTitle('docTitle')
   const [params, setParams] = useSearchParams()
   const filters = useMemo(() => parseFilters(params, data.geo), [params])
   const shown = useMemo(
@@ -25,6 +26,7 @@ export default function OfficialsPage() {
         filterOfficials(data.officials, data.salnByPerson, data.geo, filters, new Date()),
         data.salnByPerson,
         filters,
+        new Date(),
       ),
     [filters],
   )
@@ -53,7 +55,7 @@ export default function OfficialsPage() {
       <Card padding="sm" className="sm:p-6">
         <FilterBar geo={data.geo} filters={filters} onChange={onChange} />
       </Card>
-      <p className="type-meta font-semibold text-gray-700" role="status">
+      <p id="results-status" tabIndex={-1} className="type-meta font-semibold text-gray-700" role="status">
         {shown.length === 1 ? t('resultCount.one') : t('resultCount.other', { n: shown.length })}
       </p>
       {shown.length === 0 ? (

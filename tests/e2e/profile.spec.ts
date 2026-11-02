@@ -36,14 +36,18 @@ test('over-time chart appears only with two or more SALN years, with an accessib
   await expect(chart).toBeVisible()
   await expect(chart.getByRole('heading', { name: 'Assets, Liabilities & Net Worth Over Time' })).toBeVisible()
   await expect(chart).toContainText('Showing data from 2022 to 2024')
-  await expect(chart.getByRole('img')).toHaveAttribute('aria-label', /2022 to 2024/)
-  await expect(chart.getByTestId('chart-bar')).toHaveCount(6)
-  for (const s of ['assets', 'liabilities', 'netWorth']) await expect(chart.locator(`[data-series="${s}"]`)).toHaveCount(2)
-  await expect(chart.getByTestId('chart-legend').getByRole('listitem')).toHaveText(['Assets', 'Liabilities', 'Net Worth'])
+  await expect(chart.getByRole('group', { name: /Grouped bar chart/ })).toHaveAttribute('aria-label', /2022 to 2024/)
+  await expect(chart.locator('.recharts-bar-rectangle')).toHaveCount(6)
+  await expect(chart.locator('.recharts-bar')).toHaveCount(3)
+  for (const s of ['assets', 'liabilities', 'netWorth']) await expect(chart.locator(`.recharts-bar-rectangle path[fill="var(--color-${s})"]`)).toHaveCount(2)
+  await expect(chart.locator('[data-slot="chart-legend"] > div')).toHaveText(['Assets', 'Liabilities', 'Net Worth'])
   await expect(chart.getByTestId('chart-value').first()).toContainText('₱')
   expect(await page.evaluate(() => document.documentElement.scrollWidth - window.innerWidth)).toBeLessThanOrEqual(0)
   await chart.getByText('Show chart data as a table').click()
   await expect(chart.getByRole('table').locator('tbody tr')).toHaveCount(2)
+  const rows = chart.getByRole('table').locator('tbody tr')
+  await expect(rows.nth(0)).toContainText(/20,000,000\.00/)
+  await expect(rows.nth(1)).toContainText(/5,042,811\.02/)
   await page.goto('/official/test-mayor-baungon')
   await expect(page.getByTestId('saln-chart')).toHaveCount(0)
   await page.goto('/official/test-rep-1')
@@ -98,4 +102,56 @@ test('unsafe source scheme is not rendered as a link', async ({ page }) => {
   await expect(page.getByText('Source link unavailable')).toBeVisible()
   await expect(page.getByTestId('saln-cards').getByRole('link')).toHaveCount(0)
   await expect(page.locator('a[href^="javascript:" i]')).toHaveCount(0)
+})
+
+test('chart is keyboard reachable, shows the full peso value in its tooltip, and does not overflow a 360px page', async ({ page }) => {
+  await page.setViewportSize({ width: 360, height: 800 })
+  await page.goto('/official/dual-gov')
+  const chart = page.getByTestId('saln-chart')
+  await expect(chart.locator('.recharts-bar-rectangle')).toHaveCount(6)
+  expect(await page.evaluate(() => document.documentElement.scrollWidth - window.innerWidth)).toBeLessThanOrEqual(0)
+  await expect(chart.getByRole('region', { name: 'Chart, scrollable' })).toHaveAttribute('tabindex', '0')
+  const surface = chart.locator('.recharts-wrapper svg.recharts-surface')
+  await surface.focus()
+  await expect(surface).toBeFocused()
+  await page.keyboard.press('ArrowRight')
+  await expect(chart.locator('.recharts-tooltip-wrapper')).toContainText(/₱\d{1,3}(,\d{3})+\.\d{2}/)
+  await expect(chart.locator('.recharts-tooltip-wrapper')).toContainText(/^\s*20(22|24)/) // header is the year, not a series name
+})
+
+test('chart surface is not nested inside role=img', async ({ page }) => {
+  await page.goto('/official/dual-gov')
+  await expect(page.getByTestId('saln-chart').locator('svg.recharts-surface')).toBeVisible()
+  const nested = await page.evaluate(() => [...document.querySelectorAll('[role="img"]')].filter((e) => e.querySelector('[tabindex]:not([tabindex="-1"]), a[href], button, input, select')).length)
+  expect(nested).toBe(0)
+  await expect(page.getByRole('group', { name: /Grouped bar chart/ })).toHaveCount(1)
+})
+
+test('a chart with 12 years and a negative net worth renders without console errors, labels never overlap', async ({ page }) => {
+  const errors: string[] = []
+  page.on('console', (m) => m.type() === 'error' && errors.push(m.text()))
+  page.on('pageerror', (e) => errors.push(e.message))
+  await page.goto('/official/many-years')
+  const chart = page.getByTestId('saln-chart')
+  await expect(chart.locator('.recharts-bar-rectangle')).toHaveCount(36)
+  const boxes = await chart.locator('[data-testid="chart-value"]').evaluateAll((els) => els.map((e) => e.getBoundingClientRect()).map((r) => ({ x: r.x, y: r.y, w: r.width, h: r.height })))
+  expect(boxes.length).toBeGreaterThan(0)
+  for (let i = 0; i < boxes.length; i++)
+    for (let j = i + 1; j < boxes.length; j++) {
+      const [a, b] = [boxes[i], boxes[j]]
+      expect(a.x < b.x + b.w - 1 && b.x < a.x + a.w - 1 && a.y < b.y + b.h - 1 && b.y < a.y + a.h - 1, `labels ${i} and ${j} overlap`).toBe(false)
+    }
+  expect(errors).toEqual([])
+})
+
+test('if the chart chunk fails to load, a message, the data table and a working Retry appear', async ({ page }) => {
+  let block = true
+  await page.route(/SalnChart-.*\.js/, (r) => (block ? r.abort() : r.continue()))
+  await page.goto('/official/dual-gov')
+  const err = page.getByTestId('saln-chart-error')
+  await expect(err).toContainText('The chart could not be loaded')
+  await expect(err.getByRole('table')).toBeVisible()
+  block = false
+  await err.getByRole('button', { name: 'Retry' }).click()
+  await expect(page.getByTestId('saln-chart').locator('.recharts-bar-rectangle')).toHaveCount(6)
 })

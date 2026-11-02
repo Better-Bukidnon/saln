@@ -1,10 +1,9 @@
-import { useId, useState } from 'react'
 import type { ReactNode } from 'react'
 import { barangaysOf, lgus } from '../lib/geo'
 import type { Dir, Filters, SortKey, Status } from '../lib/filter'
 import { defaultFilters } from '../lib/filter'
-import { activeFilterPills } from '../lib/pills'
 import { useT } from '../lib/i18n'
+import { activeFilterPills } from '../lib/pills'
 import type { Geo, Level } from '../lib/types'
 import { Button } from './ui/Button'
 
@@ -13,26 +12,80 @@ const STATUSES: Status[] = ['current', 'former', 'all']
 const SORTS: SortKey[] = ['name', 'netWorth', 'assets', 'liabilities']
 const DIRS: Dir[] = ['asc', 'desc']
 
-const labelCls = 'type-label text-gray-900'
-const controlCls =
-  'select-chevron block h-11 w-full max-w-full rounded-md border border-gray-500 bg-white px-3 type-control text-ink shadow-xs transition-colors hover:border-gray-700 disabled:cursor-not-allowed disabled:border-gray-300 disabled:bg-gray-100 disabled:text-gray-500 disabled:shadow-none disabled:hover:border-gray-300'
-const groupCls = 'min-w-0 space-y-3 rounded-md border border-gray-200 bg-white p-3 sm:p-4'
-const legendCls = 'px-1 type-badge uppercase tracking-wide text-gray-700'
-const chipCls =
-  'flex min-h-11 w-full cursor-pointer items-center gap-3 rounded-md sm:inline-flex sm:w-auto md:min-h-10 border border-gray-500 bg-white px-3 py-2 type-label text-ink shadow-xs transition-colors hover:bg-gray-50 has-[:checked]:border-primary-500 has-[:checked]:bg-primary-50 has-[:checked]:text-primary-800'
+const icon = { width: 18, height: 18, viewBox: '0 0 24 24', fill: 'none', stroke: 'currentColor', strokeWidth: 2, strokeLinecap: 'round', strokeLinejoin: 'round', 'aria-hidden': true } as const
 const pillCls =
   'inline-flex items-center gap-1 rounded-full border border-gray-300 bg-white py-1 pl-3 pr-1 type-badge text-gray-800 shadow-xs'
 
-const icon = { width: 18, height: 18, viewBox: '0 0 24 24', fill: 'none', stroke: 'currentColor', strokeWidth: 2, strokeLinecap: 'round', strokeLinejoin: 'round', 'aria-hidden': true } as const
+interface Option {
+  value: string
+  label: string
+}
 
-function Field({ id, label, children }: { id: string; label: string; children: ReactNode }) {
+// A dropdown pill: the visible face (label + value + chevron) sits over a real <select> that is
+// transparent but fills the pill, so clicks, keyboard and screen readers all use the native control.
+// A non-default value turns the pill primary-blue and the face reads "Label: value".
+function PillSelect({
+  id,
+  label,
+  value,
+  allLabel,
+  options,
+  disabled,
+  filled,
+  onChange,
+}: {
+  id: string
+  label: string
+  value: string
+  allLabel: string
+  options: Option[]
+  disabled?: boolean
+  filled: boolean
+  onChange: (v: string) => void
+}) {
+  const shown = options.find((o) => o.value === value)?.label ?? allLabel
+  const tone = disabled
+    ? 'border-gray-300 bg-gray-100 text-gray-600'
+    : filled
+      ? 'border-primary-500 bg-primary-500 text-white'
+      : 'border-gray-500 bg-white text-gray-800 hover:border-gray-700'
   return (
-    <div className="flex flex-col gap-2">
-      <label className={labelCls} htmlFor={id}>
-        {label}
-      </label>
-      {children}
+    <div
+      className={`relative inline-flex h-11 max-w-full items-center gap-1.5 rounded-md border px-3 type-label shadow-xs transition-colors has-[select:focus-visible]:outline-2 has-[select:focus-visible]:outline-offset-2 has-[select:focus-visible]:outline-primary-500 md:h-9 ${tone}`}
+      data-testid="filter-pill-select"
+      data-filled={filled ? 'true' : 'false'}
+    >
+      <span aria-hidden="true" className="truncate">
+        {filled ? `${label}: ` : `${label} `}
+        <span className={filled ? '' : 'font-semibold text-gray-900'}>{shown}</span>
+      </span>
+      <svg {...icon} width={16} height={16} className="shrink-0">
+        <path d="m6 9 6 6 6-6" />
+      </svg>
+      <select
+        id={id}
+        aria-label={label}
+        value={value}
+        disabled={disabled}
+        onChange={(e) => onChange(e.target.value)}
+        className="absolute -inset-px h-[calc(100%+2px)] w-[calc(100%+2px)] cursor-pointer appearance-none rounded-md opacity-0 type-control disabled:cursor-not-allowed"
+      >
+        {options.map((o) => (
+          <option key={o.value} value={o.value}>
+            {o.label}
+          </option>
+        ))}
+      </select>
     </div>
+  )
+}
+
+function Check({ id, checked, onChange, children }: { id: string; checked: boolean; onChange: (v: boolean) => void; children: ReactNode }) {
+  return (
+    <label htmlFor={id} className="inline-flex min-h-11 cursor-pointer items-center gap-2 type-label text-gray-900 md:min-h-9">
+      <input id={id} type="checkbox" className="h-4 w-4 shrink-0 cursor-pointer accent-primary-500" checked={checked} onChange={(e) => onChange(e.target.checked)} />
+      {children}
+    </label>
   )
 }
 
@@ -49,32 +102,20 @@ export default function FilterBar({
   const barangays = filters.lgu ? barangaysOf(geo, filters.lgu) : []
   const pills = activeFilterPills(filters, geo, t)
   const active = pills.length
-  // Phones: the controls fold away behind a toggle (open when filters are active). Desktop ignores this.
-  const [open, setOpen] = useState(active > 0)
-  const bodyId = useId()
+  const set = (patch: Partial<Filters>) => onChange({ ...filters, ...patch })
+  const clear = () => onChange({ ...defaultFilters })
   return (
-    <form className="space-y-4" role="search" aria-label={t('filtersHeading')} onSubmit={(e) => e.preventDefault()}>
-      <div className="hidden flex-wrap items-center justify-between gap-3 md:flex">
-        <div className="flex items-center gap-2">
-          <span className="text-primary-500">
-            <svg {...icon}>
-              <path d="M3 5h18l-7 8v6l-4 2v-8z" />
-            </svg>
-          </span>
-          <h3 className="type-group-title text-ink">{t('filtersHeading')}</h3>
-          {active > 0 && (
-            <span data-testid="filters-active" className="rounded-full bg-primary-100 px-2.5 py-0.5 type-badge text-primary-800">
-              {t('filtersActive', { n: active })}
-            </span>
-          )}
-        </div>
-        <Button variant="ghost" size="sm" onClick={() => onChange({ ...defaultFilters })}>
-          {t('reset')}
-        </Button>
-      </div>
-
-      <Field id="f-q" label={t('search')}>
-        <div className="relative">
+    <form
+      className="space-y-4"
+      role="search"
+      aria-label={t('filtersHeading')}
+      onSubmit={(e) => {
+        e.preventDefault()
+        document.getElementById('results-status')?.focus() // the list already filters live; Search jumps to the result count
+      }}
+    >
+      <div className="flex flex-col gap-2 sm:flex-row">
+        <div className="relative flex-1">
           <span className="pointer-events-none absolute inset-y-0 left-3 flex items-center text-gray-600">
             <svg {...icon}>
               <circle cx="11" cy="11" r="7" />
@@ -84,164 +125,107 @@ export default function FilterBar({
           <input
             id="f-q"
             type="search"
-            className="block h-11 w-full rounded-md border border-gray-500 bg-white pl-10 pr-3 type-control text-ink shadow-xs transition-colors hover:border-gray-700"
+            aria-label={t('search')}
+            placeholder={t('search')}
+            className="block h-11 w-full rounded-md border border-gray-500 bg-gray-50 pl-10 pr-3 type-control text-ink shadow-xs transition-colors placeholder:text-gray-600 hover:border-gray-700"
             value={filters.q}
-            onChange={(e) => onChange({ ...filters, q: e.target.value }, true)}
+            onChange={(e) => onChange({ ...filters, q: e.target.value }, true)} // replace: one history entry, not one per keystroke
           />
         </div>
-      </Field>
-
-      <button
-        type="button"
-        aria-expanded={open}
-        aria-controls={bodyId}
-        onClick={() => setOpen((v) => !v)}
-        data-testid="filters-toggle"
-        className="flex h-11 w-full items-center gap-2 rounded-md border border-gray-500 bg-white px-3 type-control font-medium text-ink shadow-xs md:hidden"
-      >
-        <span className="text-primary-500">
-          <svg {...icon}>
-            <path d="M3 5h18l-7 8v6l-4 2v-8z" />
-          </svg>
-        </span>
-        <span className="flex-1 text-left">{t('filtersHeading')}</span>
-        {active > 0 && (
-          <span className="rounded-full bg-primary-100 px-2.5 py-0.5 type-badge text-primary-800">{t('filtersActive', { n: active })}</span>
-        )}
-        <svg {...icon} className={`transition-transform motion-reduce:transition-none ${open ? 'rotate-180' : ''}`}>
-          <path d="m6 9 6 6 6-6" />
-        </svg>
-      </button>
-
-      <div id={bodyId} className={open ? 'space-y-4' : 'hidden space-y-4 md:block'} data-testid="filter-body">
-      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3" data-testid="filter-groups">
-        <fieldset className={groupCls}>
-          <legend className={legendCls}>{t('groupLocation')}</legend>
-          <Field id="f-lgu" label={t('municipality')}>
-            <select
-              className={controlCls}
-              id="f-lgu"
-              value={filters.lgu ?? ''}
-              onChange={(e) => onChange({ ...filters, lgu: e.target.value || undefined, barangay: undefined })}
-            >
-              <option value="">{t('allMunicipalities')}</option>
-              {lgus(geo).map((n) => (
-                <option key={n.psgc} value={n.psgc}>
-                  {n.name}
-                </option>
-              ))}
-            </select>
-          </Field>
-          <Field id="f-brgy" label={t('barangay')}>
-            <select
-              className={controlCls}
-              id="f-brgy"
-              disabled={!filters.lgu}
-              value={filters.barangay ?? ''}
-              onChange={(e) => onChange({ ...filters, barangay: e.target.value || undefined })}
-            >
-              <option value="">{t('allBarangays')}</option>
-              {barangays.map((n) => (
-                <option key={n.psgc} value={n.psgc}>
-                  {n.name}
-                </option>
-              ))}
-            </select>
-          </Field>
-        </fieldset>
-
-        <fieldset className={groupCls}>
-          <legend className={legendCls}>{t('groupRefine')}</legend>
-          <Field id="f-level" label={t('level')}>
-            <select
-              className={controlCls}
-              id="f-level"
-              value={filters.level ?? ''}
-              onChange={(e) => onChange({ ...filters, level: (e.target.value || undefined) as Level | undefined })}
-            >
-              <option value="">{t('allLevels')}</option>
-              {LEVELS.map((l) => (
-                <option key={l} value={l}>
-                  {t(`levels.${l}`)}
-                </option>
-              ))}
-            </select>
-          </Field>
-          <Field id="f-status" label={t('term')}>
-            <select
-              className={controlCls}
-              id="f-status"
-              value={filters.status}
-              onChange={(e) => onChange({ ...filters, status: e.target.value as Status })}
-            >
-              {STATUSES.map((s) => (
-                <option key={s} value={s}>
-                  {t(`statuses.${s}`)}
-                </option>
-              ))}
-            </select>
-          </Field>
-        </fieldset>
-
-        <fieldset className={`${groupCls} sm:col-span-2 lg:col-span-1`}>
-          <legend className={legendCls}>{t('groupSort')}</legend>
-          <Field id="f-sort" label={t('sortBy')}>
-            <select
-              className={controlCls}
-              id="f-sort"
-              value={filters.sort}
-              onChange={(e) => onChange({ ...filters, sort: e.target.value as SortKey })}
-            >
-              {SORTS.map((s) => (
-                <option key={s} value={s}>
-                  {t(`sorts.${s}`)}
-                </option>
-              ))}
-            </select>
-          </Field>
-          <Field id="f-dir" label={t('direction')}>
-            <select
-              className={controlCls}
-              id="f-dir"
-              value={filters.dir}
-              onChange={(e) => onChange({ ...filters, dir: e.target.value as Dir })}
-            >
-              {DIRS.map((d) => (
-                <option key={d} value={d}>
-                  {t(d)}
-                </option>
-              ))}
-            </select>
-          </Field>
-        </fieldset>
+        <Button type="submit" className="w-full sm:w-auto">
+          {t('searchButton')}
+        </Button>
       </div>
-      <div className="flex flex-wrap gap-2" data-testid="filter-toggles">
-        <label className={chipCls} htmlFor="f-pw">
-          <input
-            id="f-pw"
-            type="checkbox"
-            className="h-4 w-4 shrink-0 cursor-pointer accent-primary-500"
-            checked={filters.provinceWide}
-            onChange={(e) => onChange({ ...filters, provinceWide: e.target.checked })}
-          />
+
+      <div className="flex flex-wrap gap-2" data-testid="filter-dropdowns">
+        <PillSelect
+          id="f-lgu"
+          label={t('municipality')}
+          value={filters.lgu ?? ''}
+          allLabel={t('filterAll')}
+          filled={!!filters.lgu}
+          options={[{ value: '', label: t('allMunicipalities') }, ...lgus(geo).map((n) => ({ value: n.psgc, label: n.name }))]}
+          onChange={(v) => set({ lgu: v || undefined, barangay: undefined })}
+        />
+        <PillSelect
+          id="f-brgy"
+          label={t('barangay')}
+          value={filters.barangay ?? ''}
+          allLabel={t('filterAll')}
+          filled={!!filters.barangay}
+          disabled={!filters.lgu}
+          options={[{ value: '', label: t('allBarangays') }, ...barangays.map((n) => ({ value: n.psgc, label: n.name }))]}
+          onChange={(v) => set({ barangay: v || undefined })}
+        />
+        <PillSelect
+          id="f-level"
+          label={t('level')}
+          value={filters.level ?? ''}
+          allLabel={t('filterAll')}
+          filled={!!filters.level}
+          options={[{ value: '', label: t('allLevels') }, ...LEVELS.map((l) => ({ value: l, label: t(`levels.${l}`) }))]}
+          onChange={(v) => set({ level: (v || undefined) as Level | undefined })}
+        />
+        <PillSelect
+          id="f-sort"
+          label={t('sortBy')}
+          value={filters.sort}
+          allLabel={t('sorts.name')}
+          filled={filters.sort !== defaultFilters.sort}
+          options={SORTS.map((s) => ({ value: s, label: t(`sorts.${s}`) }))}
+          onChange={(v) => set({ sort: v as SortKey })}
+        />
+        <PillSelect
+          id="f-dir"
+          label={t('direction')}
+          value={filters.dir}
+          allLabel={t('asc')}
+          filled={filters.dir !== defaultFilters.dir}
+          options={DIRS.map((d) => ({ value: d, label: t(d) }))}
+          onChange={(v) => set({ dir: v as Dir })}
+        />
+      </div>
+
+      <div className="flex flex-wrap items-center gap-x-6 gap-y-1 border-t border-gray-200 pt-3" data-testid="filter-options">
+        <fieldset className="flex flex-wrap items-center gap-x-5 gap-y-1">
+          <legend className="sr-only">{t('term')}</legend>
+          {STATUSES.map((s) => (
+            <label key={s} htmlFor={`f-status-${s}`} className="inline-flex min-h-11 cursor-pointer items-center gap-2 type-label text-gray-900 md:min-h-9">
+              <input
+                id={`f-status-${s}`}
+                type="radio"
+                name="status"
+                value={s}
+                className="h-4 w-4 shrink-0 cursor-pointer accent-primary-500"
+                checked={filters.status === s}
+                onChange={() => set({ status: s })}
+              />
+              {t(`statusRadio.${s}`)}
+            </label>
+          ))}
+        </fieldset>
+        <Check id="f-pw" checked={filters.provinceWide} onChange={(v) => set({ provinceWide: v })}>
           {t('includeProvinceWide')}
-        </label>
-        <label className={chipCls} htmlFor="f-saln">
-          <input
-            id="f-saln"
-            type="checkbox"
-            className="h-4 w-4 shrink-0 cursor-pointer accent-primary-500"
-            checked={filters.hasSaln}
-            onChange={(e) => onChange({ ...filters, hasSaln: e.target.checked })}
-          />
+        </Check>
+        <Check id="f-saln" checked={filters.hasSaln} onChange={(v) => set({ hasSaln: v })}>
           {t('hasSaln')}
-        </label>
-      </div>
-
+        </Check>
+        <button
+          type="button"
+          onClick={clear}
+          disabled={active === 0}
+          data-testid="clear-filters"
+          className="ml-auto inline-flex min-h-11 items-center gap-2 rounded type-label text-primary-600 hover:text-primary-800 disabled:cursor-not-allowed disabled:text-gray-600 md:min-h-9"
+        >
+          {t('clearFilters')}
+          <span data-testid="filters-active" className={`inline-flex min-w-6 justify-center rounded-full px-2 type-badge ${active ? 'bg-primary-100 text-primary-800' : 'bg-gray-100 text-gray-700'}`}>
+            {active}
+          </span>
+        </button>
       </div>
 
       {pills.length > 0 && (
-        <div role="group" aria-label={t('pillsGroup', { n: pills.length })} data-testid="filter-pills" className="flex flex-wrap items-center gap-2 border-t border-gray-200 pt-4">
+        <div role="group" aria-label={t('pillsGroup', { n: pills.length })} data-testid="filter-pills" className="flex flex-wrap items-center gap-2 border-t border-gray-200 pt-3">
           {pills.map((p) => (
             <span key={p.key} className={pillCls} data-testid="filter-pill">
               {p.label}
@@ -257,11 +241,7 @@ export default function FilterBar({
               </button>
             </span>
           ))}
-          <button
-            type="button"
-            onClick={() => onChange({ ...defaultFilters })}
-            className="inline-flex h-11 items-center rounded-full bg-accent-100 px-3 type-badge text-accent-800 transition-colors hover:bg-accent-200 md:h-9"
-          >
+          <button type="button" onClick={clear} className="inline-flex h-11 items-center rounded-full bg-accent-100 px-3 type-badge text-accent-800 transition-colors hover:bg-accent-200 md:h-9">
             {t('clearAll')}
           </button>
         </div>

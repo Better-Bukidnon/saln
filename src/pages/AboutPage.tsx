@@ -2,7 +2,7 @@ import type { ReactNode } from 'react'
 import HelpBanner from '../components/HelpBanner'
 import { Button } from '../components/ui/Button'
 import { Card } from '../components/ui/Card'
-import { useT } from '../lib/i18n'
+import { useDocTitle, useT } from '../lib/i18n'
 import portalConfig from '../../portal.config'
 
 const h3 = 'mb-3 type-section-title text-gray-900'
@@ -24,6 +24,7 @@ const LEGAL = ['constitution', 'ra6713', 'ra3019', 'eo2'] as const
 
 export default function AboutPage() {
   const t = useT()
+  useDocTitle('title.about')
   return (
     <div className="mx-auto max-w-4xl space-y-6 sm:space-y-8">
       <section className="overflow-hidden rounded-xl bg-linear-to-br from-primary-500 to-primary-700 text-white shadow-md motion-safe:animate-fade-in">

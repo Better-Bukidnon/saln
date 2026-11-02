@@ -2,6 +2,7 @@ import { Route, Routes } from 'react-router'
 import Footer from './components/layout/Footer'
 import Header from './components/layout/Header'
 import AboutPage from './pages/AboutPage'
+import NotFoundPage from './pages/NotFoundPage'
 import OfficialPage from './pages/OfficialPage'
 import OfficialsPage from './pages/OfficialsPage'
 import { useT } from './lib/i18n'
@@ -22,7 +23,7 @@ export default function App() {
           <Route path="/" element={<OfficialsPage />} />
           <Route path="/official/:id" element={<OfficialPage />} />
           <Route path="/about" element={<AboutPage />} />
-          <Route path="*" element={<OfficialsPage />} />
+          <Route path="*" element={<NotFoundPage />} />
         </Routes>
       </main>
       <Footer />

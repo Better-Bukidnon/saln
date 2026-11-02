@@ -53,3 +53,13 @@ describe('activeFilterPills', () => {
     expect(pills.find((x) => x.key === 'hasSaln')!.remove(base).hasSaln).toBe(false)
   })
 })
+
+describe('active count', () => {
+  it('equals the number of pills (what the Clear filters badge shows)', () => {
+    expect(activeFilterPills(f({ q: 'a', lgu: 'A', sort: 'assets', hasSaln: true }), geo, t)).toHaveLength(4)
+    expect(activeFilterPills(f({ status: 'current', sort: 'name', dir: 'asc' }), geo, t)).toHaveLength(0)
+  })
+  it('a barangay without its municipality is not counted', () => {
+    expect(activeFilterPills(f({ barangay: 'A1' }), geo, t)).toHaveLength(0)
+  })
+})

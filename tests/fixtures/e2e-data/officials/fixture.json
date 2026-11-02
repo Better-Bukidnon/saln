@@ -71,5 +71,41 @@
     "termEnd": "2028-06-30",
     "rosterSource": "manual",
     "rosterVerified": false
+  },
+  {
+    "id": "test-vice-governor",
+    "personId": "test-vice-governor",
+    "name": "Aaron Test Vice Governor",
+    "position": "Vice Governor",
+    "level": "province",
+    "geoCode": "1001300000",
+    "termStart": "2025-06-30",
+    "termEnd": "2028-06-30",
+    "rosterSource": "manual",
+    "rosterVerified": true
+  },
+  {
+    "id": "test-vice-mayor-baungon",
+    "personId": "test-vice-mayor-baungon",
+    "name": "Aaron Test Vice Mayor Baungon",
+    "position": "Vice Mayor",
+    "level": "municipality",
+    "geoCode": "1001301000",
+    "termStart": "2025-06-30",
+    "termEnd": "2028-06-30",
+    "rosterSource": "manual",
+    "rosterVerified": true
+  },
+  {
+    "id": "test-councilor-baungon",
+    "personId": "test-councilor-baungon",
+    "name": "Zed Test Councilor Baungon",
+    "position": "Councilor",
+    "level": "municipality",
+    "geoCode": "1001301000",
+    "termStart": "2025-06-30",
+    "termEnd": "2028-06-30",
+    "rosterSource": "manual",
+    "rosterVerified": true
   }
 ]

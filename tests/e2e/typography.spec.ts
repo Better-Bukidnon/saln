@@ -23,8 +23,8 @@ test('every sampled element on every page uses Inter, including controls and SVG
     expect(families, path).toEqual([])
   }
   await page.goto('/official/dual-gov')
-  await page.getByText('Show chart data as a table').click()
-  expect((await style(page, '[data-testid="saln-chart"] svg text')).family).toMatch(/^"?Inter/i)
+  await expect(page.locator('[data-testid="saln-chart"] .recharts-bar-rectangle').first()).toBeVisible()
+  expect((await style(page, '[data-testid="saln-chart"] .recharts-cartesian-axis-tick-value')).family).toMatch(/^"?Inter/i)
 })
 
 test('the same role has the same size and weight on every page', async ({ page }) => {
@@ -66,6 +66,5 @@ test('inputs and selects are 16px on phones (no iOS zoom)', async ({ page }) => 
   await page.setViewportSize({ width: 390, height: 844 })
   await page.goto('/')
   expect((await style(page, '#f-q')).size).toBe('16px')
-  await page.getByTestId('filters-toggle').click()
   expect((await style(page, '#f-lgu')).size).toBe('16px')
 })

@@ -8,7 +8,7 @@ import type { BadgeVariant } from './ui/Badge'
 import { Button } from './ui/Button'
 import { Card } from './ui/Card'
 
-const STATUS_VARIANT: Record<SalnRecord['status'], BadgeVariant> = {
+export const STATUS_VARIANT: Record<SalnRecord['status'], BadgeVariant> = {
   submitted: 'gray',
   verified: 'verified',
   under_review: 'primary',

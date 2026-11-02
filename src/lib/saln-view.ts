@@ -67,45 +67,14 @@ export function compactPeso(amount: number): string {
   return `${sign}\u20b1 ${Math.round(abs)}`
 }
 
-function niceStep(range: number, intervals: number): number {
-  const raw = range / intervals
-  const mag = 10 ** Math.floor(Math.log10(raw))
-  const norm = raw / mag
-  return (norm <= 1 ? 1 : norm <= 2 ? 2 : norm <= 5 ? 5 : 10) * mag
-}
-
-/**
- * Vertical scale of the bar chart. The axis always contains zero and is rounded outward to a "nice"
- * step (about four intervals), so ticks are evenly spaced. If every value is 0 the axis is 0..1000.
- * `height` is the plot height in px; y(v) maps a value to a distance from the top of the plot.
- */
-export function chartScale(data: ChartData, height: number) {
-  const min = Math.min(0, data.min)
-  const max = Math.max(0, data.max)
-  const step = max === 0 && min === 0 ? 250 : niceStep(max - min, 4)
-  const lo = Math.floor(min / step) * step
-  const hi = max === 0 && min === 0 ? 1000 : Math.ceil(max / step) * step
-  const ticks: number[] = []
-  for (let v = lo; v <= hi + step / 2; v += step) ticks.push(Math.round(v * 1e6) / 1e6)
-  const span = hi - lo
-  const y = (v: number) => ((hi - v) * height) / span
-  return { lo, hi, step, span, y, ticks }
-}
-
 export interface LabelBox {
-  id: string
-  x: number // centre
-  y: number // baseline
+  x: number
+  y: number
   w: number
   h: number
 }
 
-/** Ids of the value labels to show: scanned in order, a label is dropped if it overlaps one already kept. */
-export function placeLabels(boxes: LabelBox[]): Set<string> {
-  const kept: LabelBox[] = []
-  for (const b of boxes) {
-    const clash = kept.some((k) => Math.abs(k.x - b.x) < (k.w + b.w) / 2 && Math.abs(k.y - b.y) < (k.h + b.h) / 2)
-    if (!clash) kept.push(b)
-  }
-  return new Set(kept.map((b) => b.id))
+/** True when two chart value labels would overlap (touching edges do not count). */
+export function labelsCollide(a: LabelBox, b: LabelBox): boolean {
+  return a.x < b.x + b.w && b.x < a.x + a.w && a.y < b.y + b.h && b.y < a.y + a.h
 }

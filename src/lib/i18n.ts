@@ -1,4 +1,4 @@
-import { createContext, useContext } from 'react'
+import { createContext, useContext, useEffect } from 'react'
 import { strings } from './strings'
 import type { Lang } from './strings'
 
@@ -41,12 +41,9 @@ export function writeStoredLang(lang: Lang, getStorage: () => StorageLike = brow
   }
 }
 
-export function applyLang(
-  lang: Lang,
-  doc: { documentElement: { lang: string }; title: string } = document,
-): void {
+/** Mirror the language onto <html lang>. The document title is owned by each page (useDocTitle). */
+export function applyLang(lang: Lang, doc: { documentElement: { lang: string } } = document): void {
   doc.documentElement.lang = lang
-  doc.title = translate(lang, 'docTitle')
 }
 
 type Ctx = { lang: Lang; setLang: (l: Lang) => void }
@@ -57,4 +54,13 @@ export const useLang = () => useContext(I18nContext)
 export function useT(): TFn {
   const { lang } = useContext(I18nContext)
   return (key, params) => translate(lang, key, params)
+}
+
+/** Set document.title from a dictionary key (re-runs when the language or params change). */
+export function useDocTitle(key: string, params?: Record<string, string | number>): void {
+  const { lang } = useContext(I18nContext)
+  const title = translate(lang, key, params)
+  useEffect(() => {
+    document.title = title
+  }, [title])
 }

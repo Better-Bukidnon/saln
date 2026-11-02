@@ -84,7 +84,7 @@ test('switching to Binisaya translates the page, updates <html lang> and persist
   await expect(page.getByText(NO_SALN_CEB)).toBeVisible()
   await expect(page.getByText('No SALN data yet')).toHaveCount(0)
   await expect(page.locator('html')).toHaveAttribute('lang', 'ceb')
-  await expect(page).toHaveTitle('SALN Tracker - Bukidnon')
+  await expect(page).toHaveTitle(/ - SALN Tracker - Bukidnon$/)
   await expect(page.getByRole('navigation', { name: 'Panguna' })).toBeVisible()
   await openLangMenu(page)
   await expect(page.getByRole('button', { name: 'Binisaya' })).toHaveAttribute('aria-pressed', 'true')

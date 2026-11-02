@@ -27,7 +27,8 @@ describe('Tailwind theme tokens (BetterBukidnon main-site palette)', () => {
 
   it('has no flag colours or gradient utilities left, and keeps the animations', () => {
     expect(css).not.toMatch(/flag|gradient|#f70000|#fcd116|#0038a8|--color-ph-/)
-    for (const a of ['fade-in', 'slide-up', 'scale-up']) expect(css).toContain(`--animate-${a}:`)
+    for (const a of ['fade-in', 'slide-up']) expect(css).toContain(`--animate-${a}:`)
+    expect(css).not.toContain('scale-up')
   })
 
   it('uses the self-hosted Inter variable font', () => {

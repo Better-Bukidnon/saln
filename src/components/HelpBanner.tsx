@@ -8,7 +8,7 @@ const solid = `${base} bg-white text-primary-500 shadow-sm hover:bg-primary-50`
 const tint = `${base} bg-white/15 text-white hover:bg-white/25`
 const ghost = `${base} text-white underline-offset-4 hover:underline`
 
-// Call-to-action banner (list page only), laid out like the SALN Tracker PH one.
+// Call-to-action banner (shown on the list and About pages), laid out like the SALN Tracker PH one.
 export default function HelpBanner() {
   const t = useT()
   return (
