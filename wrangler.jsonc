@@ -1,0 +1,11 @@
+{
+  // Cloudflare Workers, static assets only: no Worker code, no bindings.
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "saln-bukidnon",
+  "compatibility_date": "2026-10-01",
+  "assets": {
+    "directory": "./dist",
+    // Client-side routes serve index.html.
+    "not_found_handling": "single-page-application"
+  }
+}
