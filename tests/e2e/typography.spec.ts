@@ -8,7 +8,7 @@ const style = (page: Page, sel: string) =>
     return { family: s.fontFamily, size: s.fontSize, weight: s.fontWeight, line: s.lineHeight }
   })
 
-test('every sampled element on every page uses Inter, including controls and SVG text', async ({ page }) => {
+test('every sampled element on every page uses Figtree, including controls and SVG text', async ({ page }) => {
   for (const path of PAGES) {
     await page.goto(path)
     const families = await page.evaluate(() => {
@@ -16,7 +16,7 @@ test('every sampled element on every page uses Inter, including controls and SVG
       for (const e of document.querySelectorAll('body, h1, h2, h3, h4, p, a, button, input, select, label, li, dt, dd, th, td, text, summary, span')) {
         if (!(e as HTMLElement).offsetParent && e.tagName !== 'text' && e.tagName !== 'BODY') continue
         const f = getComputedStyle(e).fontFamily
-        if (!/^"?Inter/i.test(f)) out.push(`${e.tagName}: ${f}`)
+        if (!/^"?Figtree/i.test(f)) out.push(`${e.tagName}: ${f}`)
       }
       return out
     })
@@ -24,7 +24,7 @@ test('every sampled element on every page uses Inter, including controls and SVG
   }
   await page.goto('/official/dual-gov')
   await expect(page.locator('[data-testid="saln-chart"] .recharts-bar-rectangle').first()).toBeVisible()
-  expect((await style(page, '[data-testid="saln-chart"] .recharts-cartesian-axis-tick-value')).family).toMatch(/^"?Inter/i)
+  expect((await style(page, '[data-testid="saln-chart"] .recharts-cartesian-axis-tick-value')).family).toMatch(/^"?Figtree/i)
 })
 
 test('the same role has the same size and weight on every page', async ({ page }) => {
@@ -57,7 +57,7 @@ test('the same role has the same size and weight on every page', async ({ page }
   expect(await at('/', 'section[aria-labelledby="help-banner-title"] a[href*="issues/new"]')).toBe(btn)
   const badge = await at('/', '[data-testid="level-badge"]')
   expect(await at('/official/dual-gov', '[data-testid="level-badge"]')).not.toBe('')
-  expect(badge).toMatch(/^12px\/500/)
+  expect(badge).toMatch(/^12px\/700/)
   // big numbers
   expect(await at('/official/dual-gov', '[data-testid="stat-records"] dd')).toMatch(/^24px\/700/)
 })

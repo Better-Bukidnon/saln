@@ -1,3 +1,4 @@
+import { Effect } from '@animate-ui/react/primitives/effects/effect'
 import { useId, useState } from 'react'
 import { nodeByCode } from '../lib/geo'
 import { useT } from '../lib/i18n'
@@ -62,7 +63,8 @@ export default function OfficialGroupSection({
   const Wrap = asHeading ? 'h3' : 'div'
   return (
     <li data-testid="group" data-group={group.key}>
-      <div className="overflow-hidden rounded-xl border border-gray-200 bg-white shadow-sm">
+      <Effect asChild fade slide={{ direction: 'up', offset: 20 }} inView inViewOnce>
+      <div className="overflow-hidden rounded-lg border border-gray-200 bg-white shadow-sm">
         {/* One band for title and description: the button is stretched over all of it, so hover and the
             focus ring cover the whole band, and nothing inside it can fall outside the gray. */}
         <div
@@ -95,14 +97,15 @@ export default function OfficialGroupSection({
             open (942 cards would otherwise be in the DOM), so in-page find only sees open groups. */}
         <div id={panelId} hidden={!open} className="p-3 sm:p-4">
           {open && (
-            <ul className="grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-6 lg:grid-cols-3">
-              {group.officials.map((o) => (
-                <OfficialCard key={o.id} official={o} saln={salnByPerson.get(o.personId)} geo={geo} />
+            <ul className="grid grid-cols-1 gap-3 sm:grid-cols-2 sm:gap-4 lg:grid-cols-3">
+              {group.officials.map((o, i) => (
+                <OfficialCard key={o.id} index={i} official={o} saln={salnByPerson.get(o.personId)} geo={geo} />
               ))}
             </ul>
           )}
         </div>
       </div>
+      </Effect>
     </li>
   )
 }

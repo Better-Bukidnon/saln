@@ -1,3 +1,4 @@
+import { Effect } from '@animate-ui/react/primitives/effects/effect'
 import { Link, useParams } from 'react-router'
 import { LEVEL_VARIANT } from '../components/OfficialCard'
 import LazySalnChart from '../components/LazySalnChart'
@@ -52,7 +53,7 @@ export default function OfficialPage() {
   const latest = latestSaln(saln)
   const series = saln ? chartSeries(saln) : null
   return (
-    <div className="space-y-6 sm:space-y-8">
+    <div className="space-y-4 sm:space-y-6">
       <p>
         <Link to="/" className={backLink}>
           <span aria-hidden="true">&larr;&nbsp;</span>
@@ -67,7 +68,8 @@ export default function OfficialPage() {
           {o.sample.notice}
         </p>
       )}
-      <Card className="motion-safe:animate-slide-up">
+      <Effect asChild fade slide={{ direction: 'up', offset: 16 }}>
+<Card>
         <div className="flex flex-wrap items-start justify-between gap-3">
           <div className="min-w-0">
             <h2 className="type-entity-title text-gray-900">{o.name}</h2>
@@ -100,6 +102,7 @@ export default function OfficialPage() {
           ))}
         </ul>
       </Card>
+</Effect>
       <section aria-labelledby="saln-records-heading" className="space-y-4 sm:space-y-6">
         <div>
           <h3 id="saln-records-heading" className="type-section-title text-gray-900">{t('salnHeading')}</h3>

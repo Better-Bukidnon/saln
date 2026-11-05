@@ -31,8 +31,8 @@ describe('Tailwind theme tokens (BetterBukidnon main-site palette)', () => {
     expect(css).not.toContain('scale-up')
   })
 
-  it('uses the self-hosted Inter variable font', () => {
-    expect(css).toMatch(/--font-sans:\s*"inter variable"/)
+  it('uses the self-hosted Figtree variable font', () => {
+    expect(css).toMatch(/--font-sans:\s*"figtree variable"/)
     // the inline SVG data URI carries an xmlns string that is not a request
     expect(css.replaceAll('http://www.w3.org/2000/svg', '')).not.toMatch(/googleapis|gstatic|https?:\/\//)
   })

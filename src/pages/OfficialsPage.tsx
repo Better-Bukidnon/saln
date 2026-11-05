@@ -1,3 +1,4 @@
+import { Effect } from '@animate-ui/react/primitives/effects/effect'
 import { useMemo } from 'react'
 import { useSearchParams } from 'react-router'
 import HelpBanner from '../components/HelpBanner'
@@ -36,9 +37,10 @@ export default function OfficialsPage() {
   const onChange = (next: Filters, replace = false) => setParams(serializeFilters(next), { replace })
 
   return (
-    <div className="space-y-6 sm:space-y-8">
-      <section className="overflow-hidden rounded-xl bg-linear-to-br from-primary-500 to-primary-700 text-white shadow-md motion-safe:animate-fade-in">
-        <div className="px-4 py-8 text-center sm:px-6 sm:py-12">
+    <div className="space-y-4 sm:space-y-6">
+      <Effect asChild fade blur={{ initialBlur: 8, blur: 0 }} slide={{ direction: 'up', offset: 28 }} transition={{ type: 'spring', stiffness: 90, damping: 18 }}>
+<section className="overflow-hidden rounded-lg bg-linear-to-br from-primary-500 to-primary-700 text-white shadow-md">
+        <div className="px-4 py-6 text-center sm:px-6 sm:py-8">
           <h2 data-testid="hero-title" className="mb-3 type-page-title sm:mb-4">
             {t('heroTitle')}
           </h2>
@@ -51,10 +53,13 @@ export default function OfficialsPage() {
           </p>
         </div>
       </section>
+</Effect>
       <HelpBanner />
-      <Card padding="sm" className="sm:p-6">
-        <FilterBar geo={data.geo} filters={filters} onChange={onChange} />
-      </Card>
+      <Effect asChild fade slide={{ direction: 'up', offset: 24 }} delay={150}>
+        <Card padding="sm" className="sm:p-6">
+          <FilterBar geo={data.geo} filters={filters} onChange={onChange} />
+        </Card>
+      </Effect>
       <p id="results-status" tabIndex={-1} className="type-meta font-semibold text-gray-700" role="status">
         {shown.length === 1 ? t('resultCount.one') : t('resultCount.other', { n: shown.length })}
       </p>
@@ -146,7 +151,7 @@ function GroupSet({
                   {total === 1 ? t('groupCount.one') : t('groupCount.other', { n: total })}
                 </Badge>
               </div>
-              <ul className="space-y-3 sm:space-y-4">{rows.map((g) => row(g, false))}</ul>
+              <ul className="space-y-2 sm:space-y-3">{rows.map((g) => row(g, false))}</ul>
             </div>
           )
         })}

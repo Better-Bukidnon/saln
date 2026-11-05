@@ -30,7 +30,7 @@ function Figure({ label, value, strong }: { label: string; value: number; strong
 export default function SalnCards({ records }: { records: SalnRecord[] }) {
   const t = useT()
   return (
-    <ul className="space-y-4 sm:space-y-6" data-testid="saln-cards">
+    <ul className="space-y-3 sm:space-y-4" data-testid="saln-cards">
       {newestFirst(records).map((r) => {
         const href = safeHref(r.sourceUrl)
         return (

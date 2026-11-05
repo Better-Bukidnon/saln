@@ -1,9 +1,10 @@
 import { Link, NavLink } from 'react-router'
+import { Highlight } from '@animate-ui/react/primitives/effects/highlight'
 import { useT } from '../../lib/i18n'
 import LanguageSwitcher from '../LanguageSwitcher'
 
 const navLink =
-  'inline-flex min-h-11 items-center rounded-lg px-2 type-nav text-ink transition-colors hover:text-primary-500 aria-[current=page]:font-semibold aria-[current=page]:text-primary-500 sm:px-3'
+  'inline-flex min-h-11 items-center rounded-full px-3 type-nav text-gray-700 transition-colors hover:text-ink aria-[current=page]:bg-primary-50 aria-[current=page]:font-bold aria-[current=page]:text-primary-600 sm:px-4'
 
 export default function Header() {
   const t = useT()
@@ -20,12 +21,14 @@ export default function Header() {
           </Link>
           <div className="ml-auto flex items-center gap-x-2 sm:gap-x-4">
             <nav aria-label={t('navMain')} className="flex items-center">
-              <NavLink to="/" end className={navLink}>
-                {t('navHome')}
-              </NavLink>
-              <NavLink to="/about" className={navLink}>
-                {t('navAbout')}
-              </NavLink>
+              <Highlight hover click={false} className="rounded-full bg-gray-100">
+                <NavLink to="/" end className={navLink} data-value="home">
+                  {t('navHome')}
+                </NavLink>
+                <NavLink to="/about" className={navLink} data-value="about">
+                  {t('navAbout')}
+                </NavLink>
+              </Highlight>
             </nav>
             <LanguageSwitcher />
           </div>

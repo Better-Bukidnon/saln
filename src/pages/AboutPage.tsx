@@ -1,3 +1,4 @@
+import { Effect } from '@animate-ui/react/primitives/effects/effect'
 import type { ReactNode } from 'react'
 import HelpBanner from '../components/HelpBanner'
 import { Button } from '../components/ui/Button'
@@ -26,9 +27,10 @@ export default function AboutPage() {
   const t = useT()
   useDocTitle('title.about')
   return (
-    <div className="mx-auto max-w-4xl space-y-6 sm:space-y-8">
-      <section className="overflow-hidden rounded-xl bg-linear-to-br from-primary-500 to-primary-700 text-white shadow-md motion-safe:animate-fade-in">
-        <div className="px-4 py-8 text-center sm:px-6 sm:py-12">
+    <div className="mx-auto max-w-4xl space-y-4 sm:space-y-6">
+      <Effect asChild fade blur={{ initialBlur: 8, blur: 0 }} slide={{ direction: 'up', offset: 28 }} transition={{ type: 'spring', stiffness: 90, damping: 18 }}>
+<section className="overflow-hidden rounded-lg bg-linear-to-br from-primary-500 to-primary-700 text-white shadow-md">
+        <div className="px-4 py-6 text-center sm:px-6 sm:py-8">
           <h2 data-testid="about-hero-title" className="mb-3 type-page-title sm:mb-4">
             {t('aboutHeading')}
           </h2>
@@ -38,6 +40,7 @@ export default function AboutPage() {
           </p>
         </div>
       </section>
+</Effect>
 
       <HelpBanner />
 
