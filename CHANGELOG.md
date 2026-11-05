@@ -19,6 +19,11 @@ Steps for each update:
 
 ## [Unreleased]
 
+## [0.4.1] - 2026-11-05
+
+### Changed
+- About page uses the same full container width as the home page (removed the `max-w-4xl` cap).
+
 ## [0.4.0] - 2026-11-05
 
 ### Added
