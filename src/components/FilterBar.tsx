@@ -51,7 +51,7 @@ function PillSelect({
       : 'border-gray-500 bg-white text-gray-800 hover:border-gray-700'
   return (
     <div
-      className={`relative inline-flex h-11 max-w-full items-center gap-1.5 rounded-md border px-3 type-label shadow-xs transition-colors has-[select:focus-visible]:outline-2 has-[select:focus-visible]:outline-offset-2 has-[select:focus-visible]:outline-primary-500 md:h-9 ${tone}`}
+      className={`relative inline-flex h-11 max-w-full items-center gap-1.5 rounded-full border px-4 type-label shadow-xs transition-colors has-[select:focus-visible]:outline-2 has-[select:focus-visible]:outline-offset-2 has-[select:focus-visible]:outline-primary-500 md:h-9 ${tone}`}
       data-testid="filter-pill-select"
       data-filled={filled ? 'true' : 'false'}
     >
@@ -68,7 +68,7 @@ function PillSelect({
         value={value}
         disabled={disabled}
         onChange={(e) => onChange(e.target.value)}
-        className="absolute -inset-px h-[calc(100%+2px)] w-[calc(100%+2px)] cursor-pointer appearance-none rounded-md opacity-0 type-control disabled:cursor-not-allowed"
+        className="absolute -inset-px h-[calc(100%+2px)] w-[calc(100%+2px)] cursor-pointer appearance-none rounded-full opacity-0 type-control disabled:cursor-not-allowed"
       >
         {options.map((o) => (
           <option key={o.value} value={o.value}>
@@ -106,7 +106,7 @@ export default function FilterBar({
   const clear = () => onChange({ ...defaultFilters })
   return (
     <form
-      className="space-y-4"
+      className="space-y-3"
       role="search"
       aria-label={t('filtersHeading')}
       onSubmit={(e) => {
@@ -116,7 +116,7 @@ export default function FilterBar({
     >
       <div className="flex flex-col gap-2 sm:flex-row">
         <div className="relative flex-1">
-          <span className="pointer-events-none absolute inset-y-0 left-3 flex items-center text-gray-600">
+          <span className="pointer-events-none absolute inset-y-0 left-4 flex items-center text-gray-600">
             <svg {...icon}>
               <circle cx="11" cy="11" r="7" />
               <path d="m20 20-3.5-3.5" />
@@ -127,7 +127,7 @@ export default function FilterBar({
             type="search"
             aria-label={t('search')}
             placeholder={t('search')}
-            className="block h-11 w-full rounded-md border border-gray-500 bg-gray-50 pl-10 pr-3 type-control text-ink shadow-xs transition-colors placeholder:text-gray-600 hover:border-gray-700"
+            className="block h-11 w-full rounded-full border border-gray-500 bg-gray-50 pl-11 pr-4 type-control text-ink shadow-xs transition-colors placeholder:text-gray-600 hover:border-gray-700"
             value={filters.q}
             onChange={(e) => onChange({ ...filters, q: e.target.value }, true)} // replace: one history entry, not one per keystroke
           />

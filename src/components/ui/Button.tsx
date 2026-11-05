@@ -4,15 +4,15 @@ type Variant = 'primary' | 'ghost'
 type Size = 'sm' | 'md' | 'lg'
 
 const base =
-  'inline-flex min-h-11 items-center justify-center rounded-lg type-button transition-all duration-200 disabled:cursor-not-allowed disabled:opacity-50'
+  'inline-flex min-h-11 items-center justify-center rounded-full type-button-pill transition-all duration-200 disabled:cursor-not-allowed disabled:opacity-50'
 const variants: Record<Variant, string> = {
-  primary: 'bg-primary-500 text-white shadow-sm hover:bg-primary-700 hover:shadow-md',
-  ghost: 'border border-gray-400 bg-white text-gray-800 hover:bg-surface-alt',
+  primary: 'bg-primary-500 text-white shadow-sm hover:scale-[1.02] hover:bg-primary-700 hover:shadow-md motion-reduce:hover:scale-100',
+  ghost: 'border border-gray-500 bg-white text-gray-800 hover:border-gray-900 hover:bg-surface-alt',
 }
 const sizes: Record<Size, string> = {
-  sm: 'px-3 py-2',
-  md: 'px-4 py-2.5',
-  lg: 'px-6 py-3',
+  sm: 'px-4 py-2',
+  md: 'px-6 py-2.5',
+  lg: 'px-8 py-3',
 }
 
 type Common = { variant?: Variant; size?: Size }

@@ -65,8 +65,8 @@ test('body font is Inter, self-hosted', async ({ page }) => {
   })
   await page.goto('/')
   await page.evaluate(() => document.fonts.ready)
-  expect(await page.evaluate(() => getComputedStyle(document.body).fontFamily)).toMatch(/^"?Inter/)
-  expect(await page.evaluate(() => document.fonts.check('16px "Inter Variable"'))).toBe(true)
+  expect(await page.evaluate(() => getComputedStyle(document.body).fontFamily)).toMatch(/^"?Figtree/)
+  expect(await page.evaluate(() => document.fonts.check('16px "Figtree Variable"'))).toBe(true)
   expect(external).toEqual([])
 })
 
@@ -109,6 +109,7 @@ test('every level badge colour meets AA', async ({ page }) => {
 })
 
 test('keyboard focus shows the 2px primary outline on every interactive element', async ({ page }) => {
+  test.setTimeout(90_000) // 100 Tab stops x 250ms of transition wait is ~25s before any work
   await page.goto('/')
   const seen = new Set<string>()
   const bad: string[] = []
@@ -216,7 +217,7 @@ test('footer has four sections, the disclaimer once, and readable links on the d
   await expect(page.getByText('Aggregator, not the original source; not an official government website.')).toHaveCount(1)
   await expect(page.getByRole('note')).toHaveCount(1)
   for (const sel of ['footer-quick', 'footer-resources', 'footer-contribute']) {
-    const a = `[data-testid="${sel}"] a`
+    const a = `[data-testid="${sel}"] :is(a:not([data-contact-item]), button[aria-haspopup])` // the contact menu's own links sit on a white card
     const n = await page.locator(a).count()
     for (let i = 0; i < n; i++) {
       await page.locator(a).nth(i).evaluate((e, k) => e.setAttribute('data-fc', String(k)), `${sel}-${i}`)
@@ -252,7 +253,7 @@ test('the help banner is on the list and About pages (not profiles), with its th
   await page.goto('/')
   const banner = page.getByRole('region', { name: 'Help us open up SALN data' })
   await expect(banner.getByRole('link', { name: 'Submit SALN Data' })).toBeVisible()
-  await expect(banner.getByRole('link', { name: 'Contact Us' })).toHaveAttribute('href', 'mailto:volunteer@betterbukidnon.org')
+  await expect(banner.getByRole('button', { name: 'Contact Us' })).toBeVisible()
   await expect(banner.getByRole('link', { name: 'Learn More' })).toHaveAttribute('href', '/about')
   await expect(banner.getByRole('link', { name: /ombudsman.gov.ph/ })).toBeVisible()
   await page.goto('/about')
@@ -261,13 +262,34 @@ test('the help banner is on the list and About pages (not profiles), with its th
   await expect(page.getByText('Help us open up SALN data')).toHaveCount(0)
 })
 
+test('Contact Us offers the default mail app, web mail and copy, so it works with no mail app installed', async ({ page, context }) => {
+  await context.grantPermissions(['clipboard-read', 'clipboard-write'])
+  await page.goto('/')
+  const banner = page.getByRole('region', { name: 'Help us open up SALN data' })
+  const toggle = banner.getByRole('button', { name: 'Contact Us' })
+  await expect(toggle).toHaveAttribute('aria-expanded', 'false')
+  await toggle.click()
+  await expect(toggle).toHaveAttribute('aria-expanded', 'true')
+  const menu = banner.getByRole('group', { name: 'Choose how to email us' })
+  await expect(menu.getByRole('link', { name: 'Default mail app' })).toHaveAttribute('href', 'mailto:volunteer@betterbukidnon.org')
+  await expect(menu.getByRole('link', { name: 'Gmail' })).toHaveAttribute('href', /mail\.google\.com.*to=volunteer%40betterbukidnon\.org/)
+  await expect(menu.getByRole('link', { name: 'Outlook' })).toHaveAttribute('href', /outlook\.live\.com/)
+  await expect(menu.getByRole('link', { name: 'Yahoo Mail' })).toHaveAttribute('href', /compose\.mail\.yahoo\.com/)
+  await menu.getByRole('button', { name: 'Copy email address' }).click()
+  await expect(menu.getByRole('button', { name: 'Email address copied' })).toBeVisible()
+  expect(await page.evaluate(() => navigator.clipboard.readText())).toBe('volunteer@betterbukidnon.org')
+  await page.keyboard.press('Escape')
+  await expect(toggle).toHaveAttribute('aria-expanded', 'false')
+  await expect(toggle).toBeFocused()
+})
+
 test('banner text and buttons on the blue meet AA', async ({ page }) => {
   await page.goto('/')
   const stops = ['rgb(0, 50, 160)', 'rgb(0, 33, 112)']
   const banner = '[aria-labelledby="help-banner-title"]'
   expect(await contrastOf(page, `${banner} h3`, stops)).toBeGreaterThanOrEqual(4.5)
   expect(await contrastOf(page, `${banner} > div p:nth-of-type(1)`, stops)).toBeGreaterThanOrEqual(4.5)
-  expect(await contrastOf(page, `${banner} a[href^="mailto"]`, ['rgb(38, 82, 177)', 'rgb(26, 55, 126)'].concat(['rgb(0, 50, 160)']))).toBeGreaterThanOrEqual(4.5)
+  expect(await contrastOf(page, `${banner} button[aria-haspopup]`, ['rgb(38, 82, 177)', 'rgb(26, 55, 126)'].concat(['rgb(0, 50, 160)']))).toBeGreaterThanOrEqual(4.5)
   expect(await contrastOf(page, `${banner} a[href*="issues"]`)).toBeGreaterThanOrEqual(4.5) // white button, primary text
 })
 

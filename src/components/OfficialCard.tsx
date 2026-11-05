@@ -1,4 +1,5 @@
 import { Link } from 'react-router'
+import { Effect } from '@animate-ui/react/primitives/effects/effect'
 import { formatPeso } from '../lib/money'
 import { latestSaln } from '../lib/data'
 import { nodeByCode } from '../lib/geo'
@@ -34,7 +35,9 @@ export default function OfficialCard({
   official,
   saln,
   geo,
+  index = 0,
 }: {
+  index?: number
   official: Official
   saln: SalnRecord[] | undefined
   geo: Geo
@@ -43,10 +46,11 @@ export default function OfficialCard({
   const latest = latestSaln(saln)
   return (
     <li>
+      <Effect fade slide={{ direction: 'up', offset: 24 }} delay={(index % 3) * 80} inView inViewOnce className="h-full">
       <Card
         hoverable
         padding="sm"
-        className="relative flex h-full flex-col gap-3 sm:p-5"
+        className="relative flex h-full flex-col gap-2.5 sm:p-4"
       >
         <div className="flex items-start justify-between gap-3">
           <div className="min-w-0">
@@ -91,6 +95,7 @@ export default function OfficialCard({
           </span>
         </div>
       </Card>
+      </Effect>
     </li>
   )
 }

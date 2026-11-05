@@ -18,7 +18,7 @@ export default function App() {
         {t('skipToContent')}
       </a>
       <Header />
-      <main id="main" className="container mx-auto flex-1 px-3 py-4 sm:px-4 sm:py-8 lg:px-8">
+      <main id="main" className="container mx-auto flex-1 px-3 py-4 sm:px-4 sm:py-6 lg:px-8">
         <Routes>
           <Route path="/" element={<OfficialsPage />} />
           <Route path="/official/:id" element={<OfficialPage />} />

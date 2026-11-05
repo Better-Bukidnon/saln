@@ -30,6 +30,10 @@ Playwright reuses an already running preview server locally but never in CI (`CI
 
 Deploys as static assets via Cloudflare Workers (`wrangler.jsonc`, worker name `saln-bukidnon`).
 
+## Versioning
+
+This project follows [Semantic Versioning](https://semver.org/). Every update gets a changelog entry and a version bump; see [CHANGELOG.md](CHANGELOG.md) for the rules and the `npm run release:patch|minor|major` scripts.
+
 ## Data sources
 
 `data/geo.json` (Bukidnon geography: 1 province, 2 cities, 20 municipalities, 464 barangays) is built from the Philippine Standard Geographic Code (PSGC).

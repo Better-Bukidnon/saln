@@ -89,7 +89,7 @@ export default function LanguageSwitcher() {
         role="group"
         aria-label={t('language')}
         onKeyDown={onListKey}
-        className="absolute right-0 top-[calc(100%+0.5rem)] z-[1001] min-w-[13.5rem] max-w-[calc(100vw-1.5rem)] rounded-xl border border-gray-200 bg-white p-2 shadow-[0_12px_32px_rgba(0,0,0,0.12),0_2px_6px_rgba(0,0,0,0.06)]"
+        className="absolute right-0 top-[calc(100%+0.5rem)] z-[1001] min-w-[13.5rem] max-w-[calc(100vw-1.5rem)] rounded-lg border border-gray-200 bg-white p-2 shadow-lg"
       >
         {LANGS.map((l, i) => (
           <button
@@ -104,11 +104,8 @@ export default function LanguageSwitcher() {
               setLang(l)
               close(true)
             }}
-            className={`flex min-h-12 w-full items-center gap-4 whitespace-nowrap rounded-lg px-4 text-left type-control hover:bg-primary-50 ${l === lang ? 'font-bold text-primary-500' : 'font-medium text-ink'}`}
+            className={`flex min-h-12 w-full items-center whitespace-nowrap rounded-full px-5 text-left type-control transition-colors ${l === lang ? 'bg-primary-500 font-bold text-white hover:bg-primary-600' : 'font-medium text-ink hover:bg-primary-50'}`}
           >
-            <svg {...icon} className={l === lang ? '' : 'invisible'}>
-              <path d="m5 12 5 5 9-10" />
-            </svg>
             {LANG_NAMES[l]}
           </button>
         ))}

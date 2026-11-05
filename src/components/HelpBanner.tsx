@@ -1,9 +1,11 @@
 import { Link } from 'react-router'
+import { Effect } from '@animate-ui/react/primitives/effects/effect'
+import ContactMenu from './ContactMenu'
 import portalConfig from '../../portal.config'
 import { useT } from '../lib/i18n'
 
 const base =
-  'inline-flex min-h-11 w-full items-center justify-center rounded-lg px-5 py-2.5 type-button transition-colors lg:w-auto'
+  'inline-flex min-h-11 w-full items-center justify-center rounded-full px-6 py-2.5 type-button-pill transition-colors lg:w-auto'
 const solid = `${base} bg-white text-primary-500 shadow-sm hover:bg-primary-50`
 const tint = `${base} bg-white/15 text-white hover:bg-white/25`
 const ghost = `${base} text-white underline-offset-4 hover:underline`
@@ -12,9 +14,10 @@ const ghost = `${base} text-white underline-offset-4 hover:underline`
 export default function HelpBanner() {
   const t = useT()
   return (
+    <Effect asChild fade slide={{ direction: 'up', offset: 24 }} inView inViewOnce>
     <section
       aria-labelledby="help-banner-title"
-      className="on-dark rounded-xl bg-linear-to-br from-primary-500 to-primary-700 p-5 text-white shadow-md sm:p-6 lg:flex lg:items-center lg:justify-between lg:gap-8"
+      className="on-dark rounded-lg bg-linear-to-br from-primary-500 to-primary-700 p-5 text-white shadow-md sm:p-6 lg:flex lg:items-center lg:justify-between lg:gap-8"
     >
       <div className="min-w-0 space-y-2">
         <h3 id="help-banner-title" className="type-card-title">
@@ -35,13 +38,12 @@ export default function HelpBanner() {
         <a className={solid} href={portalConfig.submitUrl} target="_blank" rel="noopener noreferrer">
           {t('bannerSubmit')}
         </a>
-        <a className={tint} href={`mailto:${portalConfig.volunteerEmail}`}>
-          {t('bannerContact')}
-        </a>
+        <ContactMenu className={`${tint} w-full`}>{t('bannerContact')}</ContactMenu>
         <Link className={ghost} to="/about">
           {t('bannerLearn')}
         </Link>
       </div>
     </section>
+    </Effect>
   )
 }

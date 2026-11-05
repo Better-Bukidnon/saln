@@ -1,10 +1,10 @@
 import { Link } from 'react-router'
 import portalConfig from '../../../portal.config'
 import { useT } from '../../lib/i18n'
+import ContactMenu from '../ContactMenu'
 import Disclaimer from '../Disclaimer'
 
 const REPO_URL = portalConfig.repoUrl
-const VOLUNTEER_MAIL = `mailto:${portalConfig.volunteerEmail}`
 
 const svg = { width: 20, height: 20, viewBox: '0 0 24 24', fill: 'none', stroke: 'currentColor', strokeWidth: 2, strokeLinecap: 'round', strokeLinejoin: 'round', 'aria-hidden': true } as const
 const GithubIcon = () => (
@@ -42,9 +42,9 @@ export default function Footer() {
               <a className={social} href={REPO_URL} {...ext} aria-label={t('footerGithubLabel')}>
                 <GithubIcon />
               </a>
-              <a className={social} href={VOLUNTEER_MAIL} aria-label={t('footerEmailLabel')}>
+              <ContactMenu className={social} ariaLabel={t('footerEmailLabel')} openUp>
                 <MailIcon />
-              </a>
+              </ContactMenu>
             </div>
           </section>
           <section data-testid="footer-quick" className="flex flex-col items-center sm:items-start">
@@ -72,10 +72,10 @@ export default function Footer() {
             <p className="inline-flex items-center gap-1.5 rounded-md bg-success/15 px-3 py-1.5 type-badge text-white/80">
               {t('footerCostPrefix')} <span className="font-bold text-success-light">{'₱'}0</span>
             </p>
-            <a className={pill} href={VOLUNTEER_MAIL}>
+            <ContactMenu className={pill} openUp>
               <MailIcon />
               {t('footerVolunteer')}
-            </a>
+            </ContactMenu>
             <a className={pill} href={REPO_URL} {...ext}>
               <GithubIcon />
               {t('footerContribute')}
