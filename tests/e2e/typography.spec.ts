@@ -54,7 +54,7 @@ test('the same role has the same size and weight on every page', async ({ page }
   expect(await at('/about', '[aria-labelledby="about-what"] p')).toBe(body)
   // buttons and badges
   const btn = await at('/about', '[aria-labelledby="about-request"] a')
-  expect(await at('/', 'section[aria-labelledby="help-banner-title"] a[href*="issues/new"]')).toBe(btn)
+  expect(await at('/', 'section[aria-labelledby="help-banner-title"] a[href*="forms.gle"]')).toBe(btn)
   const badge = await at('/', '[data-testid="level-badge"]')
   expect(await at('/official/dual-gov', '[data-testid="level-badge"]')).not.toBe('')
   expect(badge).toMatch(/^12px\/700/)
