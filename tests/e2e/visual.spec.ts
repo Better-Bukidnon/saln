@@ -290,7 +290,7 @@ test('banner text and buttons on the blue meet AA', async ({ page }) => {
   expect(await contrastOf(page, `${banner} h3`, stops)).toBeGreaterThanOrEqual(4.5)
   expect(await contrastOf(page, `${banner} > div p:nth-of-type(1)`, stops)).toBeGreaterThanOrEqual(4.5)
   expect(await contrastOf(page, `${banner} button[aria-haspopup]`, ['rgb(38, 82, 177)', 'rgb(26, 55, 126)'].concat(['rgb(0, 50, 160)']))).toBeGreaterThanOrEqual(4.5)
-  expect(await contrastOf(page, `${banner} a[href*="issues"]`)).toBeGreaterThanOrEqual(4.5) // white button, primary text
+  expect(await contrastOf(page, `${banner} a[href*="forms.gle"]`)).toBeGreaterThanOrEqual(4.5) // white button, primary text
 })
 
 test('the language menu opens, selects, closes on Escape and outside click, and moves with the arrow keys', async ({ page }) => {
