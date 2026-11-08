@@ -17,11 +17,11 @@ describe('portalConfig', () => {
     expect(portalConfig.ombudsmanRequestUrl).toBe('https://www.ombudsman.gov.ph/request-for-copy-of-salns/')
     expect(portalConfig.mainSiteUrl).toBe('https://betterbukidnon.org')
   })
-  it('keeps every link absolute https and the submit form inside the repo', () => {
+  it('keeps every link absolute https and points submission to the Google Form', () => {
     for (const [k, v] of Object.entries(portalConfig)) {
       if (k.endsWith('Url')) expect(v, k).toMatch(/^https:\/\/[a-z0-9.-]+(\/\S*)?$/)
     }
-    expect(portalConfig.submitUrl.startsWith(`${portalConfig.repoUrl}/issues/new`)).toBe(true)
+    expect(portalConfig.submitUrl).toBe('https://forms.gle/QKEFeNjbLTn7J1Mq7')
     expect(portalConfig.volunteerEmail).toMatch(/^[^@\s]+@[^@\s]+\.[a-z]+$/)
   })
   it('carries the aggregator disclaimer', () => {
